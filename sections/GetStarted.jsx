@@ -30,7 +30,7 @@ const GetStarted = () => (
         variants={fadeIn('left', 'tween', 0.2, 1)}
         className="flex-[0.75] flex justify-center flex-col"
       >
-        <TypingText title="| How Metaversus Works" />
+        <TypingText title="| How it Works" />
         <TitleText title={<>Three Ways To Get An Hand On It</>} />
         <span className="font-extrabold text-white">Any remaining DEEFI will be airdroped to holders</span>
         <div className="mt-[31px] flex flex-col max-w-[370px] gap-[24px]">
