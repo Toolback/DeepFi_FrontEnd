@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { socials } from '../constants';
 
 import styles from '../styles';
@@ -17,8 +18,9 @@ const Footer = () => (
     <div className={`${styles.innerWidth} mx-auto flex flex-col gap-8`}>
       <div className="flex items-center justify-between flex-wrap gap-5">
         <h4 className="font-bold md:text-[64px] text-[44px] text-white">
-        Enter the DeepFi
+        Enter the DeFi
         </h4>
+        <Link href="/App">
         <button type="button" className="flex items-center h-fit py-4 px-6 bg-[#25618B] rounded-[32px] gap-[12px]">
           {/* <img
             src="/headset.svg"
@@ -29,6 +31,7 @@ const Footer = () => (
             Explore
           </span>
         </button>
+          </Link>
       </div>
 
       <div className="flex flex-col">

@@ -5,7 +5,17 @@ import { motion } from 'framer-motion';
 import styles from '../styles';
 import { navVariants } from '../utils/motion';
 
-const Navbar = () => (
+// web3 connect
+
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount} from 'wagmi'
+import Link from 'next/link';
+
+
+const Navbar = () => {
+  const { address, isConnected } = useAccount()
+  console.log('address retrieved is :', address);
+return (
   <motion.nav
     variants={navVariants}
     initial="hidden"
@@ -16,21 +26,35 @@ const Navbar = () => (
     <div
       className={`${styles.innerWidth} mx-auto flex justify-between gap-8`}
     >
-      <img
+      {/* <img
         src="/search.svg"
         alt="search"
         className="w-[24px] h-[24px] object-contain"
-      />
+      /> */}
       <h2 className="font-extrabold text-[24px] leading-[30.24px] text-white">
-        DeepFi
+        Deposit.Finance
       </h2>
-      <img
+      {/* <img
         src="/menu.svg"
         alt="menu"
         className="w-[24px] h-[24px] object-contain"
-      />
+      /> */}
+      {/* <ConnectButton /> */}
+      <Link href="/App">
+      <button type="button" className="flex items-center h-fit py-4 px-6 bg-[#25618B] bg-opacity-20 rounded-[32px] gap-[12px]">
+          {/* <img
+            src="/headset.svg"
+            alt="headset"
+            className="w-[24px] h-[24px] object-contain"
+          /> */}
+          <span className="font-normal text-[16px] text-white">
+            Enter App
+          </span>
+        </button>
+        </Link>
     </div>
   </motion.nav>
-);
+)
+    };
 
 export default Navbar;
