@@ -17,7 +17,7 @@ const LayoutTop = () => {
             <div className="absolute w-[50%] inset-0 gradient-01" />
             <div
                 // className={`${styles.innerWidth} mx-auto flex justify-between gap-8`}
-                className={`mx-auto flex justify-between gap-8`}
+                className={`mx-auto flex justify-end gap-8`}
 
             >
                 {/* <img
@@ -25,13 +25,7 @@ const LayoutTop = () => {
             alt="search"
             className="w-[24px] h-[24px] object-contain"
           /> */}
-          <Link href="/">
-            <button type="button">
-                <h2 className="font-extrabold text-[24px] leading-[30.24px] text-white">
-                    Deposit.Finance
-                </h2>
-            </button>
-          </Link>
+
                 {/* <img
             src="/menu.svg"
             alt="menu"

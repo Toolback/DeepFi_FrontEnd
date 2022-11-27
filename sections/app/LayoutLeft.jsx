@@ -12,18 +12,25 @@ const LayoutLeft = () => {
     }
 
     return (
-        <div className='bg-primary-black h-screen border-r-10 rounded border-white'>
-            <div className='absolute left-8 bottom-1/2 flex flex-col '>
-                <button className="" onClick={() => handleNavClick('news')}>News</button>
-                <button className="" onClick={() => handleNavClick('pools')}>Pools</button>
-                <button className="" onClick={() => handleNavClick('stake')}>Stake</button>
-                <button className="" onClick={() => handleNavClick('bonds')}>Bonds</button>
-                <button className="" onClick={() => handleNavClick('dashboard')}>Dashboard</button>
+        <div className='bg-primary-black text-white flex flex-col py-2 px-8 justify-between h-screen border-r border-gray-500 border-dashed'>
+                      <Link href="/">
+            <button type="button">
+                <h2 className="font-extrabold text-[24px] leading-[30.24px] ">
+                    Deposit.Finance
+                </h2>
+            </button>
+          </Link>
+            <div className='flex flex-col gap-2 font-normal sm:text-[23px] text-[20px] '>
+                <button className="hover:font-extrabold" onClick={() => handleNavClick('news')}>News</button>
+                <button className="hover:font-extrabold" onClick={() => handleNavClick('pools')}>Pools</button>
+                <button className="hover:font-extrabold" onClick={() => handleNavClick('stake')}>Stake</button>
+                <button className="hover:font-extrabold" onClick={() => handleNavClick('bonds')}>Bonds</button>
+                <button className="hover:font-extrabold" onClick={() => handleNavClick('dashboard')}>Dashboard</button>
 
             </div>
-            <div className='absolute left-8 bottom-10 flex flex-col'>
-                <button className="" onClick={() => handleNavClick('stake')}>Docs</button>
-                <button className="" onClick={() => handleNavClick('bonds')}>Help</button>
+            <div className='flex flex-col'>
+                <button className="hover:font-extrabold" onClick={() => handleNavClick('stake')}>Docs</button>
+                <button className="hover:font-extrabold" onClick={() => handleNavClick('bonds')}>Help</button>
                 <Link href="/"><button>Home</button></Link>
             </div>
         </div>
