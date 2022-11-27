@@ -26,7 +26,7 @@ const PoolsTable = () => {
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-white">Available Pools</h1>
                     <p className="mt-2 text-sm text-gray-300">
-                        A list of all the available pools of the protocol including their name, value, status and ibToken address.
+                        A list of all the available pools of the protocol including their name, value, apy and ibToken address.
                     </p>
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
