@@ -50,7 +50,7 @@ export default function CoinSelectView({ onSelect }: CoinSelectViewTypes) {
         />
       </div>
       <ul role="listbox" className="min-h-[200px] py-3">
-        {coinListData.length > 0 ? (
+        {/* {coinListData.length > 0 ? (
           coinListData.map((item, index) => (
             <li
               key={item.code}
@@ -70,7 +70,7 @@ export default function CoinSelectView({ onSelect }: CoinSelectViewTypes) {
             <h3 className="mb-2 text-base">Ops! not found</h3>
             <p className="text-gray-500">Try another keyword for search</p>
           </li>
-        )}
+        )} */}
       </ul>
     </div>
   );
