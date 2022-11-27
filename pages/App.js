@@ -41,7 +41,7 @@ const App = () => {
             <div className='bg-primary-black flex w-full overflow-hidden '>
                 <div className='hidden md:block md:justify-start'>
                         <LayoutLeft destination={destination} /> 
-                    <div className="gradient-03 z-0" />
+                    <div className="gradient-02 z-0" />
 
                 </div>
 
