@@ -40,7 +40,9 @@ const App = () => {
         return (
             <div className='bg-primary-black flex w-full h-auto overflow-hidden '>
                 <div className='hidden sm:flex sm:justify-start h-auto'>
+                    <div className='h-screen sticky top-0'>
                         <LayoutLeft destination={destination} /> 
+                    </div>
                     <div className="gradient-02 z-0" />
                 </div>
 

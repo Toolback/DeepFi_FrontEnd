@@ -12,7 +12,7 @@ const LayoutLeft = () => {
     }
 
     return (
-        <div className=' h-screen sticky top-0 text-white flex flex-col py-2 px-8 justify-between border-r border-gray-500 border-dashed'>
+        <div className=' text-white flex flex-col h-screen py-2 px-8 justify-between border-r border-gray-500 border-dashed'>
                       <Link href="/">
             <button type="button">
                 <h2 className="font-extrabold text-[24px] leading-[30.24px] ">
