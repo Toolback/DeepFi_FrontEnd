@@ -1,7 +1,7 @@
 import React, { useReducer, createContext } from 'react';
 
 export const initialAppRouteState = {
-  destination:'news'
+  destination:'pools'
 }
 
 export const AppRouteStoreContext = createContext(initialAppRouteState);

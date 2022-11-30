@@ -5,11 +5,6 @@ import Bonds from '../sections/app/Bonds'
 import Dashboard from '../sections/app/Dashboard'
 import Admin from '../sections/app/Admin'
 
-
-
-
-
-
 const AppViewManager = ({ destination, data }) => {
 
   const generateProtocolView = () => {
@@ -19,7 +14,6 @@ const AppViewManager = ({ destination, data }) => {
 
       case 'pools':
         return <Pools data={data} />
-
 
       case 'stake':
         return <Stake data={data} />
@@ -34,17 +28,13 @@ const AppViewManager = ({ destination, data }) => {
         return <Admin data={data} />
 
 
-
       default:
         break;
-
-
     }
   };
 
   return (
     (generateProtocolView())
-
   )
 }
 

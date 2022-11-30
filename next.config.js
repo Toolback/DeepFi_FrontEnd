@@ -24,9 +24,11 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	reactStrictMode: true,
 	experimental: {
 	  appDir: false,
 	},
+	exclude: ['node_modules']
   };
   
   module.exports = nextConfig;

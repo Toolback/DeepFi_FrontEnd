@@ -42,7 +42,6 @@ const App = () => {
                 <div className='hidden md:block md:justify-start'>
                         <LayoutLeft destination={destination} /> 
                     <div className="gradient-02 z-0" />
-
                 </div>
 
                 <div className='w-full justify-center'>
@@ -60,9 +59,7 @@ const App = () => {
 
     return (
         <>
-
             {generateAppData()}
-
         </>
     )
 }

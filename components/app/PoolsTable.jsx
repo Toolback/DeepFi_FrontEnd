@@ -21,7 +21,7 @@ const PoolsTable = () => {
     return (
 
 
-        <div className="pt-10 px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-white">Available Pools</h1>

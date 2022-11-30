@@ -21,7 +21,7 @@ const LayoutLeft = () => {
             </button>
           </Link>
             <div className='flex flex-col gap-2 font-normal sm:text-[23px] text-[20px] '>
-                <button className="hover:font-extrabold" onClick={() => handleNavClick('news')}>News</button>
+                {/* <button className="hover:font-extrabold" onClick={() => handleNavClick('news')}>News</button> */}
                 <button className="hover:font-extrabold" onClick={() => handleNavClick('pools')}>Pools</button>
                 <button className="hover:font-extrabold" onClick={() => handleNavClick('stake')}>Stake</button>
                 <button className="hover:font-extrabold" onClick={() => handleNavClick('bonds')}>Bonds</button>
