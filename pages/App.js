@@ -38,22 +38,22 @@ const App = () => {
         // console.log('- generateView : destination + StateAppData ', destination, stateAppData + '+ accounts', accounts)
 
         return (
-            <div className='bg-primary-black flex w-full h-auto overflow-hidden '>
-                <div className='hidden sm:flex sm:justify-start h-auto'>
-                    <div className='h-screen sticky top-0'>
-                        <LayoutLeft destination={destination} /> 
+            <div className='bg-primary-black flex overflow-hidden '>
+                <div className='hidden sm:flex sm:justify-start'>
+                    <div className=''>
+                        <LayoutLeft destination={destination} />
                     </div>
                     <div className="gradient-02 z-0" />
                 </div>
 
                 <div className='w-full justify-center'>
-                    <div className='flex justify-end w-full'>
-                    <LayoutTop destination={destination} />
+                    <div className=''>
+                        <LayoutTop destination={destination} />
                     </div>
-                    <div className='flex justify-center text-white'>
+                    <div className=' text-white'>
                         <AppContentManager destination={destination} />
                     </div>
-                    <div className="gradient-04 z-0" />
+                    <div className=" hidden sm:flex gradient-04 z-0 " />
                 </div>
             </div>
         )
