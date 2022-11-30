@@ -18,17 +18,24 @@ const Pools = () => {
         }
     ]
     const stats = [
-        { name: 'Total Subscribers', stat: '71,897' },
-        { name: 'Avg. Open Rate', stat: '58.16%' },
-        { name: 'Avg. Click Rate', stat: '24.57%' },
-      ]
-    
+            { name: 'Total Deposit', stat: 'N/a' },
+            { name: 'Total Claimable', stat: 'N/a' },
+            { name: 'Total Earned', stat: 'N/a' },
+            { name: 'Total IbTokens', stat: 'N/a' }
+          ]
     return (
-        <div className="">
-            <StatsCards />
-            <PoolsNews />
-        <PoolsTable availablePools={availablePools}/>
+        <>
+        <div className="hidden sm:block">
+                <h3 className="pb-2 text-xl font-semibold text-white">My Summary</h3>
+            <StatsCards  stats={stats}/>
         </div>
+        <PoolsNews />
+        <PoolsTable availablePools={availablePools}/>
+        <div className="sm:hidden">
+                <h3 className="pb-2 text-xl font-semibold text-white">My Summary</h3>
+            <StatsCards  stats={stats}/>
+        </div>
+        </>
     )
 }
 

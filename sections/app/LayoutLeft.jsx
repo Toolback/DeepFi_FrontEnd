@@ -15,7 +15,7 @@ const LayoutLeft = () => {
         <div className=' text-white flex flex-col h-screen py-2 px-8 justify-between border-r border-gray-500 border-dashed'>
                       <Link href="/">
             <button type="button">
-                <h2 className="font-extrabold text-[24px] leading-[30.24px] ">
+                <h2 className="pt-2 font-extrabold text-[24px] leading-[30.24px] ">
                     Deposit.Finance
                 </h2>
             </button>

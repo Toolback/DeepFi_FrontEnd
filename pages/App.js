@@ -46,7 +46,7 @@ const App = () => {
                     <div className="gradient-02 z-0" />
                 </div>
 
-                <div className='w-full justify-center'>
+                <div className='w-full sm:px-16 px-6 justify-center'>
                     <div className=''>
                         <LayoutTop destination={destination} />
                     </div>
