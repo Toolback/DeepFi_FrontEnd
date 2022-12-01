@@ -46,11 +46,11 @@ const App = () => {
                     <div className="gradient-02 z-0" />
                 </div>
 
-                <div className='w-full h-auto sm:px-16 px-6 '>
-                    <div className='w-full h-auto'>
+                <div className='w-full h-full sm:px-16 px-6 '>
+                    <div className='w-full h-full'>
                         <LayoutTop destination={destination} />
                     </div>
-                    <div className='w-full h-auto text-white'>
+                    <div className='w-full h-full text-white'>
                         <AppContentManager destination={destination} />
                     </div>
                     <div className=" hidden sm:flex gradient-04 z-0" />
