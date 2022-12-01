@@ -1,4 +1,4 @@
-const StakeNews = ({children}) => {
+const StakeNews = ({children} : React.PropsWithChildren) => {
     return (
         <div className="flex h-4/5 w-auto items-center">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
