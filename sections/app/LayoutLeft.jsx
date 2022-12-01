@@ -12,7 +12,10 @@ const LayoutLeft = () => {
     }
 
     return (
-        <div className=' text-white flex flex-col h-screen py-2 px-8 justify-between border-r border-gray-500 border-dashed'>
+        <div className=' text-white  h-screen w-[250px]'>
+            <div className='fixed h-screen pl-6'>
+                <div className='flex flex-col h-screen justify-between '>
+
                       <Link href="/">
             <button type="button">
                 <h2 className="pt-2 font-extrabold text-[24px] leading-[30.24px] ">
@@ -33,6 +36,8 @@ const LayoutLeft = () => {
                 <button className="hover:font-extrabold" onClick={() => handleNavClick('bonds')}>Help</button>
                 <Link href="/"><button>Home</button></Link>
             </div>
+                </div>
+        </div>
         </div>
     )
 }
