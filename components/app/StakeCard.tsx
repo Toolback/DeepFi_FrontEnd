@@ -54,6 +54,7 @@ const StakeCard = () => {
               </div>
               <div className="flex flex-col gap-4 xs:gap-[18px]">
                 <TransactionInfo label={'Staking APR'} value={'X%'}/>
+                <TransactionInfo label={'Total Earned'} />
                 <TransactionInfo label={'Total ADeepFi'}/>
                 <TransactionInfo label={'DeepFi Owned'} />
                 <TransactionInfo label={'Protocol Fee'} />

@@ -53,7 +53,7 @@ const App = () => {
                     <div className=' text-white'>
                         <AppContentManager destination={destination} />
                     </div>
-                    <div className=" hidden sm:flex gradient-04 z-0 " />
+                    <div className=" hidden sm:flex gradient-04 z-0" />
                 </div>
             </div>
         )
