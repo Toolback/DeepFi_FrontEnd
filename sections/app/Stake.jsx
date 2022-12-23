@@ -13,7 +13,7 @@ const Stake = () => {
     <>
       {/* <h3 className="pb-2 text-xl font-semibold text-white">My Summary</h3> */}
       {/* <StatsCards stats={stats} /> */}
-      <div className='flex flex-col sm:pt-28 w-auto  '>
+      <div className='flex flex-col sm:pt-28 w-auto pt-12 '>
 
       <StakeNews>
       <StakeCard />

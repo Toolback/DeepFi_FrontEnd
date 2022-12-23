@@ -2,7 +2,7 @@ export default function PoolsNews() {
   return (
     <div className="relative pb-4 sm:py-16">
       <div className="absolute inset-x-0 top-0 hidden h-1/2 lg:block" aria-hidden="true" />
-      <div className="mx-auto max-w-7xl bg-indigo-600 lg:bg-transparent lg:px-8">
+      <div className="mx-auto max-w-7xl bg-transparent lg:px-8">
         <div className="lg:grid lg:grid-cols-12">
           <div className="relative z-10 lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:py-16">
             <div className="absolute inset-x-0 h-1/2 lg:hidden" aria-hidden="true" />

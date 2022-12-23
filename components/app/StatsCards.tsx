@@ -18,7 +18,7 @@ const StatsCards = (stats?: any) => {
             <Loader />
         ) : (
           <>
-            <dl className="grid grid-cols-1 gap-5 sm:grid-cols-4">
+            <dl className="grid grid-cols-2 gap-5 sm:grid-cols-4">
 
               {actualStats?.map((item: any) => (
                 <div key={item.name} className="overflow-hidden rounded-lg bg-white bg-opacity-10 px-4 py-5 shadow sm:p-6">

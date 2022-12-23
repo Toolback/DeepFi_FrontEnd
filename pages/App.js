@@ -1,9 +1,10 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { AppRouteStoreContext } from '../data/StoreAppRouter'
 import AppContentManager from '../utils/AppContentManager'
 
 import LayoutTop from '../sections/app/LayoutTop'
 import LayoutLeft from '../sections/app/LayoutLeft'
+import ModaleMenu from '../components/app/ModaleMenu'
 
 const App = () => {
     const { stateAppRoute } = useContext(AppRouteStoreContext);
@@ -36,19 +37,20 @@ const App = () => {
 
     const generateView = (destination) => {
         // console.log('- generateView : destination + StateAppData ', destination, stateAppData + '+ accounts', accounts)
-
+        const [modaleMenuStatus, setModaleMenuStatus] = useState(false);
         return (
-            <div className='bg-primary-black sm:flex overflow-hidden h-auto w-screen'>
-                <div className='hidden sm:flex  w-[250px] h-auto border-r border-gray-500 border-dashed'>
+            <div className='bg-primary-black flex overflow-hidden h-auto w-screen'>
+                <div className='hidden md:flex  w-[250px] h-auto border-r border-gray-500 border-dashed'>
                     {/* <div className=''> */}
                         <LayoutLeft destination={destination} />
                     {/* </div> */}
                     <div className="gradient-02 z-0" />
                 </div>
 
-                <div className='w-full h-full sm:px-16 px-6 '>
+                <div className='w-full h-full md:px-16 px-6 '>
                     <div className='w-full h-full'>
-                        <LayoutTop destination={destination} />
+                        <LayoutTop destination={destination} modaleMenuStatus={modaleMenuStatus} setModaleMenuStatus={setModaleMenuStatus}/>
+                {modaleMenuStatus == true ? (<ModaleMenu setModaleMenuStatus={setModaleMenuStatus}/>) : (<></>)}
                     </div>
                     <div className='w-full h-full text-white'>
                         <AppContentManager destination={destination} />
