@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./node_modules/flowbite-react/**/*.js",
     './app/**/*.{html,js,jsx,ts,tsx}',
     './components/**/*.{html,js,jsx,ts,tsx}',
     './sections/**/*.{html,js,jsx,ts,tsx}',
     './styles/**/*.{js,jsx,ts,tsx}',
+    './*.{js,jsx,ts,tsx}',
   ],
   // mode: 'jit',
   theme: {
@@ -20,7 +20,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("flowbite/plugin"),
     require('@tailwindcss/aspect-ratio'),
 
   ],

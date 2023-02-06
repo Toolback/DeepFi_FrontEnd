@@ -2,7 +2,7 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { SwapIcon } from '../../components/app/utils/icons/swap-icon';
 import CoinInput from '../../components/app/coin-input';
-import TransactionInfo from '../../components/app/transaction-info';
+import TransactionInfo from './Transaction-info';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeInBottom } from '../../utils/fade-in-bottom';
 

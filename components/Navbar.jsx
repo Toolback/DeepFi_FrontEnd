@@ -41,14 +41,14 @@ return (
       /> */}
       {/* <ConnectButton /> */}
       <Link href="/App">
-      <button type="button" className="flex items-center h-fit py-4 px-6 bg-[#25618B] bg-opacity-20 rounded-[32px] gap-[12px]">
+      <button type="button" className="flex items-center h-fit py-4 px-4 bg-[#25618B] bg-opacity-20 rounded-[32px] gap-[12px]">
           {/* <img
             src="/headset.svg"
             alt="headset"
             className="w-[24px] h-[24px] object-contain"
           /> */}
           <span className="font-normal text-[16px] text-white">
-            Enter App
+            App
           </span>
         </button>
         </Link>

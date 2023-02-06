@@ -3360,26 +3360,6 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.7.tgz#609f39207cb614b89d0765b477cb2d437fbf9787"
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
-flowbite-react@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/flowbite-react/-/flowbite-react-0.3.5.tgz#5da0cd2c78170de36cb2c33d2f14d6655df11734"
-  integrity sha512-X2unmmXmS7DZbGTk+C7jf0qrtpPu4i/yo8OeHHd1XO5V5TAUjhAyYIcy3RwKjKS+WC+Fj/rMHe5QKBF7E0ryoA==
-  dependencies:
-    "@floating-ui/react-dom" "^1.0.0"
-    "@floating-ui/react-dom-interactions" "^0.9.1"
-    classnames "^2.3.2"
-    commitizen "^4.2.5"
-    react-icons "^4.6.0"
-    react-indiana-drag-scroll "^2.2.0"
-
-flowbite@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/flowbite/-/flowbite-1.5.4.tgz#fafea28f7722cecc9aae2ca81b81cb51b3bc123b"
-  integrity sha512-A4VTeJE+aHSbwrMzWvpTADhNgX8Njpb3DqRL26pFkOupklPg8cmNstZK8cXrFnBPxomOiX/OazZnhQM1BIZADQ==
-  dependencies:
-    "@popperjs/core" "^2.9.3"
-    mini-svg-data-uri "^1.4.3"
-
 follow-redirects@^1.14.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
