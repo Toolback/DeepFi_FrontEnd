@@ -3,10 +3,10 @@ import { useContext } from 'react'
 import { AppRouteStoreContext } from '../../data/StoreAppRouter'
 
 
-const ModaleMenu = ({setModaleMenuStatus}) => {
+const ModaleMenu = ({setModaleMenuStatus} : any) => {
     const { dispatchAppRoute } = useContext(AppRouteStoreContext);
 
-    const handleNavClick = (paramRoute) => {
+    const handleNavClick = (paramRoute : any) => {
         let dDataAppRoute = paramRoute;
         setModaleMenuStatus(false);
         return dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute })

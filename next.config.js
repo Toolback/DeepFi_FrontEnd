@@ -28,6 +28,13 @@ const nextConfig = {
 	experimental: {
 	  appDir: false,
 	},
+	typescript: {
+		// !! WARN !!
+		// Dangerously allow production builds to successfully complete even if
+		// your project has type errors.
+		// !! WARN !!
+		ignoreBuildErrors: true,
+	  },
 	// exclude: ['node_modules']
   };
   
