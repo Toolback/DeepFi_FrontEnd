@@ -16,7 +16,7 @@ const Home = () => (
     </div>
     {/* <World /> */}
     <div className="relative">
-      <Explore />
+      {/* <Explore /> */}
       {/* <Insights /> */}
       <div className="gradient-04 z-0" />
       <Feedback />
