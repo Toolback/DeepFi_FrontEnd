@@ -18,7 +18,7 @@ const LayoutLeft = () => {
 
                     <Link href="/">
                         <button type="button">
-                            <h2 className="pt-2 font-extrabold text-[24px] leading-[30.24px] ">
+                            <h2 className="pt-4 font-extrabold text-[24px] leading-[30.24px] ">
                                 Deposit.Finance
                             </h2>
                         </button>

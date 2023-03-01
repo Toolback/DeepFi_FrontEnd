@@ -13,7 +13,7 @@ const ModaleMenu = ({setModaleMenuStatus} : any) => {
     }
 
     return (
-        <div className="flex justify-center" role="status">
+        <div className="flex justify-center pb-8" role="status">
             <div className='flex flex-col gap-2 font-normal text-white text-[20px] '>
                 {/* <button className="hover:font-extrabold" onClick={() => handleNavClick('news')}>News</button> */}
                 <button className="hover:font-extrabold" onClick={() => handleNavClick('dashboard')}>Dashboard</button>
