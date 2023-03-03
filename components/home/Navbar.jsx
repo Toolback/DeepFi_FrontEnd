@@ -5,10 +5,6 @@ import { motion } from 'framer-motion';
 import styles from '../../styles';
 import { navVariants } from '../../utils/motion';
 
-// web3 connect
-
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAccount} from 'wagmi'
 import Link from 'next/link';
 
 

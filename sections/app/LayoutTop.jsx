@@ -5,7 +5,6 @@ import { useState } from 'react';
 import styles from '../../styles';
 import Link from 'next/link';
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, modaleMenuStatus, setModaleMenuStatus }) => {
 
