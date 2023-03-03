@@ -9,8 +9,7 @@ import Link from 'next/link';
 
 
 const Navbar = () => {
-  const { address, isConnected } = useAccount()
-  console.log('address retrieved is :', address);
+
 return (
   <motion.nav
     variants={navVariants}
