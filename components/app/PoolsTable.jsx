@@ -2,18 +2,18 @@
 const PoolsTable = () => {
     const availablePools = [
         {
-            name: "Usdt",
-            infos: "Safe Strategy",
+            name: "MLP - Mummy Finance",
+            infos: "Actual Reward : Deepfi Tokens",
             ibTokenAddress: "0x0",
-            tvl: "100'000", 
+            tvl: "0", 
             apy:'5%',
             // image:""
         },
         {
-                name: "Dai",
-                infos: "Safe Strategy",
+                name: "Deposit LP - Equalizer Finance",
+                infos: "Actual Reward : Deepfi Tokens",
                 ibTokenAddress: "0x0",
-                tvl: "50'000", 
+                tvl: "0", 
                 apy:'5%',
                 // image:""
         }
@@ -26,7 +26,7 @@ const PoolsTable = () => {
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-white">Available Pools</h1>
                     <p className="mt-2 text-sm text-gray-300">
-                        A list of all the available pools of the protocol including their name, value, apy and ibToken address.
+                        A list of all the available pools of the protocol including their name, value, apy and address.
                     </p>
                 </div>
                 {/* <div className=" mt-4 sm:mt-0 sm:ml-16 sm:flex-none">

@@ -1,6 +1,6 @@
 export default function PoolsNews() {
   return (
-    <div className="relative pb-4 sm:py-16">
+    <div className="relative pb-4 sm:py-8">
       <div className="absolute inset-x-0 top-0 hidden h-1/2 lg:block" aria-hidden="true" />
       <div className="mx-auto max-w-7xl bg-transparent lg:px-8">
         <div className="lg:grid lg:grid-cols-12">
@@ -9,7 +9,7 @@ export default function PoolsNews() {
             <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-none lg:p-0">
               <div className="aspect-w-10 aspect-h-6 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1">
                 <img
-                  className="rounded-3xl object-cover object-center shadow-2xl"
+                  className="border border-white border-opacity-40 rounded-3xl object-cover object-center shadow-2xl"
                   // src="https://plus.unsplash.com/premium_photo-1663931932618-284a8d80dda5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
                   src="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
                   alt=""
@@ -18,7 +18,7 @@ export default function PoolsNews() {
             </div>
           </div>
 
-          <div className="relative bg-purple-500 bg-opacity-10 lg:col-span-10 lg:col-start-3 lg:row-start-1 lg:grid lg:grid-cols-10 lg:items-center lg:rounded-3xl">
+          <div className="relative border border-white border-opacity-10 bg-purple-500 bg-opacity-10 lg:col-span-10 lg:col-start-3 lg:row-start-1 lg:grid lg:grid-cols-10 lg:items-center lg:rounded-3xl">
             <div className="absolute inset-0 hidden overflow-hidden rounded-3xl lg:block" aria-hidden="true">
               <svg
                 className="absolute bottom-full left-full translate-y-1/3 -translate-x-2/3 transform xl:bottom-auto xl:top-0 xl:translate-y-0"
@@ -75,7 +75,7 @@ export default function PoolsNews() {
               </p>
               <button className="">
                 <a
-                  className="block w-full rounded-md border border-transparent bg-white py-3 px-5 text-center text-base font-medium text-indigo-700 shadow-md hover:bg-gray-50 sm:inline-block sm:w-auto"
+                  className="block w-full rounded-md border border-transparent bg-white py-3 px-5 text-center text-base font-medium  text-indigo-700 shadow-md hover:bg-gray-50 sm:inline-block sm:w-auto"
                   href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
                 >
                   Read More
