@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { AppDataStoreContext } from 'data/StoreAppData';
 import { useContext, useEffect, useState } from 'react';
 
-import { approveTargetFT, balOfDeepfi, balOfFakeToken, getAdapterId, getAdapterInfos, getDeployedPools, getVaultEndRewardDuration, getVaultName, getVaultRewardDuration, getVaultRewardRate, getVaultRewardToken, getVaultTotalUserEarned, getVaultTVL, getVaultUserClaimable, getVaultUserDeposit, mintFakeToken, vaultDeposit } from '../../lib/bc/smc'
+import { approveTargetFT, balOfDeepfi, balOfFakeToken, getAdapterId, getAdapterInfos, getDeployedPools, getVaultEndRewardDuration, getVaultName, getVaultRewardDuration, getVaultRewardRate, getVaultRewardToken, getVaultTotalUserEarned, getVaultTVL, getVaultUserClaimable, getVaultUserDeposit, mintFakeToken, vaultClaim, vaultDeposit, vaultWithdraw } from '../../lib/bc/smc'
 import { BigNumber } from "ethers";
 import { getProvider } from 'lib/bc/wallet-connect';
 
@@ -11,7 +11,7 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
     const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
     const [lockData, setLockData] = useState(false);
     const [userAmountInput, setUserAmountInput] = useState(0);
-    const [updateData, setUpdateDate] = useState(false);
+    const [updateData, setUpdateData] = useState(false);
     const [actionPoolState, setActionPoolState] = useState("deposit");
 
 
@@ -102,7 +102,21 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
         const signer = provider.getSigner(stateAppData.userAddress);
         await approveTargetFT(stats.vaultAddress, userAmountInput, signer);
         await vaultDeposit(stats.vaultAddress, userAmountInput, signer)
-        setUpdateDate(!updateData);
+        setUpdateData(!updateData);
+    }
+
+    const handlePoolWithdraw = async () => {
+        const provider = await getProvider()
+        const signer = provider.getSigner(stateAppData.userAddress);
+        await vaultWithdraw(stats.vaultAddress, userAmountInput, signer)
+        setUpdateData(!updateData);
+    }
+
+    const handlePoolClaim = async () => {
+        const provider = await getProvider()
+        const signer = provider.getSigner(stateAppData.userAddress);
+        await vaultClaim(stats.vaultAddress, signer)
+        setUpdateData(!updateData);
     }
 
 
@@ -110,13 +124,12 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
         const provider = await getProvider()
         const signer = provider.getSigner(stateAppData.userAddress);
         await mintFakeToken(stateAppData.userAddress, signer);
-        setUpdateDate(!updateData);
+        setUpdateData(!updateData);
     }
 
     const setMaxDepositInput = async () => {
         const maxBal = await balOfFakeToken(stateAppData.userAddress);
         setUserAmountInput(maxBal);
-        console.log("Input RETRIEVED", userAmountInput)
         renderPools()
     }
 
@@ -152,7 +165,7 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
             case 'withdraw':
                 return (
                     <>
-                        <div className="">Available: {stats.userStakingBal}</div>
+                        <div className="">Available: {stats.userDeposit}</div>
                         <div className=" bg-primary-black bg-opacity-70 rounded p-2 flex justify-between">
                             <input className="placeholder-white w-3/4  bg-white bg-opacity-0	" placeholder="Enter Amount" onChange={e => setUserAmountInput(e.target.value)} value={userAmountInput} />
                             <button onClick={() => setMaxDepositInput()}>MAX</button>
@@ -161,7 +174,7 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
                         </div>
                         <div className='flex justify-center gap-2'>
                             {stateAppData.userAddress != '' && stateAppData.userAddress != 'connect to retrieve' ?
-                                <button onClick={() => handlePoolDeposit()} className='hover:bg-purple-900 bg-primary-black bg-opacity-70 rounded px-4 py-2'>Deposit</button>
+                                <button onClick={() => handlePoolWithdraw()} className='hover:bg-purple-900 bg-primary-black bg-opacity-70 rounded px-4 py-2'>Withdraw</button>
                                 :
                                 <button onClick={() => setModaleConnectStatus(true)} className='hover:bg-purple-900 bg-primary-black bg-opacity-70 rounded px-4 py-2'>Connect Wallet</button>
                             }
@@ -172,7 +185,7 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
             case 'claim':
                 return (
                     <>
-                        <div className="">Available: {stats.userStakingBal}</div>
+                        <div className="">Available: {stats.userClaimable}</div>
                         <div className=" bg-primary-black bg-opacity-70 rounded p-2 flex justify-between">
                             <input className="placeholder-white w-3/4  bg-white bg-opacity-0	" placeholder="Enter Amount" onChange={e => setUserAmountInput(e.target.value)} value={userAmountInput} />
                             <button onClick={() => setMaxDepositInput()}>MAX</button>
@@ -181,7 +194,7 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
                         </div>
                         <div className='flex justify-center gap-2'>
                             {stateAppData.userAddress != '' && stateAppData.userAddress != 'connect to retrieve' ?
-                                <button onClick={() => handlePoolDeposit()} className='hover:bg-purple-900 bg-primary-black bg-opacity-70 rounded px-4 py-2'>Deposit</button>
+                                <button onClick={() => handlePoolClaim()} className='hover:bg-purple-900 bg-primary-black bg-opacity-70 rounded px-4 py-2'>Claim</button>
                                 :
                                 <button onClick={() => setModaleConnectStatus(true)} className='hover:bg-purple-900 bg-primary-black bg-opacity-70 rounded px-4 py-2'>Connect Wallet</button>
                             }
