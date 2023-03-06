@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function PoolsNews() {
   return (
     <div className="relative pb-4 sm:py-8">
@@ -73,14 +75,13 @@ export default function PoolsNews() {
                 Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus
                 dui laoreet diam sed lacus, fames.
               </p>
-              <button className="">
-                <a
-                  className="block w-full rounded-md border border-transparent bg-white py-3 px-5 text-center text-base font-medium  text-indigo-700 shadow-md hover:bg-gray-50 sm:inline-block sm:w-auto"
-                  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
-                >
-                  Read More
-                </a>
-              </button>
+
+              <div className='block w-full rounded-md border border-transparent bg-white py-3 px-5 text-center text-base font-medium  text-indigo-700 shadow-md hover:bg-gray-50 sm:inline-block sm:w-auto'>
+                <button>
+                  <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Read More</Link>
+                </button>
+              </div>
+
             </div>
           </div>
         </div>

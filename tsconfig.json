@@ -25,6 +25,6 @@
 		},
 		"moduleResolution": "node"
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.js"],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.js", "data/StoreAppData.js", "lib/bc/wallet-connect.js", "components/app/ModaleConnect.js", "components/app/PoolsDisplay.jsx"],
 	"exclude": ["node_modules"]
 }

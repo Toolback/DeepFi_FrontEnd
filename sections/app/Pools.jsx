@@ -2,59 +2,143 @@ import PoolsDisplay from "../../components/app/PoolsDisplay"
 import StatsCards from '../../components/app/StatsCards'
 import PoolsNews from '../../components/app/PoolsNews'
 import TreasuryCard from '../../components/app/TreasuryCard'
+import { AppDataStoreContext } from 'data/StoreAppData';
+import { useContext, useEffect, useState } from 'react';
 
-const Pools = ({data}) => {
-    const availablePools = [
+import { balOfDeepfi, getAdapterId, getAdapterInfos, getDeployedPools, getVaultEndRewardDuration, getVaultName, getVaultRewardDuration, getVaultRewardRate, getVaultRewardToken, getVaultTotalUserEarned, getVaultTVL, getVaultUserClaimable, getVaultUserDeposit } from '../../lib/bc/smc'
+import { BigNumber } from "ethers";
+
+const Pools = ({ data }) => {
+    
+    
+    const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
+    const [selectedPool, setSelectedPool] = useState(0);
+    const [poolsButtons, setPoolsButtons] = useState([
         {
-            name: "Usdt",
-            infos: "Safe Strategy",
-            ibTokenAddress: "0x0",
-            tvl: "100'000",
-            image: ""
-        },
-        {
-            asset: "Dai",
-            ibTokenAddress: "0x0",
-            tvl: "0",
-        }
-    ]
+            vaultId: 0,
+            vaultAddress: '',
+            vaultButtonName: "",
+
+        }])
+        ;
+        
+        
+        const soonPool =
+            {
+                vaultId: 0,
+                vaultAddress: 'N/a',
+                vaultButtonName: "Soon !",
+    
+            }
+
+
     const stats = [
         { name: 'Total Deposit', stat: 'N/a' },
         { name: 'Total Claimable', stat: 'N/a' },
         { name: 'Total Earned', stat: 'N/a' },
-        { name: 'Actual Deepfi Balance', stat: 'N/a' }
+        { name: 'Actual Deepfi Balance', stat: '' }
     ]
 
     const treasury = [
-        { name: 'MMY', stat: 'N/a', src:"https://s2.coinmarketcap.com/static/img/coins/64x64/23038.png" },
+        { name: 'MMY', stat: 'N/a', src: "https://s2.coinmarketcap.com/static/img/coins/64x64/23038.png" },
         { name: 'X', stat: 'N/a' },
         // { name: 'Total Earned', stat: 'N/a' },
         // { name: 'Actual Deepfi Balance', stat: 'N/a' }
     ]
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            let i = 0;
+            const deployedPools = await getDeployedPools();
+            const buttons = []
+            await deployedPools.map(async (i_address) => {
+                buttons.push(
+                    {
+                        vaultId: i,
+                        vaultAddress: i_address,
+                        vaultButtonName: "MLP", // for now only one pool define later 
+                    }
+                )
+                // console.log(" Info push: ", pool)
+                i++;
+            })
+            setPoolsButtons(buttons)
+            return (poolsInfos)
+        }
+
+
+        fetchData().then((valeur) => {
+            // console.log("All Pools Infos", valeur)
+            // Promesse tenue
+            renderPools()
+            // setLoading(false);
+        }, (raison) => {
+            // Rejet de la promesse
+            console.log("ERROR Pools infos fetch", raison)
+
+            // setLoading(false);
+
+        });
+    }, [])
+
+    const renderPools = () => {
+        // console.log(" Pool send to compo : ", poolsInfos[selectedPool])
+        console.log("pool Button infos", soonPool)
+        return (
+
+            <>
+                <div className="flex justify-center pt-2 gap-2">
+                    {poolsButtons.map((item) => (
+                        <button onClick={() => setSelectedPool(item.vaultId)} key={item.vaultId} className={selectedPool == item.vaultId ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>
+                            {item.vaultButtonName}
+                        </button>
+
+                    ))}
+                    <button key={soonPool.vaultId} className={'hover:bg-white hover:bg-opacity-30 border border-white border-opacity-10 bg-primary-black bg-opacity-10 px-4 py-2 rounded text-gray-300'}>
+                        {soonPool.vaultButtonName}
+                    </button>
+
+
+                </div>
+                <PoolsDisplay pool={poolsButtons[selectedPool]} setModaleConnectStatus={data} />
+            </>
+        )
+    }
+
     return (
         <div className="flex flex-col items-center">
             <div className="sm:w-3/4">
-            <PoolsNews />
-            {/* <div className="hidden sm:block">
-                <h3 className="pb-2 text-xl font-semibold text-white">My Summary</h3>
-                <StatsCards stats={stats} />
-            </div> */}
-            {/* <div className="sm:hidden"> */}
-            {/* <div className="flex flex-col"> */}
-            <h3 className="pt-4 text-xl font-semibold text-white text-center">Protocol Treasury</h3>
-            <p className="mt-2 pb-4  text-sm text-gray-300 text-center">
-                liquidity generated by the protocol
-                    </p>
-            <TreasuryCard stats={treasury} />
+                <PoolsNews />
+
+                <h3 className="pt-4 text-xl font-semibold text-white text-center">Protocol Treasury</h3>
+                <p className="mt-2 pb-4  text-sm text-gray-300 text-center">
+                    liquidity generated by the protocol
+                </p>
+                <TreasuryCard stats={treasury} />
 
                 <h3 className="pt-4 text-xl font-semibold text-white text-center">My Summary</h3>
                 <p className="mt-2 pb-4 text-sm text-gray-300 text-center">
-                        All pools combined
-                    </p>
+                    All pools combined
+                </p>
                 <StatsCards stats={stats} />
-            {/* </div> */}
-            <PoolsDisplay availablePools={availablePools} setModaleConnectStatus={data} />
+
+                <div className="sm:flex-auto sm:pt-8">
+                    <h1 className="text-xl font-semibold text-white text-center">Available Pools</h1>
+                    <p className="mt-2 text-sm text-gray-300 text-center">
+                        A list of all the available pools of the protocol
+                    </p>
                 </div>
+
+
+                {/* button to change pools */}
+
+
+                {renderPools()}
+
+
+            </div>
         </div>
     )
 }

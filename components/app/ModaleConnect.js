@@ -1,18 +1,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import metamaskLogo from '../../public/metamask.svg';
+import { connectWallet } from 'lib/bc/wallet-connect';
+import { AppDataStoreContext } from 'data/StoreAppData';
+import { useContext } from 'react';
 
-// import { useContext } from 'react'
-// import { AppRouteStoreContext } from '../../data/StoreAppRouter'
+const ModaleConnect = ({ setModaleConnectStatus }) => {
+  const {dispatchAppData} = useContext(AppDataStoreContext);
 
+  const handleConnectClick = async () => {
+    const res = await connectWallet();
+    console.log("address retrieved :", res.userAddress);
+    await dispatchAppData({ type: 'setAppData', accounts : res.accounts, userStatus : res.userStatus, userAddress : res.userAddress, signer : res.signer})
 
-const ModaleConnect = ({ setModaleConnectStatus }: any) => {
-  // const { dispatchAppRoute } = useContext(AppRouteStoreContext);
-
-  const handleConnectClick = () => {
-    // let dDataAppRoute = paramRoute;
-    // setModaleMenuStatus(false);
-    // return dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute })
+    setModaleConnectStatus(false);
   }
 
 

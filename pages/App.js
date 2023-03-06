@@ -43,6 +43,7 @@ const App = () => {
         const [modaleConnectStatus, setModaleConnectStatus] = useState(false);
 
         return (
+
             <div className='bg-primary-black flex justify-center overflow-hidden h-auto w-full'>
                 {modaleConnectStatus == true ? (<ModaleConnect setModaleConnectStatus={setModaleConnectStatus} />) : (<></>)}
                 {/* <div className='hidden md:flex  w-[250px] h-auto border-r border-gray-500 border-dashed'>
