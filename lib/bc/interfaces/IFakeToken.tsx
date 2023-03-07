@@ -6,7 +6,7 @@ import { getProvider } from "../wallet-connect";
 const IFakeToken = async (signer? : any) => {
     let provider = signer ? signer : await getProvider()
     let contractInstance = new ethers.Contract(
-        "0xA339d00d4120108Caeb4169Ce42424B0cA549A4C", // fake token contract address Fantom Testnet
+        "0xd2f933747cDe7cB612948e9B8A940dc6bBCF2da1", // fake token contract address Fantom Testnet
         FakeToken.abi, 
         provider
     ); 

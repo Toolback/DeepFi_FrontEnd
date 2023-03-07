@@ -1,4 +1,4 @@
-import D_Pool_SingleReward from "../ABI/D_Pool_SingleReward.json";
+import D_Pool_SingleReward from "../ABI/D_Vault_SingleReward.json";
 import {ethers, getDefaultProvider} from "ethers"
 import { getProvider } from "../wallet-connect";
 

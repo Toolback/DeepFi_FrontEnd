@@ -6,9 +6,11 @@ import styles from '../../styles';
 import Link from 'next/link';
 import { AppDataStoreContext } from 'data/StoreAppData';
 import { useContext } from 'react';
+import { AppRouteStoreContext } from '../../data/StoreAppRouter';
 
 const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, modaleMenuStatus, setModaleMenuStatus }) => {
-    const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
+    const { stateAppData } = useContext(AppDataStoreContext);
+    const { dispatchAppRoute } = useContext(AppRouteStoreContext);
 
     return (
         <>
@@ -21,7 +23,7 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                 className={`py-8 relative`}
             >
                 <div className='flex pb-8 text-white md:hidden justify-between items-center'>
-                <button type="button">
+                    <button type="button">
                         <Link href="/">
                             <h2 className=" font-extrabold text-[24px] leading-[30.24px] ">
                                 Deposit.Finance
@@ -29,13 +31,25 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                         </Link>
                     </button>
 
-                    {stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve" ?
-                        <p>{(stateAppData.userAddress).substring(0,5)}...{(stateAppData.userAddress).substring(stateAppData.userAddress.length - 3)}</p>
-                        :
-                        <button className='hover:font-extrabold text-white' onClick={() => setModaleConnectStatus(!modaleConnectStatus)}>
-                        Connect
-                    </button>
-                    }
+                    <div>
+
+                        {stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve" ?
+                            <p>{(stateAppData.userAddress).substring(0, 5)}...{(stateAppData.userAddress).substring(stateAppData.userAddress.length - 3)}</p>
+                            :
+                            <button className='hover:font-extrabold text-white' onClick={() => setModaleConnectStatus(!modaleConnectStatus)}>
+                                Connect
+                            </button>
+                        }
+                        {destination == 'pools' ?
+                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'admin' })}>
+                                Admin Panel
+                            </button>
+                            :
+                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'pools' })}>
+                                User Panel
+                            </button>
+                        }
+                    </div>
                     {/* <button onClick={() => setModaleMenuStatus(!modaleMenuStatus)}>
                     <img src="/menu.svg" alt="menu" className="w-[24px] h-[24px] object-contain" />
                     
@@ -54,13 +68,25 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                             </h2>
                         </Link>
                     </button>
-                    {stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve" ?
-                        <p>{(stateAppData.userAddress).substring(0,5)}...{(stateAppData.userAddress).substring(stateAppData.userAddress.length - 3)}</p>
-                        :
-                        <button className='hover:font-extrabold  text-[20px]' onClick={() => setModaleConnectStatus(!modaleConnectStatus)}>
-                            Connect
-                        </button>
-                    }
+                    <div className='flex gap-5'>
+
+                        {destination == 'pools' ?
+                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'admin' })}>
+                                Admin Panel
+                            </button>
+                            :
+                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'pools' })}>
+                                User Panel
+                            </button>
+                        }
+                        {stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve" ?
+                            <p>{(stateAppData.userAddress).substring(0, 5)}...{(stateAppData.userAddress).substring(stateAppData.userAddress.length - 3)}</p>
+                            :
+                            <button className='hover:font-extrabold  text-[20px]' onClick={() => setModaleConnectStatus(!modaleConnectStatus)}>
+                                Connect
+                            </button>
+                        }
+                    </div>
 
 
 

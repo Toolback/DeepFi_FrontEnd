@@ -5,7 +5,7 @@ import { getProvider } from "../wallet-connect";
 const IMLPAdapter = async (signer? : any) => {
     let provider = signer ? signer : await getProvider()
     let contractInstance = new ethers.Contract(
-        "0xd29266219fc8A71C8320f2bBF0C2f7b22C7527FA", // mlp strategy fantom testnet
+        "0x76C0F75205A6eF8cf956228c5C257e4921bf1397", // mlp strategy fantom testnet
         MLPAdapterABI.abi, 
         provider
     );
