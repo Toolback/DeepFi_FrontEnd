@@ -66,6 +66,15 @@ export const approveTargetDeepfi = async (_target : string, _amount : number, _s
     }
 }
 
+export const transferDeepfi = async (_target : string, _amount : number, _signer : any) => {
+    try {
+        let res = await (await IDeepfi(_signer)).transfer(_target, _amount);
+        return await res.wait();
+    } catch (e) {
+        console.error("SM : Error transfering Deepfi token :", e)
+    }
+}
+
 
 // -------------------- Handler -------------------- 
 
@@ -161,7 +170,7 @@ export const vaultClaim = async (vault_address : string, signer : any) => {
 export const setRewardsDuration = async (vault_address : string, duration : number, signer : any) => {
     try {
         let res = await (await IVault(vault_address, signer)).setRewardsDuration(duration);
-        return (res);
+        return await res.wait();
     } catch (e) {
         console.error("SM : Error while setRewardsDuration:", e)
     }
@@ -170,9 +179,46 @@ export const setRewardsDuration = async (vault_address : string, duration : numb
 export const notifyRewardAmount = async (vault_address : string, amount : number, signer : any) => {
     try {
         let res = await (await IVault(vault_address, signer)).notifyRewardAmount(amount);
-        return (res);
+        return await res.wait();
     } catch (e) {
         console.error("SM : Error while notifyRewardAmount:", e)
+    }
+}
+
+export const setNewVaultAdmin = async (vault_address : string, newAdminAddress : string, signer : any) => {
+    try {
+        let adminRole = await (await IVault(vault_address, signer)).DEFAULT_ADMIN_ROLE(); 
+        let res = await (await IVault(vault_address, signer)).grantRole(adminRole, newAdminAddress);
+        return await res.wait();
+    } catch (e) {
+        console.error("SM : Error while setNewVaultAdmin:", e)
+    }
+}
+
+export const removeVaultAdmin = async (vault_address : string, newAdminAddress : string, signer : any) => {
+    try {
+        let adminRole = await (await IVault(vault_address, signer)).DEFAULT_ADMIN_ROLE(); 
+        let res = await (await IVault(vault_address, signer)).revokeRole(adminRole, newAdminAddress);
+        return await res.wait();
+    } catch (e) {
+        console.error("SM : Error while removeVaultAdmin:", e)
+    }
+}
+
+export const setPauseVault = async (vault_address : string, flag : number, signer : any) => {
+    try {
+        if (flag === 1)
+        {
+            let res = await (await IVault(vault_address, signer)).pause();
+            return await res.wait();
+        }
+        else 
+        {
+            let res = await (await IVault(vault_address, signer)).unpause();
+            return await res.wait();
+        }
+    } catch (e) {
+        console.error("SM : Error while removeVaultAdmin:", e)
     }
 }
 
@@ -183,10 +229,19 @@ export const getVaultName = async (vault_address : string) => {
         let res = await (await IVault(vault_address)).vaultName();
         return (res);
     } catch (e) {
-        console.error("SM : Error retrieving vault tvl:", e)
+        console.error("SM : Error retrieving vault name:", e)
     }
 }
 
+export const isVaultAdmin = async (vault_address : string, userAddress : string) => {
+    try {
+        const AdminRole = await (await IVault(vault_address)).DEFAULT_ADMIN_ROLE();
+        const res = await (await IVault(vault_address)).hasRole(AdminRole, userAddress);
+    return (res);
+} catch (e) {
+    console.error("SM : Error retrieving vault admin role:", e)
+}
+}
 export const getVaultTVL = async (vault_address : string) => {
     try {
         let res = await (await IVault(vault_address)).totalSupply();
