@@ -222,6 +222,14 @@ export const setPauseVault = async (vault_address : string, flag : number, signe
     }
 }
 
+export const getPausedVaultStatus = async (vault_address : string) => {
+    try {
+        let res = await (await IVault(vault_address)).paused();
+        return res;
+    } catch (e) {
+        console.error("SM : Error while removeVaultAdmin:", e)
+    }
+}
 // View Functions
 
 export const getVaultName = async (vault_address : string) => {

@@ -4,7 +4,7 @@ import { approveTargetDeepfi, transferDeepfi, setRewardsDuration, notifyRewardAm
 import { AppDataStoreContext } from 'data/StoreAppData';
 import { useContext } from 'react';
 import { ethers } from 'ethers'
-import { getVaultName, isVaultAdmin, setPauseVault } from "../../lib/bc/smc";
+import { getPausedVaultStatus, getVaultName, isVaultAdmin, removeVaultAdmin, setNewVaultAdmin, setPauseVault } from "../../lib/bc/smc";
 const Admin = ({ data }) => {
     const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
 
@@ -13,6 +13,7 @@ const Admin = ({ data }) => {
     const [newRewardAmount, setNewRewardAmount] = useState();
     const [userVaultAdminAddress, setUserVaultAdminAddress] = useState();
     const [userVaultAdminStatus, setUserVaultAdminStatus] = useState('N/a');
+    const [vaultPausedStatus, setVaultPausedStatus] = useState('N/a');
 
 
     const [adapterId, setAdapterId] = useState();
@@ -85,7 +86,6 @@ const Admin = ({ data }) => {
     const handleCheckUserAdminStatus = async (flag) => {
         if (flag != 1) {
             const res = await isVaultAdmin(vaultAddress, userVaultAdminAddress);
-            console.log("User Admin ? ", res)
             if (res === true)
                 setUserVaultAdminStatus("Yes");
             else 
@@ -99,6 +99,14 @@ const Admin = ({ data }) => {
 
     }
 
+    const handleCheckVaultPausedStatus = async () => {
+            const res = await getPausedVaultStatus(vaultAddress);
+            if (res === true)
+                setVaultPausedStatus("Vault in Pause");
+            else 
+                setVaultPausedStatus("Vault in Action");
+    }
+
     const handleSetVaultPause = async (flag) => {
         const provider = await getProvider()
         const signer = provider.getSigner(stateAppData.userAddress);
@@ -106,6 +114,16 @@ const Admin = ({ data }) => {
             await setPauseVault(vaultAddress, 1, signer);
         else
             await setPauseVault(vaultAddress, 0, signer);
+
+    }
+
+    const handleSetVaultAdmin = async (flag) => {
+        const provider = await getProvider()
+        const signer = provider.getSigner(stateAppData.userAddress);
+        if (flag === 1)
+            await setNewVaultAdmin(vaultAddress, userVaultAdminAddress, signer);
+        else
+            await removeVaultAdmin(vaultAddress, userVaultAdminAddress, signer);
 
     }
 
@@ -190,8 +208,8 @@ const Admin = ({ data }) => {
                             </div>
                         </div>
 
-                        <button className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Set Admin</button>
-                        <button className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Remove Admin</button>
+                        <button onClick={() => handleSetVaultAdmin(1)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Set Admin</button>
+                        <button onClick={() => handleSetVaultAdmin(0)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Remove Admin</button>
 
                     </div>
 
@@ -204,7 +222,11 @@ const Admin = ({ data }) => {
                                 <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setVaultAddress(e.target.value)} value={vaultAddress} />
                             </div>
                             <div>
-                                <p>Vault Status :</p>
+                            <div className="flex justify-between">
+                                    <p>Vault Status :</p>
+                                    <button onClick={() => handleCheckVaultPausedStatus()}>O</button>
+                                </div>
+                                <p>{vaultPausedStatus}</p>
                                 {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Duration" onChange={e => setNewRewardDuration(e.target.value)} value={newRewardDuration} /> */}
                             </div>
                         </div>
