@@ -108,7 +108,7 @@ const Pools = ({ data }) => {
     }
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col z-50 items-center">
             <div className="sm:w-3/4">
                 <PoolsNews />
 

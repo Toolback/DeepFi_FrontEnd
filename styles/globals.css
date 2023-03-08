@@ -66,6 +66,7 @@
 
 .gradient-04 {
   position: absolute;
+  z-index: 0;
   width: 304px;
   height: 90%;
   left: 30%;

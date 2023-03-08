@@ -14,7 +14,7 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
 
     return (
         <>
-            <div className="absolute z-1 w-[50%] h-[70%] inset-0 gradient-01" />
+            <div className="absolute w-[40%] h-[60%]  gradient-01" />
 
             <motion.nav
                 variants={navVariants}

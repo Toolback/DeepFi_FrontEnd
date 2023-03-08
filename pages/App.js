@@ -57,10 +57,10 @@ const App = () => {
                         {modaleMenuStatus == true ? (<ModaleMenu setModaleMenuStatus={setModaleMenuStatus} />) : (<></>)}
 
                     </div>
-                    <div className='w-full h-full text-white'>
+                    <div className='w-full h-full relative z-30 text-white'>
                         <AppContentManager destination={destination} data={setModaleConnectStatus} />
                     </div>
-                    <div className=" hidden sm:flex gradient-04 z-0" />
+                    <div className=" hidden sm:flex gradient-04 " />
 
                     <div className='w-full h-full'>
                         <LayoutBottom destination={destination}/>
