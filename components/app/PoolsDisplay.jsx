@@ -27,7 +27,8 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
             rewardRate: "N/A",
             userDeposit: 'N/a',
             userClaimable: 'N/a',
-            userTotalEarned: 'N/a'
+            userTotalEarned: 'N/a',
+            adapterContracts: []
         })
     // console.log(" Pool retrieved by compo: ", pool)
 
@@ -48,9 +49,9 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
             if (stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve")
                 connected = true;
             // console.log("Connected Status", connected)
-            let adapter_id = await getAdapterId(pool.vault_address);
+            let adapter_id = await getAdapterId(pool.vaultAddress);
 
-            let adapter_data = await getAdapterInfos(adapter_id);
+            // let adapter_data = await getAdapterInfos(adapter_id);
 
 
             let rewardToken = await getVaultRewardToken(pool.vaultAddress);
@@ -70,6 +71,7 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
                 userClaimable: connected == true ? (await getVaultUserClaimable(pool.vaultAddress, stateAppData.userAddress)).toString() + " Deepfi" : "N/a",
                 userTotalEarned: connected == true ? (await getVaultTotalUserEarned(pool.vaultAddress, stateAppData.userAddress)).toString() : "N/a",
                 userStakingBal: connected == true ? (await balOfFakeToken(stateAppData.userAddress)).toString() + " MLP" : "N/a",
+                adapterContracts : (await getAdapterInfos(adapter_id)).contracts
             }
 
             setStats(res);
@@ -134,13 +136,15 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
     }
 
     const renderAction = () => {
-    
+
         switch (actionPoolState) {
             case 'deposit':
                 return (
                     <>
                         <div className='pt-4 pb-2 flex flex-col'>
                             <Link className="" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
+                            <Link className="" href="https://faucet.fantom.network/">Mint Test FTM</Link>
+
                             <div className=''>
                                 <button onClick={() => mintTestToken()}>Mint (Test) MLP Token</button>
                             </div>
@@ -165,6 +169,14 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
             case 'withdraw':
                 return (
                     <>
+                        <div className='pt-4 pb-2 flex flex-col'>
+                            <Link className="" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
+                            <Link className="" href="https://faucet.fantom.network/">Mint Test FTM</Link>
+
+                            <div className=''>
+                                <button onClick={() => mintTestToken()}>Mint (Test) MLP Token</button>
+                            </div>
+                        </div>
                         <div className="">Available: {stats.userDeposit}</div>
                         <div className=" bg-primary-black bg-opacity-70 rounded p-2 flex justify-between">
                             <input className="placeholder-white w-3/4  bg-white bg-opacity-0	" placeholder="Enter Amount" onChange={e => setUserAmountInput(e.target.value)} value={userAmountInput} />
@@ -185,6 +197,14 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
             case 'claim':
                 return (
                     <>
+                        <div className='pt-4 pb-2 flex flex-col'>
+                            <Link className="" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
+                            <Link className="" href="https://faucet.fantom.network/">Mint Test FTM</Link>
+
+                            <div className=''>
+                                <button onClick={() => mintTestToken()}>Mint (Test) MLP Token</button>
+                            </div>
+                        </div>
                         <div className="">Available: {stats.userClaimable}</div>
                         <div className=" bg-primary-black bg-opacity-70 rounded p-2 flex justify-between">
                             <input className="placeholder-white w-3/4  bg-white bg-opacity-0	" placeholder="Enter Amount" onChange={e => setUserAmountInput(e.target.value)} value={userAmountInput} />
@@ -253,9 +273,9 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
                                 <div className='sm:w-2/3'>
 
                                     <div className="flex justify-center">
-                                        <button onClick={() => {setUserAmountInput(0); setActionPoolState("deposit")}} className={actionPoolState == "deposit" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Deposit</button>
-                                        <button onClick={() => {setUserAmountInput(0);setActionPoolState("withdraw")}} className={actionPoolState == "withdraw" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Withdraw</button>
-                                        <button onClick={() => {setUserAmountInput(0);setActionPoolState("claim")}} className={actionPoolState == "claim" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Claim</button>
+                                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("deposit") }} className={actionPoolState == "deposit" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Deposit</button>
+                                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("withdraw") }} className={actionPoolState == "withdraw" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Withdraw</button>
+                                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("claim") }} className={actionPoolState == "claim" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Claim</button>
 
                                     </div>
                                     {renderAction()}
@@ -270,21 +290,29 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
 
 
                     {/* Contracts card */}
+                    {stats.adapterContracts.map(item => {
+                        console.log("TEst retrieved : ", stats.adapterContracts)
+                        return (
                     <div className="border border-white border-opacity-20 rounded p-2">
                         <div className="pb-2 flex justify-between">
-                            <h3 className="font-extrabold">Strategy</h3>
+                            <h3 className="font-extrabold">{item.name}</h3>
+                            <Link href={item.link}>
                             <button className="text-blue-400">Contract</button>
+                            </Link>
                         </div>
-                        <p>Lorem Ipsum </p>
+                        <p>{item.description}</p>
                     </div>
 
-                    <div className="border border-white border-opacity-20 rounded p-2">
+                        )
+                    })}
+
+                    {/* <div className="border border-white border-opacity-20 rounded p-2">
                         <div className="pb-2 flex justify-between">
                             <h3 className="font-extrabold">MLP</h3>
                             <button className="text-blue-400">Contract</button>
                         </div>
                         <p>Lorem Ipsum </p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

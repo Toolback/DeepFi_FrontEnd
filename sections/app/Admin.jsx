@@ -4,20 +4,27 @@ import { approveTargetDeepfi, transferDeepfi, setRewardsDuration, notifyRewardAm
 import { AppDataStoreContext } from 'data/StoreAppData';
 import { useContext } from 'react';
 import { ethers } from 'ethers'
-import { getPausedVaultStatus, getVaultName, isVaultAdmin, removeVaultAdmin, setNewVaultAdmin, setPauseVault } from "../../lib/bc/smc";
+import { addAdapterContractInfo, deleteAdapterContractInfo, getPausedVaultStatus, getVaultName, isAdapterAdmin, isHandlerAdmin, isVaultAdmin, removeAdapterAdmin, removeHandlerAdmin, removeVaultAdmin, setNewAdapterAdmin, setNewHandlerAdmin, setNewVaultAdmin, setPauseVault } from "../../lib/bc/smc";
 const Admin = ({ data }) => {
     const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
 
     const [vaultAddress, setVaultAddress] = useState();
     const [newRewardDuration, setNewRewardDuration] = useState();
     const [newRewardAmount, setNewRewardAmount] = useState();
-    const [userVaultAdminAddress, setUserVaultAdminAddress] = useState();
+    const [userAdminAddress, setUserAdminAddress] = useState();
     const [userVaultAdminStatus, setUserVaultAdminStatus] = useState('N/a');
     const [vaultPausedStatus, setVaultPausedStatus] = useState('N/a');
 
+    const [userHandlerAdminStatus, setUserHandlerAdminStatus] = useState('N/a');
+
 
     const [adapterId, setAdapterId] = useState();
+    const [userAdapterAdminStatus, setUserAdapterAdminStatus] = useState('N/a');
 
+    const [adapterContractName, setAdapterContractName] = useState();
+    const [adapterContractDescription, setAdapterContractDescription] = useState();
+    const [adapterContractLink, setAdapterContractLink] = useState();
+    const [adapterContractIndex, setAdapterContractIndex] = useState();
 
     const [deployedPools, setDeployedPools] = useState([
         {
@@ -32,25 +39,22 @@ const Admin = ({ data }) => {
             let i = 0;
             const deployedPools = await getDeployedPools();
             const buttons = []
-            await deployedPools.forEach( async (i_address) => {
+            await deployedPools.forEach(async (i_address) => {
                 // const res = await getVaultName(i_address);
                 // console.log("Vault Name : ", vaultName);
-                buttons.push(
-                    {
+                buttons.push({
                         vaultId: i,
                         vaultAddress: i_address,
                         vaultName: "MLP", // for now only one pool define later
                         // vaultName :  res,
-                    }
-                    )
-                    renderDeployedVaults()
+                    })
+                renderDeployedVaults()
                 // console.log(" Info push: ", pool)
                 i++;
             })
             setDeployedPools(buttons)
             // return (poolsInfos)
         }
-
 
         fetchData().then((valeur) => {
             // console.log("All Pools Infos", valeur)
@@ -60,51 +64,80 @@ const Admin = ({ data }) => {
         }, (raison) => {
             // Rejet de la promesse
             console.log("ERROR Pools infos fetch", raison)
-
             // setLoading(false);
-
         });
     }, [])
 
     const handleSubmitVaultReward = async () => {
         const provider = await getProvider()
         const signer = provider.getSigner(stateAppData.userAddress);
-        let tx;
-        let receipt;
+
         // approve staking token transfer to vault 
-        tx = await approveTargetDeepfi(vaultAddress, ethers.utils.parseUnits(newRewardAmount, 18), signer);
+        await approveTargetDeepfi(vaultAddress, ethers.utils.parseUnits(newRewardAmount, 18), signer);
         // transfer reward to vault
-        tx = await transferDeepfi(vaultAddress, ethers.utils.parseUnits(newRewardAmount, 18), signer);
+        await transferDeepfi(vaultAddress, ethers.utils.parseUnits(newRewardAmount, 18), signer);
         // set reward duration
-        tx = await setRewardsDuration(vaultAddress, newRewardDuration, signer);
+        await setRewardsDuration(vaultAddress, newRewardDuration, signer);
 
         // notify reward amount
-        tx = await notifyRewardAmount(vaultAddress, ethers.utils.parseUnits(newRewardAmount, 18), signer);
+        await notifyRewardAmount(vaultAddress, ethers.utils.parseUnits(newRewardAmount, 18), signer);
 
     }
 
     const handleCheckUserAdminStatus = async (flag) => {
-        if (flag != 1) {
-            const res = await isVaultAdmin(vaultAddress, userVaultAdminAddress);
+        if (flag === 0) {
+            const res = await isVaultAdmin(vaultAddress, userAdminAddress);
             if (res === true)
                 setUserVaultAdminStatus("Yes");
-            else 
+            else
                 setUserVaultAdminStatus("Nop");
         }
-        // else
-        // {
-        //     const res = await isAdapterAdmin(adapterId, address);
-        //     return (res);
-        // }
+        else if (flag === 1) {
+            const res = await isHandlerAdmin(userAdminAddress);
+            if (res === true)
+                setUserHandlerAdminStatus("Yes");
+            else
+                setUserHandlerAdminStatus("Nop");
+        }
+        else if (flag === 2) {
+            const res = await isAdapterAdmin(userAdminAddress);
+            if (res === true)
+                setUserAdapterAdminStatus("Yes");
+            else
+                setUserAdapterAdminStatus("Nop");
+        }
 
     }
 
+    const handleSetAdmin = async (flag1, flag2) => {
+        const provider = await getProvider()
+        const signer = provider.getSigner(stateAppData.userAddress);
+        if (flag1 === 0) {
+            if (flag2 === 1)
+                await setNewVaultAdmin(vaultAddress, userAdminAddress, signer);
+            else
+                await removeVaultAdmin(vaultAddress, userAdminAddress, signer);
+        }
+        else if (flag1 === 1) {
+            if (flag2 === 1)
+                await setNewHandlerAdmin(userAdminAddress, signer);
+            else
+                await removeHandlerAdmin(userAdminAddress, signer);
+        }
+        else if (flag1 === 2) {
+            if (flag2 === 1)
+                await setNewAdapterAdmin(userAdminAddress, signer);
+            else
+                await removeAdapterAdmin(userAdminAddress, signer);
+        }
+    }
+
     const handleCheckVaultPausedStatus = async () => {
-            const res = await getPausedVaultStatus(vaultAddress);
-            if (res === true)
-                setVaultPausedStatus("Vault in Pause");
-            else 
-                setVaultPausedStatus("Vault in Action");
+        const res = await getPausedVaultStatus(vaultAddress);
+        if (res === true)
+            setVaultPausedStatus("Vault in Pause");
+        else
+            setVaultPausedStatus("Vault in Action");
     }
 
     const handleSetVaultPause = async (flag) => {
@@ -113,22 +146,23 @@ const Admin = ({ data }) => {
         if (flag === 1)
             await setPauseVault(vaultAddress, 1, signer);
         else
-            await setPauseVault(vaultAddress, 0, signer);
-
+            await setPauseVault(vaultAddress, 0, signer);     
     }
 
-    const handleSetVaultAdmin = async (flag) => {
+    const handleAddNewContractInfo = async () => {
         const provider = await getProvider()
         const signer = provider.getSigner(stateAppData.userAddress);
-        if (flag === 1)
-            await setNewVaultAdmin(vaultAddress, userVaultAdminAddress, signer);
-        else
-            await removeVaultAdmin(vaultAddress, userVaultAdminAddress, signer);
+        await addAdapterContractInfo(adapterId, adapterContractName, adapterContractDescription, adapterContractLink, signer)  
+    }
 
+    const handleRemoveContractInfo = async () => {
+        const provider = await getProvider()
+        const signer = provider.getSigner(stateAppData.userAddress);
+        await deleteAdapterContractInfo(adapterId, adapterContractIndex, signer);
     }
 
     const renderDeployedVaults = () => {
-        console.log("Deployed POOls ", deployedPools)
+        // console.log("Deployed POOls ", deployedPools)
         return (
             <>
                 {deployedPools.map(item => {
@@ -196,7 +230,7 @@ const Admin = ({ data }) => {
                             </div>
                             <div>
                                 <p>User Address :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setUserVaultAdminAddress(e.target.value)} value={userVaultAdminAddress} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
                             </div>
                             <div>
                                 <div className="flex justify-between">
@@ -208,8 +242,8 @@ const Admin = ({ data }) => {
                             </div>
                         </div>
 
-                        <button onClick={() => handleSetVaultAdmin(1)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Set Admin</button>
-                        <button onClick={() => handleSetVaultAdmin(0)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Remove Admin</button>
+                        <button onClick={() => handleSetAdmin(0, 1)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Set Admin</button>
+                        <button onClick={() => handleSetAdmin(0, 0)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Remove Admin</button>
 
                     </div>
 
@@ -222,7 +256,7 @@ const Admin = ({ data }) => {
                                 <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setVaultAddress(e.target.value)} value={vaultAddress} />
                             </div>
                             <div>
-                            <div className="flex justify-between">
+                                <div className="flex justify-between">
                                     <p>Vault Status :</p>
                                     <button onClick={() => handleCheckVaultPausedStatus()}>O</button>
                                 </div>
@@ -238,14 +272,39 @@ const Admin = ({ data }) => {
                 </div>
             </div>
 
-            {/* Adapters  */}
+            {/* Liquidity Handler */}
 
             <div className="bg-white bg-opacity-10 rounded flex flex-col p-5 gap-5 items-center">
-                <h3 className="">Adapters Management</h3>
+                <h3 className="">Liquidity Handler Management</h3>
                 <div className="flex gap-5">
 
                     <div className="bg-primary-black p-5 rounded flex flex-col gap-2 items-center">
-                        <h4>Setup Adapter Infos</h4>
+                        <h4>Handler Admins</h4>
+
+                        <div className="flex flex-col gap-2 justify-end">
+
+                            <div>
+                                <p>User Address :</p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
+                            </div>
+                            <div>
+                                <div className="flex justify-between">
+                                    <p>User Status :</p>
+                                    <button onClick={() => handleCheckUserAdminStatus(1)}>O</button>
+                                </div>
+                                <p>{userHandlerAdminStatus}</p>
+                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="User Status" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} /> */}
+                            </div>
+                        </div>
+
+                        <button onClick={() => handleSetAdmin(1, 1)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Set Admin</button>
+                        <button onClick={() => handleSetAdmin(1, 0)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Remove Admin</button>
+
+                    </div>
+
+
+                    <div className="bg-primary-black p-5 rounded flex flex-col gap-2 items-center">
+                        <h4>Add Adapter Contracts Infos</h4>
 
                         <div className="flex flex-col gap-2 justify-end">
                             <div>
@@ -254,19 +313,43 @@ const Admin = ({ data }) => {
 
                             </div>
                             <div>
-                                <p>New Reward Duration :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Duration" onChange={e => setNewRewardDuration(e.target.value)} value={newRewardDuration} />
+                                <p>Contract Name :</p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Ex : MLP" onChange={e => setAdapterContractName(e.target.value)} value={adapterContractName} />
                             </div>
                             <div>
-                                <p>New Reward Amount :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Amount" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} />
+                                <p>Contract Description :</p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Ex : Mummy token etc" onChange={e => setAdapterContractDescription(e.target.value)} value={adapterContractDescription} />
+                            </div>
+                            <div>
+                                <p>Contract Link :</p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Fantom scan link" onChange={e => setAdapterContractLink(e.target.value)} value={adapterContractLink} />
                             </div>
                         </div>
 
-                        <button className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Submit</button>
+                        <button onClick={() => handleAddNewContractInfo()} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Submit</button>
                     </div>
 
+
                     <div className="bg-primary-black p-5 rounded flex flex-col gap-2 items-center">
+                        <h4>Remove Adapters Contracts Infos</h4>
+
+                        <div className="flex flex-col gap-2 justify-end">
+                            <div>
+                                <p>Adapter Id :</p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
+
+                            </div>
+                            <div>
+                                <p>Contract Index (start at 0) : </p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Index" onChange={e => setAdapterContractIndex(e.target.value)} value={adapterContractIndex} />
+                            </div>
+
+                        </div>
+
+                        <button onClick={() => handleRemoveContractInfo()} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Submit</button>
+                    </div>
+
+                    {/* <div className="bg-primary-black p-5 rounded flex flex-col gap-2 items-center">
                         <h4>Add Adapter Contracts Infos</h4>
 
                         <div className="flex flex-col gap-2 justify-end">
@@ -290,9 +373,50 @@ const Admin = ({ data }) => {
                         </div>
 
                         <button className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Submit</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
+
+
+            {/* Adapters  */}
+
+            <div className="bg-white bg-opacity-10 rounded flex flex-col p-5 gap-5 items-center">
+                <h3 className="">MLP Adapter Management</h3>
+                <div className="flex gap-5">
+
+                    <div className="bg-primary-black p-5 rounded flex flex-col gap-2 items-center">
+                        <h4>Adapter Admins</h4>
+
+                        <div className="flex flex-col gap-2 justify-end">
+                            <div>
+                                <p>Adapter Id :</p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
+
+                            </div>
+                            <div>
+                                <p>User Address :</p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
+                            </div>
+                            <div>
+                                <div className="flex justify-between">
+                                    <p>User Status :</p>
+                                    <button onClick={() => handleCheckUserAdminStatus(2)}>O</button>
+                                </div>
+                                <p>{userAdapterAdminStatus}</p>
+                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="User Status" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} /> */}
+                            </div>
+                        </div>
+
+                        <button onClick={() => handleSetAdmin(2, 1)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Set Admin</button>
+                        <button onClick={() => handleSetAdmin(2, 0)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Remove Admin</button>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
 
         </div>
     )

@@ -83,7 +83,7 @@ export const getDeployedPools = async () => {
         let res = await (await IHandler()).getListOfPools();
         return (res);
     } catch (e) {
-        console.error("SM : Error retrieving protocol pools:", e)
+        console.error("SM : Error retrieving getDeployedPools:", e)
     }
 }
 
@@ -92,22 +92,52 @@ export const getAdapterId = async (poolAddress : string) => {
         let res = await (await IHandler()).getAdapterId(poolAddress);
         return (res);
     } catch (e) {
-        console.error("SM : Error retrieving protocol pools:", e)
+        console.error("SM : Error retrieving getAdapterId:", e)
     }
 }
 
 export const getAdapterInfos = async (poolId : number) => {
     try {
-        let res = await (await IHandler()).adapterIdsToAdapterInfo(poolId);
+        let res = await (await IHandler()).getAdapterInfo(poolId);
         return (res);
     } catch (e) {
-        console.error("SM : Error retrieving protocol pools:", e)
+        console.error("SM : Error retrieving getAdapterInfos:", e)
     }
 }
 
+export const isHandlerAdmin = async (userAddress : string) => {
+    try {
+        const AdminRole = await (await IHandler()).DEFAULT_ADMIN_ROLE();
+        const res = await (await IHandler()).hasRole(AdminRole, userAddress);
+    return (res);
+} catch (e) {
+    console.error("SM : Error retrieving handler admin role:", e)
+}
+}
 
 
 // Admin
+
+export const setNewHandlerAdmin = async (newAdminAddress : string, signer : any) => {
+    try {
+        let adminRole = await (await IHandler(signer)).DEFAULT_ADMIN_ROLE(); 
+        let res = await (await IHandler(signer)).grantRole(adminRole, newAdminAddress);
+        return await res.wait();
+    } catch (e) {
+        console.error("SM : Error while setNewHandlerAdmin:", e)
+    }
+}
+
+export const removeHandlerAdmin = async (newAdminAddress : string, signer : any) => {
+    try {
+        let adminRole = await (await IHandler(signer)).DEFAULT_ADMIN_ROLE(); 
+        let res = await (await IHandler(signer)).revokeRole(adminRole, newAdminAddress);
+        return await res.wait();
+    } catch (e) {
+        console.error("SM : Error while removeHandlerAdmin:", e)
+    }
+}
+
 export const setPoolToAdapterId = async (poolAddress : string, adapterId : number, signer : any) => {
     try {
         let res = await (await IHandler(signer)).setPoolToAdapterId(poolAddress, adapterId);
@@ -132,6 +162,29 @@ export const changeAdapterStatus = async (adapterId : number, adapter_status : b
         return (res);
     } catch (e) {
         console.error("SM : Error set adapter status:", e)
+    }
+}
+
+export const addAdapterContractInfo = async (adapterId : number, adapterContractName : string, adapterContractDescription : string, adapterContractLink : string, signer : any) => {
+    try {
+        let ContractsInfo = {
+            name : adapterContractName,
+            description : adapterContractDescription,
+            link : adapterContractLink
+        }
+        let res = await (await IHandler(signer)).addContractInfoToAdapterInfo(adapterId, ContractsInfo);
+        return (res);
+    } catch (e) {
+        console.error("SM : Error addAdapterContractInfo:", e)
+    }
+}
+
+export const deleteAdapterContractInfo = async (adapterId : number, contractIndex : number, signer : any) => {
+    try {
+        let res = await (await IHandler(signer)).deleteContractInfoFromAdapterInfo(adapterId, contractIndex);
+        return (res);
+    } catch (e) {
+        console.error("SM : Error deleteAdapterContractInfo:", e)
     }
 }
 
@@ -334,3 +387,33 @@ export const getVaultRewardToken = async (vault_address : string) => {
 
 // // -------------------- MLP Adapter --------------------
 
+
+export const isAdapterAdmin = async (userAddress : string) => {
+    try {
+        const AdminRole = await (await IMLPAdapter()).DEFAULT_ADMIN_ROLE();
+        const res = await (await IMLPAdapter()).hasRole(AdminRole, userAddress);
+    return (res);
+} catch (e) {
+    console.error("SM : Error retrieving Adapter admin role:", e)
+}
+}
+
+export const setNewAdapterAdmin = async (newAdminAddress : string, signer : any) => {
+    try {
+        let adminRole = await (await IMLPAdapter(signer)).DEFAULT_ADMIN_ROLE(); 
+        let res = await (await IMLPAdapter(signer)).grantRole(adminRole, newAdminAddress);
+        return await res.wait();
+    } catch (e) {
+        console.error("SM : Error while setNewAdapterAdmin:", e)
+    }
+}
+
+export const removeAdapterAdmin = async (newAdminAddress : string, signer : any) => {
+    try {
+        let adminRole = await (await IMLPAdapter(signer)).DEFAULT_ADMIN_ROLE(); 
+        let res = await (await IMLPAdapter(signer)).revokeRole(adminRole, newAdminAddress);
+        return await res.wait();
+    } catch (e) {
+        console.error("SM : Error while removeAdapterAdmin:", e)
+    }
+}

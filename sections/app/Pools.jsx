@@ -16,8 +16,8 @@ const Pools = ({ data }) => {
     const [poolsButtons, setPoolsButtons] = useState([
         {
             vaultId: 0,
-            vaultAddress: '',
-            vaultButtonName: "",
+            vaultAddress: '0xc3fa3096A0853Ab1199eA504ad2C167a0eB92680',
+            vaultButtonName: "MLP",
 
         }])
         ;
@@ -65,7 +65,7 @@ const Pools = ({ data }) => {
                 i++;
             })
             setPoolsButtons(buttons)
-            return (poolsInfos)
+            return (true)
         }
 
 
@@ -85,7 +85,6 @@ const Pools = ({ data }) => {
 
     const renderPools = () => {
         // console.log(" Pool send to compo : ", poolsInfos[selectedPool])
-        console.log("pool Button infos", soonPool)
         return (
 
             <>
