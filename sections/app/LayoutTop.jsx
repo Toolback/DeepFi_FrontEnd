@@ -11,7 +11,7 @@ import { AppRouteStoreContext } from '../../data/StoreAppRouter';
 const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, modaleMenuStatus, setModaleMenuStatus }) => {
     const { stateAppData } = useContext(AppDataStoreContext);
     const { dispatchAppRoute } = useContext(AppRouteStoreContext);
-
+    console.log()
     return (
         <>
             <div className="absolute w-[40%] h-[60%]  gradient-01" />
@@ -40,6 +40,8 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                                 Connect
                             </button>
                         }
+                        {stateAppData.userStatus === "admin" ?
+                        <>
                         {destination == 'pools' ?
                             <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'admin' })}>
                                 Admin Panel
@@ -49,6 +51,7 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                                 User Panel
                             </button>
                         }
+                        </> : <></>}
                     </div>
                     {/* <button onClick={() => setModaleMenuStatus(!modaleMenuStatus)}>
                     <img src="/menu.svg" alt="menu" className="w-[24px] h-[24px] object-contain" />
@@ -69,7 +72,8 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                         </Link>
                     </button>
                     <div className='flex gap-5'>
-
+                    {stateAppData.userStatus === "admin" ?
+                        <>
                         {destination == 'pools' ?
                             <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'admin' })}>
                                 Admin Panel
@@ -79,6 +83,8 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                                 User Panel
                             </button>
                         }
+                                                </> : <></>}
+
                         {stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve" ?
                             <p>{(stateAppData.userAddress).substring(0, 5)}...{(stateAppData.userAddress).substring(stateAppData.userAddress.length - 3)}</p>
                             :
@@ -86,6 +92,7 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                                 Connect
                             </button>
                         }
+                        
                     </div>
 
 

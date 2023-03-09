@@ -4,14 +4,15 @@ import metamaskLogo from '../../public/metamask.svg';
 import { connectWallet } from 'lib/bc/wallet-connect';
 import { AppDataStoreContext } from 'data/StoreAppData';
 import { useContext } from 'react';
+import { isHandlerAdmin } from 'lib/bc/smc';
 
 const ModaleConnect = ({ setModaleConnectStatus }) => {
   const {dispatchAppData} = useContext(AppDataStoreContext);
 
   const handleConnectClick = async () => {
     const res = await connectWallet();
-    console.log("address retrieved :", res.userAddress);
-    await dispatchAppData({ type: 'setAppData', accounts : res.accounts, userStatus : res.userStatus, userAddress : res.userAddress, signer : res.signer})
+    let userStatus = await isHandlerAdmin(res.userAddress) ? "admin" : "member";
+    await dispatchAppData({ type: 'setAppData', accounts : res.accounts, userStatus, userAddress : res.userAddress, signer : res.signer})
 
     setModaleConnectStatus(false);
   }
