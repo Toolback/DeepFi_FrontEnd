@@ -225,7 +225,7 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
                     {/* deposit / withdraw */}
                     <div className='sm:col-span-1'>
 
-                        <div className=" py-6 px-2  sm:flex sm:justify-center border border-white border-opacity-10 drop-shadow-lg bg-black bg-opacity-10 rounded">
+                        <div className=" py-6 px-2  sm:flex sm:justify-center border border-white border-opacity-10 drop-shadow-lg bg-black bg-opacity-10 rounded ">
                             <div className=''>
 
 
@@ -251,26 +251,26 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
                         <div className="flex flex-col gap-5">
                             <div className="">
                                 <h4 className='text-gray-300'>TVL</h4>
-                                <p className='text-xl font-bold tracking-tight text-white'>{stats.tvl}</p>
+                                <p className='text-lg font-bold tracking-tight text-white'>{stats.tvl}</p>
                             </div>
                             <div className="">
                                 <h4 className='text-gray-300'>Reward</h4>
-                                <p className='text-xl font-bold tracking-tight text-white'>{stats.rewardAmount} {stats.rewardToken}</p>
+                                <p className='text-lg font-bold tracking-tight text-white'>{stats.rewardAmount} {stats.rewardToken}</p>
                             </div>
                             <div className="">
                                 <h4 className='text-gray-300'>Duration</h4>
-                                <p className='text-xl font-bold tracking-tight text-white'>{stats.rewardDuration}</p>
+                                <p className='text-lg font-bold tracking-tight text-white'>{stats.rewardDuration}</p>
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-5">
                             <div className="">
                                 <h4 className='text-gray-300'>Your Deposit</h4>
-                                <p className='text-xl font-bold tracking-tight text-white'>{stats.userDeposit}</p>
+                                <p className='text-lg font-bold tracking-tight text-white'>{stats.userDeposit}</p>
                             </div>
                             <div className="">
                                 <h4 className='text-gray-300'>To Claim</h4>
-                                <p className='text-xl font-bold tracking-tight text-white'>{stats.userClaimable}</p>
+                                <p className='text-lg font-bold tracking-tight text-white'>{stats.userClaimable}</p>
                             </div>
                         </div>
                     </div>
