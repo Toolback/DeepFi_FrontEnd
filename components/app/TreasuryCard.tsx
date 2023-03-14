@@ -18,7 +18,7 @@ const TreasuryCard = (stats?: any) => {
             <Loader />
         ) : (
           <>
-            <dl className="grid grid-cols-2 gap-5 sm:grid-cols-4 border border-white border-opacity-10 bg-white bg-opacity-10 rounded-lg  px-4 py-5 shadow">
+            <dl className="grid grid-cols-2 gap-5 sm:grid-cols-4 border border-white border-opacity-10 bg-white backdrop-blur-lg drop-shadow-lg bg-opacity-5 rounded-lg  px-4 py-5 shadow">
 
               {actualStats?.map((item: any) => (
                 <div key={item.name} className="overflow-hidden flex flex-col items-center ">

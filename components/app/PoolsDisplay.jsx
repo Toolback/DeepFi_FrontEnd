@@ -71,7 +71,7 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
                 userClaimable: connected == true ? (await getVaultUserClaimable(pool.vaultAddress, stateAppData.userAddress)).toString() + " Deepfi" : "N/a",
                 userTotalEarned: connected == true ? (await getVaultTotalUserEarned(pool.vaultAddress, stateAppData.userAddress)).toString() : "N/a",
                 userStakingBal: connected == true ? (await balOfFakeToken(stateAppData.userAddress)).toString() + " MLP" : "N/a",
-                adapterContracts : (await getAdapterInfos(adapter_id)).contracts
+                adapterContracts: (await getAdapterInfos(adapter_id)).contracts
             }
 
             setStats(res);
@@ -141,13 +141,8 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
             case 'deposit':
                 return (
                     <>
-                        <div className='pt-4 pb-2 flex flex-col'>
-                            <Link className="" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
-                            <Link className="" href="https://faucet.fantom.network/">Mint Test FTM</Link>
-
-                            <div className=''>
-                                <button onClick={() => mintTestToken()}>Mint (Test) MLP Token</button>
-                            </div>
+                        <div className='pt-4 pb-2 '>
+                            <Link className="text-start" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
                         </div>
                         <div className="">Available: {stats.userStakingBal}</div>
                         <div className=" bg-primary-black bg-opacity-70 rounded p-2 flex justify-between">
@@ -169,15 +164,10 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
             case 'withdraw':
                 return (
                     <>
-                        <div className='pt-4 pb-2 flex flex-col'>
-                            <Link className="" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
-                            <Link className="" href="https://faucet.fantom.network/">Mint Test FTM</Link>
-
-                            <div className=''>
-                                <button onClick={() => mintTestToken()}>Mint (Test) MLP Token</button>
-                            </div>
+                        <div className='pt-4 pb-2 '>
+                            <Link className="text-start" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
                         </div>
-                        <div className="">Available: {stats.userDeposit}</div>
+                        <div className="">Total Staked: {stats.userDeposit}</div>
                         <div className=" bg-primary-black bg-opacity-70 rounded p-2 flex justify-between">
                             <input className="placeholder-white w-3/4  bg-white bg-opacity-0	" placeholder="Enter Amount" onChange={e => setUserAmountInput(e.target.value)} value={userAmountInput} />
                             <button onClick={() => setMaxDepositInput()}>MAX</button>
@@ -197,15 +187,10 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
             case 'claim':
                 return (
                     <>
-                        <div className='pt-4 pb-2 flex flex-col'>
-                            <Link className="" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
-                            <Link className="" href="https://faucet.fantom.network/">Mint Test FTM</Link>
-
-                            <div className=''>
-                                <button onClick={() => mintTestToken()}>Mint (Test) MLP Token</button>
-                            </div>
+                        <div className='pt-4 pb-2'>
+                            <Link className="text-start" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
                         </div>
-                        <div className="">Available: {stats.userClaimable}</div>
+                        <div className="">To Claim: {stats.userClaimable}</div>
                         <div className=" bg-primary-black bg-opacity-70 rounded p-2 flex justify-between">
                             <input className="placeholder-white w-3/4  bg-white bg-opacity-0	" placeholder="Enter Amount" onChange={e => setUserAmountInput(e.target.value)} value={userAmountInput} />
                             <button onClick={() => setMaxDepositInput()}>MAX</button>
@@ -236,23 +221,62 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
 
                 {/* pool display */}
                 <div className="pt-4 grid sm:grid-cols-2 gap-4">
-                    {/* global infos cards */}
-                    <div className="border border-white border-opacity-10 bg-white bg-opacity-10 p-4 sm:p-6 sm:py-8 rounded flex justify-between">
-                        <div className="">
-                            <h4 className='text-gray-300'>TVL</h4>
-                            <p>{stats.tvl}</p>
-                        </div>
-                        <div className="">
-                            <h4 className='text-gray-300'>Reward</h4>
-                            <p>{stats.rewardAmount} {stats.rewardToken}</p>
-                        </div>
-                        <div className="">
-                            <h4 className='text-gray-300'>Duration</h4>
-                            <p>{stats.rewardDuration}</p>
+
+                    {/* deposit / withdraw */}
+                    <div className='sm:col-span-1'>
+
+                        <div className=" py-6 px-2  sm:flex sm:justify-center border border-white border-opacity-10 drop-shadow-lg bg-black bg-opacity-10 rounded">
+                            <div className=''>
+
+
+                                <div className="flex justify-center ">
+                                    <button onClick={() => { setUserAmountInput(0); setActionPoolState("deposit") }} className={actionPoolState == "deposit" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Deposit</button>
+                                    <button onClick={() => { setUserAmountInput(0); setActionPoolState("withdraw") }} className={actionPoolState == "withdraw" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Withdraw</button>
+                                    <button onClick={() => { setUserAmountInput(0); setActionPoolState("claim") }} className={actionPoolState == "claim" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Claim</button>
+
+                                </div>
+                                <div className='mt-6 h-[1px] w-full bg-gray-600'></div>
+                                {renderAction()}
+
+                                {/* conditionnel if connected */}
+
+                                {/* <button>Approve & Deposit</button> */}
+                            </div>
                         </div>
                     </div>
+
+                    {/* global infos cards */}
+                    <div className="border border-white border-opacity-10 drop-shadow-lg bg-white/5 p-4 sm:p-6 sm:py-8 rounded flex items-center justify-around">
+
+                        <div className="flex flex-col gap-5">
+                            <div className="">
+                                <h4 className='text-gray-300'>TVL</h4>
+                                <p className='text-xl font-bold tracking-tight text-white'>{stats.tvl}</p>
+                            </div>
+                            <div className="">
+                                <h4 className='text-gray-300'>Reward</h4>
+                                <p className='text-xl font-bold tracking-tight text-white'>{stats.rewardAmount} {stats.rewardToken}</p>
+                            </div>
+                            <div className="">
+                                <h4 className='text-gray-300'>Duration</h4>
+                                <p className='text-xl font-bold tracking-tight text-white'>{stats.rewardDuration}</p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-5">
+                            <div className="">
+                                <h4 className='text-gray-300'>Your Deposit</h4>
+                                <p className='text-xl font-bold tracking-tight text-white'>{stats.userDeposit}</p>
+                            </div>
+                            <div className="">
+                                <h4 className='text-gray-300'>To Claim</h4>
+                                <p className='text-xl font-bold tracking-tight text-white'>{stats.userClaimable}</p>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* personal infos cards */}
-                    <div className="border border-white border-opacity-10 bg-white bg-opacity-10 p-4 sm:p-6 sm:py-8 rounded flex justify-between">
+                    {/* <div className="border border-white border-opacity-10 drop-shadow-lg bg-white bg-opacity-5 p-4 sm:p-6 sm:py-8 rounded flex justify-between">
                         <div className="">
                             <h4 className='text-gray-300'>Your Deposit</h4>
                             <p>{stats.userDeposit}</p>
@@ -261,47 +285,25 @@ const PoolsDisplay = ({ pool, setModaleConnectStatus }) => {
                             <h4 className='text-gray-300'>To Claim</h4>
                             <p>{stats.userClaimable}</p>
                         </div>
-                    </div>
+                    </div> */}
 
 
 
-                    {/* deposit / withdraw */}
-                    <div className='sm:col-span-2'>
-                        <div className='sm:flex sm:justify-center '>
 
-                            <div className=" py-6 px-2 sm:w-2/3 sm:flex sm:justify-center border border-white border-opacity-10 bg-white bg-opacity-10 rounded">
-                                <div className='sm:w-2/3'>
-
-                                    <div className="flex justify-center">
-                                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("deposit") }} className={actionPoolState == "deposit" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Deposit</button>
-                                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("withdraw") }} className={actionPoolState == "withdraw" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Withdraw</button>
-                                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("claim") }} className={actionPoolState == "claim" ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>Claim</button>
-
-                                    </div>
-                                    {renderAction()}
-
-                                    {/* conditionnel if connected */}
-
-                                    {/* <button>Approve & Deposit</button> */}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
                     {/* Contracts card */}
                     {stats.adapterContracts.map(item => {
-                        console.log("TEst retrieved : ", stats.adapterContracts)
                         return (
-                    <div className="border border-white border-opacity-20 rounded p-2">
-                        <div className="pb-2 flex justify-between">
-                            <h3 className="font-extrabold">{item.name}</h3>
-                            <Link href={item.link}>
-                            <button className="text-blue-400">Contract</button>
-                            </Link>
-                        </div>
-                        <p>{item.description}</p>
-                    </div>
+                            <dl key={item.name} className="border border-white border-opacity-20 drop-shadow-lg rounded p-2">
+                                <div className="pb-2 flex justify-between">
+                                    <h3 className="font-extrabold">{item.name}</h3>
+                                    <Link href={item.link}>
+                                        <button className="text-blue-400">Contract</button>
+                                    </Link>
+                                </div>
+                                <p>{item.description}</p>
+                            </dl>
 
                         )
                     })}

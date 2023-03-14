@@ -88,7 +88,7 @@ const Pools = ({ data }) => {
         return (
 
             <>
-                <div className="flex justify-center pt-2 gap-2">
+                <div className="flex justify-center pt-4 gap-2">
                     {poolsButtons.map((item) => (
                         <button onClick={() => setSelectedPool(item.vaultId)} key={item.vaultId} className={selectedPool == item.vaultId ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>
                             {item.vaultButtonName}
@@ -123,7 +123,7 @@ const Pools = ({ data }) => {
                 </p>
                 <StatsCards stats={stats} />
 
-                <div className="sm:flex-auto sm:pt-8">
+                <div className="sm:flex-auto pt-4">
                     <h1 className="text-xl font-semibold text-white text-center">Available Pools</h1>
                     <p className="mt-2 text-sm text-gray-300 text-center">
                         A list of all the available pools of the protocol
