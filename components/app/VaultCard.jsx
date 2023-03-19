@@ -37,7 +37,7 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
 
   const toClaimTemp = [
     { name: 'Deepfi', balance: 1000, url: 'https://s2.coinmarketcap.com/static/img/coins/64x64/23038.png' },
-    { name: 'FTM', balance: 1000, url: '' },
+    // { name: 'FTM', balance: 1000, url: '' },
   ]
 
   const totalEarnedTemp = [
@@ -314,11 +314,11 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
                       <h4 className='text-sm text-gray-300'>Your Stake</h4>
                     </div>
                     <div className="">
-                      <p className='text-lg text-center font-bold tracking-tight text-white'>{stats.rewardDuration}</p>
+                      <p className='text-lg text-center font-bold tracking-tight text-white'>X</p>
                       <h4 className='text-sm text-gray-300'>Rewards / second</h4>
                     </div>
                     <div className="">
-                      <p className='text-lg text-center font-bold tracking-tight text-white'>{stats.rewardDuration}</p>
+                      <p className='text-lg text-center font-bold tracking-tight text-white'>X</p>
                       <h4 className='text-sm text-gray-300'>APR</h4>
                     </div>
                     <div className="text-center">
@@ -326,8 +326,8 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
                       <h4 className='text-sm text-gray-300'>TVL</h4>
                     </div>
                     <div className="text-center">
-                      <p className='text-lg font-bold tracking-tight text-white'>{stats.tvl}</p>
-                      <h4 className='text-sm text-gray-300'>Fees</h4>
+                      <p className='text-lg font-bold tracking-tight text-white'>0.1 %</p>
+                      <h4 className='text-sm text-gray-300'>Fees on withdraw</h4>
                     </div>
 
                   </div>
