@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
-import { navVariants } from '../../utils/motion';
+import { navVariants } from 'utils/motion';
 import { useState } from 'react';
 
-import styles from '../../styles';
+import styles from 'styles';
 import Link from 'next/link';
 
-import { socials } from '../../constants';
+import { socials } from '../../../constants';
 
-import { footerVariants } from '../../utils/motion';
+import { footerVariants } from 'utils/motion';
 const LayoutBottom = ({ destination}) => {
     
     return (
@@ -17,16 +17,18 @@ const LayoutBottom = ({ destination}) => {
         whileInView="show"
         className={`${styles.xPaddings} py-8 relative`}
       >
-        <div className="footer-gradient" />
         <div className={`${styles.innerWidth} mx-auto flex flex-col gap-8`}>
 
           <div className="flex flex-col">
             <div className="mb-[50px] h-[2px] bg-white opacity-10" />
     
             <div className="flex items-center justify-between flex-wrap gap-4">
-              <h4 className="font-extrabold text-[24px] text-white">
+              <Link href="/">
+
+              <button className="font-extrabold text-[24px] text-white">
                 Deposit.Finance
-              </h4>
+              </button>
+              </Link>
               <p className="font-normal text-[14px] text-white opacity-50">
                 Copyright © 2021 - 2023 Deposit.Finance All rights reserved.
               </p>

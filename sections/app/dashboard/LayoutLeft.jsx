@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useContext } from 'react'
-import { AppRouteStoreContext } from '../../data/StoreAppRouter'
+import { AppRouteStoreContext } from 'data/StoreAppRouter'
 
 
 const LayoutLeft = () => {

@@ -13,13 +13,12 @@ const StakeCard = () => {
         <div className="flex justify-center items-center pt-8 text-md">
         <div className="mx-auto w-full max-w-lg rounded-lg bg-white bg-opacity-5 p-10 shadow-card xs:p-6 xs:pt-5">
 
-          <AnimatePresence exitBeforeEnter>
-            <motion.div
+            {/* <motion.div
               initial="exit"
               animate="enter"
               exit="exit"
               variants={fadeInBottom('easeIn', 0.25)}
-            >
+            > */}
               <div className="mb-5 border-b border-dashed border-gray-200 pb-5 dark:border-gray-800 xs:mb-7 xs:pb-6">
                 <div
                   className={cn(
@@ -67,8 +66,7 @@ const StakeCard = () => {
               >
                 Stake
               </button>
-            </motion.div>
-          </AnimatePresence>
+            {/* </motion.div> */}
         </div>
       </div>
 

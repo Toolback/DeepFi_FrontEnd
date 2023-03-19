@@ -2,9 +2,7 @@ import { useContext, useState } from 'react'
 import { AppRouteStoreContext } from '../data/StoreAppRouter'
 import AppContentManager from '../utils/AppContentManager'
 
-import LayoutTop from '../sections/app/LayoutTop'
-import LayoutBottom from '../sections/app/LayoutBottom'
-import LayoutLeft from '../sections/app/LayoutLeft'
+import {LayoutTop, LayoutBottom, LayoutLeft } from 'sections/app/dashboard'
 import ModaleMenu from '../components/app/ModaleMenu'
 import ModaleConnect from '../components/app/ModaleConnect'
 
@@ -14,22 +12,10 @@ const App = () => {
 
     const generateAppData = () => {
         switch (destination) {
-            case 'news':
+            case 'appPage':
                 return generateView(destination)
 
-            case 'pools':
-                return generateView(destination)
-
-            case 'stake':
-                return generateView(destination)
-
-            case 'bonds':
-                return generateView(destination)
-
-            case 'dashboard':
-                return generateView(destination)
-
-            case 'admin':
+            case 'adminPage':
                 return generateView(destination)
 
             default:
@@ -57,6 +43,7 @@ const App = () => {
                         {modaleMenuStatus == true ? (<ModaleMenu setModaleMenuStatus={setModaleMenuStatus} />) : (<></>)}
 
                     </div>
+
                     <div className='w-full h-full relative z-30 text-white'>
                         <AppContentManager destination={destination} data={setModaleConnectStatus} />
                     </div>

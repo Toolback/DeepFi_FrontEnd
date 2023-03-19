@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
 
-const TreasuryCard = (stats?: any) => {
+const TreasuryRenderer = (treasury?: any) => {
 
 
-  const [actualStats, setActualStats] = useState([null]);
+  const [actualStats, setActualStats] = useState([undefined]);
 
   useEffect(() => {
-    setActualStats(stats.stats);
-    renderStats()
-  }, [stats]);
+    setActualStats(treasury.treasury);
+    renderTreasury()
+  }, [treasury]);
 
-  const renderStats = () => {
+  const renderTreasury = () => {
     return (
       <>
-        {actualStats.length < 2 ? (
+        {/* {actualStats[0] != undefined ? ( */}
+        {actualStats[0] === undefined? (
+
             <Loader />
         ) : (
           <>
-            <dl className="grid grid-cols-2 gap-5 sm:grid-cols-4 border border-white border-opacity-10 bg-white backdrop-blur-lg drop-shadow-lg bg-opacity-5 rounded-lg  px-4 py-5 shadow">
+            <dl className="grid grid-cols-2 gap-5 backdrop-blur-lg drop-shadow-lg rounded-lg  px-4 pt-8 shadow">
 
               {actualStats?.map((item: any) => (
                 <div key={item.name} className="overflow-hidden flex flex-col items-center ">
@@ -39,9 +41,9 @@ const TreasuryCard = (stats?: any) => {
 
   return (
     <div>
-      {renderStats()}
+      {renderTreasury()}
     </div>
   )
 }
 
-export default TreasuryCard
+export default TreasuryRenderer

@@ -5,7 +5,7 @@ import { AppDataStoreContext } from 'data/StoreAppData';
 import { useContext } from 'react';
 import { ethers } from 'ethers'
 import { addAdapterContractInfo, deleteAdapterContractInfo, getPausedVaultStatus, getVaultName, isAdapterAdmin, isHandlerAdmin, isVaultAdmin, removeAdapterAdmin, removeHandlerAdmin, removeVaultAdmin, setNewAdapterAdmin, setNewHandlerAdmin, setNewVaultAdmin, setPauseVault } from "../../lib/bc/smc";
-const Admin = ({ data }) => {
+const Admin_Page = ({ data }) => {
     const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
 
     const [vaultAddress, setVaultAddress] = useState();
@@ -183,7 +183,7 @@ const Admin = ({ data }) => {
 
     return (
         <div className="flex flex-col gap-5 z-50 w-auto h-full">
-            <div className="bg-white bg-opacity-10 rounded flex flex-col p-5 gap-5 items-center">
+            <div className="bg-purple-500/10 back rounded flex flex-col p-5 gap-5 items-center">
                 <h3 className="">Deployed Vaults</h3>
 
                 <div className="flex gap-5">
@@ -196,7 +196,7 @@ const Admin = ({ data }) => {
 
             {/* Vault  */}
 
-            <div className="bg-white bg-opacity-10 rounded flex flex-col p-5 gap-5 items-center">
+            <div className="bg-purple-500/10 back rounded flex flex-col p-5 gap-5 items-center">
                 <h3 className="">Vaults Management</h3>
 
                 <div className="flex  gap-5">
@@ -205,18 +205,18 @@ const Admin = ({ data }) => {
                         <div className="flex flex-col gap-2 justify-end">
                             <div>
                                 <p>Vault Address :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setVaultAddress(e.target.value)} value={vaultAddress} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Address" onChange={e => setVaultAddress(e.target.value)} value={vaultAddress} />
                             </div>
                             <div>
                                 <p>New Reward Duration (seconds) :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="1 day = 86400 secs" onChange={e => setNewRewardDuration(e.target.value)} value={newRewardDuration} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="1 day = 86400 secs" onChange={e => setNewRewardDuration(e.target.value)} value={newRewardDuration} />
                             </div>
                             <div>
                                 <p>New Reward Amount :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Amount" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Amount" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} />
                             </div>
                         </div>
-                        <button onClick={() => handleSubmitVaultReward()} className=' hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Submit</button>
+                        <button onClick={() => handleSubmitVaultReward()} className=' hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Submit</button>
                         <p>(Multiple Transactions)</p>
                     </div>
 
@@ -226,11 +226,11 @@ const Admin = ({ data }) => {
                         <div className="flex flex-col gap-2 justify-end">
                             <div>
                                 <p>Vault Address :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setVaultAddress(e.target.value)} value={vaultAddress} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Address" onChange={e => setVaultAddress(e.target.value)} value={vaultAddress} />
                             </div>
                             <div>
                                 <p>User Address :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
                             </div>
                             <div>
                                 <div className="flex justify-between">
@@ -238,12 +238,12 @@ const Admin = ({ data }) => {
                                     <button onClick={() => handleCheckUserAdminStatus(0)}>O</button>
                                 </div>
                                 <p>{userVaultAdminStatus}</p>
-                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="User Status" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} /> */}
+                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="User Status" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} /> */}
                             </div>
                         </div>
 
-                        <button onClick={() => handleSetAdmin(0, 1)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Set Admin</button>
-                        <button onClick={() => handleSetAdmin(0, 0)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Remove Admin</button>
+                        <button onClick={() => handleSetAdmin(0, 1)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Set Admin</button>
+                        <button onClick={() => handleSetAdmin(0, 0)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Remove Admin</button>
 
                     </div>
 
@@ -253,7 +253,7 @@ const Admin = ({ data }) => {
                         <div className="flex flex-col gap-2 justify-end">
                             <div>
                                 <p>Vault Address :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setVaultAddress(e.target.value)} value={vaultAddress} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Address" onChange={e => setVaultAddress(e.target.value)} value={vaultAddress} />
                             </div>
                             <div>
                                 <div className="flex justify-between">
@@ -261,12 +261,12 @@ const Admin = ({ data }) => {
                                     <button onClick={() => handleCheckVaultPausedStatus()}>O</button>
                                 </div>
                                 <p>{vaultPausedStatus}</p>
-                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Duration" onChange={e => setNewRewardDuration(e.target.value)} value={newRewardDuration} /> */}
+                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Duration" onChange={e => setNewRewardDuration(e.target.value)} value={newRewardDuration} /> */}
                             </div>
                         </div>
 
-                        <button onClick={() => handleSetVaultPause(1)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Pause</button>
-                        <button onClick={() => handleSetVaultPause(0)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>UnPause</button>
+                        <button onClick={() => handleSetVaultPause(1)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Pause</button>
+                        <button onClick={() => handleSetVaultPause(0)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>UnPause</button>
 
                     </div>
                 </div>
@@ -274,7 +274,7 @@ const Admin = ({ data }) => {
 
             {/* Liquidity Handler */}
 
-            <div className="bg-white bg-opacity-10 rounded flex flex-col p-5 gap-5 items-center">
+            <div className="bg-purple-500/10 back rounded flex flex-col p-5 gap-5 items-center">
                 <h3 className="">Liquidity Handler Management</h3>
                 <div className="flex gap-5">
 
@@ -285,7 +285,7 @@ const Admin = ({ data }) => {
 
                             <div>
                                 <p>User Address :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
                             </div>
                             <div>
                                 <div className="flex justify-between">
@@ -293,12 +293,12 @@ const Admin = ({ data }) => {
                                     <button onClick={() => handleCheckUserAdminStatus(1)}>O</button>
                                 </div>
                                 <p>{userHandlerAdminStatus}</p>
-                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="User Status" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} /> */}
+                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="User Status" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} /> */}
                             </div>
                         </div>
 
-                        <button onClick={() => handleSetAdmin(1, 1)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Set Admin</button>
-                        <button onClick={() => handleSetAdmin(1, 0)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Remove Admin</button>
+                        <button onClick={() => handleSetAdmin(1, 1)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Set Admin</button>
+                        <button onClick={() => handleSetAdmin(1, 0)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Remove Admin</button>
 
                     </div>
 
@@ -309,24 +309,24 @@ const Admin = ({ data }) => {
                         <div className="flex flex-col gap-2 justify-end">
                             <div>
                                 <p>Adapter Id :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
 
                             </div>
                             <div>
                                 <p>Contract Name :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Ex : MLP" onChange={e => setAdapterContractName(e.target.value)} value={adapterContractName} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Ex : MLP" onChange={e => setAdapterContractName(e.target.value)} value={adapterContractName} />
                             </div>
                             <div>
                                 <p>Contract Description :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Ex : Mummy token etc" onChange={e => setAdapterContractDescription(e.target.value)} value={adapterContractDescription} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Ex : Mummy token etc" onChange={e => setAdapterContractDescription(e.target.value)} value={adapterContractDescription} />
                             </div>
                             <div>
                                 <p>Contract Link :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Fantom scan link" onChange={e => setAdapterContractLink(e.target.value)} value={adapterContractLink} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Fantom scan link" onChange={e => setAdapterContractLink(e.target.value)} value={adapterContractLink} />
                             </div>
                         </div>
 
-                        <button onClick={() => handleAddNewContractInfo()} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Submit</button>
+                        <button onClick={() => handleAddNewContractInfo()} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Submit</button>
                     </div>
 
 
@@ -336,17 +336,17 @@ const Admin = ({ data }) => {
                         <div className="flex flex-col gap-2 justify-end">
                             <div>
                                 <p>Adapter Id :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
 
                             </div>
                             <div>
                                 <p>Contract Index (start at 0) : </p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Index" onChange={e => setAdapterContractIndex(e.target.value)} value={adapterContractIndex} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Index" onChange={e => setAdapterContractIndex(e.target.value)} value={adapterContractIndex} />
                             </div>
 
                         </div>
 
-                        <button onClick={() => handleRemoveContractInfo()} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Submit</button>
+                        <button onClick={() => handleRemoveContractInfo()} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Submit</button>
                     </div>
 
                     {/* <div className="bg-primary-black p-5 rounded flex flex-col gap-2 items-center">
@@ -355,24 +355,24 @@ const Admin = ({ data }) => {
                         <div className="flex flex-col gap-2 justify-end">
                             <div>
                                 <p>Adapter Id :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
 
                             </div>
                             <div>
                                 <p>Contract Name :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Duration" onChange={e => setNewRewardDuration(e.target.value)} value={newRewardDuration} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Duration" onChange={e => setNewRewardDuration(e.target.value)} value={newRewardDuration} />
                             </div>
                             <div>
                                 <p>Contract Description :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Amount" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Amount" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} />
                             </div>
                             <div>
                                 <p>Contract Link :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Amount" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Amount" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} />
                             </div>
                         </div>
 
-                        <button className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Submit</button>
+                        <button className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Submit</button>
                     </div> */}
                 </div>
             </div>
@@ -380,7 +380,7 @@ const Admin = ({ data }) => {
 
             {/* Adapters  */}
 
-            <div className="bg-white bg-opacity-10 rounded flex flex-col p-5 gap-5 items-center">
+            <div className="bg-purple-500/10 back rounded flex flex-col p-5 gap-5 items-center">
                 <h3 className="">MLP Adapter Management</h3>
                 <div className="flex gap-5">
 
@@ -390,12 +390,12 @@ const Admin = ({ data }) => {
                         <div className="flex flex-col gap-2 justify-end">
                             <div>
                                 <p>Adapter Id :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
 
                             </div>
                             <div>
                                 <p>User Address :</p>
-                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
                             </div>
                             <div>
                                 <div className="flex justify-between">
@@ -403,12 +403,12 @@ const Admin = ({ data }) => {
                                     <button onClick={() => handleCheckUserAdminStatus(2)}>O</button>
                                 </div>
                                 <p>{userAdapterAdminStatus}</p>
-                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-white bg-opacity-10 rounded	" placeholder="User Status" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} /> */}
+                                {/* <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="User Status" onChange={e => setNewRewardAmount(e.target.value)} value={newRewardAmount} /> */}
                             </div>
                         </div>
 
-                        <button onClick={() => handleSetAdmin(2, 1)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Set Admin</button>
-                        <button onClick={() => handleSetAdmin(2, 0)} className='hover:bg-purple-900 bg-white bg-opacity-10 rounded px-4 py-2'>Remove Admin</button>
+                        <button onClick={() => handleSetAdmin(2, 1)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Set Admin</button>
+                        <button onClick={() => handleSetAdmin(2, 0)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Remove Admin</button>
 
                     </div>
 
@@ -422,4 +422,4 @@ const Admin = ({ data }) => {
     )
 }
 
-export default Admin
+export default Admin_Page

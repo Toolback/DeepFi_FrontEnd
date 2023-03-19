@@ -1,20 +1,19 @@
 import { motion } from 'framer-motion';
-import { navVariants } from '../../utils/motion';
+import { navVariants } from 'utils/motion';
 import { useState } from 'react';
 
-import styles from '../../styles';
+import styles from 'styles';
 import Link from 'next/link';
 import { AppDataStoreContext } from 'data/StoreAppData';
 import { useContext } from 'react';
-import { AppRouteStoreContext } from '../../data/StoreAppRouter';
+import { AppRouteStoreContext } from 'data/StoreAppRouter';
 
 const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, modaleMenuStatus, setModaleMenuStatus }) => {
     const { stateAppData } = useContext(AppDataStoreContext);
     const { dispatchAppRoute } = useContext(AppRouteStoreContext);
-    console.log()
     return (
         <>
-            <div className="absolute w-[40%] h-[60%]  gradient-01" />
+            <div className="absolute w-[35%] h-[60%]  gradient-01" />
 
             <motion.nav
                 variants={navVariants}
@@ -22,6 +21,8 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                 whileInView="show"
                 className={`py-8 relative`}
             >
+                    {/* <div className="absolute w-[50%] inset-0 gradient-01" /> */}
+
                 <div className='flex pb-8 text-white md:hidden justify-between items-center'>
                     <button type="button">
                         <Link href="/">
@@ -42,12 +43,12 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                         }
                         {stateAppData.userStatus === "admin" ?
                         <>
-                        {destination == 'pools' ?
-                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'admin' })}>
+                        {destination === "appPage" ?
+                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'adminPage' })}>
                                 Admin Panel
                             </button>
                             :
-                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'pools' })}>
+                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'appPage' })}>
                                 User Panel
                             </button>
                         }
@@ -74,12 +75,12 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                     <div className='flex gap-5'>
                     {stateAppData.userStatus === "admin" ?
                         <>
-                        {destination == 'pools' ?
-                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'admin' })}>
+                        {destination == 'appPage' ?
+                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'adminPage' })}>
                                 Admin Panel
                             </button>
                             :
-                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'pools' })}>
+                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'appPage' })}>
                                 User Panel
                             </button>
                         }

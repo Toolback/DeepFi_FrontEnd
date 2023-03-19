@@ -1,32 +1,16 @@
-import News from '../sections/app/News'
-import Pools from '../sections/app/Pools'
-import Stake from '../sections/app/Stake'
-import Bonds from '../sections/app/Bonds'
-import Dashboard from '../sections/app/Dashboard'
-import Admin from '../sections/app/Admin'
+import App_Page from '../sections/app/dashboard/App_Page'
+import Admin_Page from '../sections/admin/Admin_Page'
 
 const AppViewManager = ({ destination, data }) => {
 
   const generateProtocolView = () => {
     switch (destination) {
-      // case 'news':
-      //   return <News data={data} />
 
-      case 'pools':
-        return <Pools data={data} />
+      case 'appPage':
+        return <App_Page data={data} />
 
-      // case 'stake':
-      //   return <Stake data={data} />
-
-      // case 'bonds':
-      //   return <Bonds data={data} />
-
-      // case 'dashboard':
-      //   return <Dashboard data={data} />
-
-      case 'admin':
-        return <Admin data={data} />
-
+      case 'adminPage':
+        return <Admin_Page data={data} />
 
       default:
         break;

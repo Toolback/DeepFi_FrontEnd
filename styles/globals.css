@@ -85,6 +85,31 @@
   );
 }
 
+.gradient-06 {
+  position: absolute;
+  z-index: 0;
+  width: 404px;
+  height: 800px;
+  right: 20%;
+  top: 15%;
+
+  background: rgba(45, 72, 152, 0.75);
+  filter: blur(175px);
+  transform: rotate(-114.2deg);
+}
+
+.gradient-07 {
+  position: absolute;
+  width: 404px;
+  height: 800px;
+  left: 20%;
+  top: 45%;
+
+  background: rgba(149, 66, 232, 0.35);
+  filter: blur(175px);
+  transform: rotate(-114.2deg);
+}
+
 .feedback-gradient {
   position: absolute;
   width: 200px;
