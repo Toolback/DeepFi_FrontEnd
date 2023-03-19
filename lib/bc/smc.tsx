@@ -4,6 +4,7 @@ import IVault from "./interfaces/IVault";
 import IMLPAdapter from "./interfaces/IMLPAdapter";
 import IFakeToken from "./interfaces/IFakeToken";
 import {ethers} from "ethers";
+import IERC20 from "./interfaces/IERC20";
 
 
 // const getMsgSender = async () => {
@@ -12,9 +13,34 @@ import {ethers} from "ethers";
 //     return {addr};
 // }
 
-// -------------------- IExec Oracle --------------------
+// -------------------- IERC20 --------------------
 
+export const getTokenName = async (_addr : string) => {
+    try {
+        let req = await (await IERC20(_addr)).name();
+        return (req);
+    } catch (e) {
+        console.error("SM : Error retrieving token name:", e)
+    }
+}
 
+export const getTokenBalanceOf = async (_contractAddr : string, _userAddr : string) => {
+    try {
+        let req = await (await IERC20(_contractAddr)).balanceOf(_userAddr);
+        return (req);
+    } catch (e) {
+        console.error("SM : Error retrieving token balance:", e)
+    }
+}
+
+export const getTokenDecimals = async (_contractAddr : string) => {
+    try {
+        let req = await (await IERC20(_contractAddr)).decimals();
+        return (req);
+    } catch (e) {
+        console.error("SM : Error retrieving token decimals:", e)
+    }
+}
 
 // -------------------- Test Token -------------------- 
 
@@ -323,7 +349,7 @@ export const getVaultUserDeposit = async (vault_address : string, user_address :
 
 export const getVaultUserClaimable = async (vault_address : string, user_address : string) => {
     try {
-        let res = await (await IVault(vault_address)).getRewardBalance(user_address);
+        let res = await (await IVault(vault_address)).getUserAllClaimableRewards(user_address);
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving user claimable balance:", e)

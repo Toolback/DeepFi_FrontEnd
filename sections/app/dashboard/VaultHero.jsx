@@ -95,10 +95,12 @@ export default function VaultHero() {
                 dui laoreet diam sed lacus, fames.
               </motion.p>
 
-              <motion.div  variants={textVariant(1.2)} className='block w-full rounded-md border border-transparent bg-white py-3 px-5 text-center text-base font-medium  text-indigo-700 shadow-md hover:bg-gray-50 sm:inline-block sm:w-auto'>
-                <button>
-                  <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">Read More</Link>
+              <motion.div  variants={textVariant(1.2)} >
+                  <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">
+                <button className='block w-full rounded-md border border-transparent bg-white py-3 px-5 text-center text-base font-medium  text-indigo-700 shadow-md hover:bg-gray-50 sm:inline-block sm:w-auto'>
+                    Read More
                 </button>
+                    </Link>
               </motion.div>
 
             </div>
