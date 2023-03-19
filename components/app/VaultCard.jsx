@@ -236,7 +236,7 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
             className="relative w-full  mt-[30px]"
           >
 
-            <div className="absolute w-full min-h-[700px] sm:min-h-[350px] hero-gradient rounded-tl-[120px] z-[0] -top-[10px]" />
+            <div className="absolute w-full min-h-[710px] sm:min-h-[350px] hero-gradient rounded-tl-[120px] z-[0] -top-[10px]" />
 
 
             {/* <div className=" w-full h-[30px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" /> */}
@@ -269,7 +269,7 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
                 </div>
 
                 {/* global infos cards */}
-                <div className="bg-secondary-black/5 min-h-[300px] flex items-center border border-white/10 backdrop-blur drop-shadow-lg ">
+                <div className="bg-secondary-black/5 min-h-[360px] sm:min-h-[100px] flex items-center border border-white/10 backdrop-blur drop-shadow-lg ">
 
                   <div className="h-3/4 flex flex-col gap-4 w-2/3">
 
