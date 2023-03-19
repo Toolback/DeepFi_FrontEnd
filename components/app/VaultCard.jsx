@@ -236,7 +236,7 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
             className="relative w-full  mt-[30px]"
           >
 
-            <div className="absolute w-full min-h-[650px] sm:min-h-[350px] hero-gradient rounded-tl-[120px] z-[0] -top-[10px]" />
+            <div className="absolute w-full min-h-[700px] sm:min-h-[350px] hero-gradient rounded-tl-[120px] z-[0] -top-[10px]" />
 
 
             {/* <div className=" w-full h-[30px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" /> */}
@@ -308,7 +308,7 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
 
                   <div className='w-[1px] h-3/4 bg-white/30'></div>
 
-                  <div className="flex flex-col gap-5 w-1/3 text-center">
+                  <div className="flex flex-col gap-2 w-1/3 text-center">
                     <div className="text-center ">
                       <p className='text-lg font-bold tracking-tight text-white'>{stats.userDeposit}</p>
                       <h4 className='text-sm text-gray-300'>Your Stake</h4>
