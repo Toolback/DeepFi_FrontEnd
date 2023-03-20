@@ -256,9 +256,9 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
 
 
                       <div className="flex justify-center ">
-                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("claim") }} className={actionPoolState == "claim" ? 'hover:bg-purple-900 sm:border sm:border-white/10 sm:bg-purple-900 px-4 py-2 rounded border-b-white/50 text-gray-300' : 'hover:bg-purple-900 sm:border sm:border-white/10 sm:bg-primary-black px-2 sm:px-4 py-2 rounded text-gray-300'}>Claim</button>
-                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("deposit") }} className={actionPoolState == "deposit" ? 'hover:bg-purple-900 sm:border sm:border-white/10 sm:bg-purple-900 px-4 py-2 rounded border-b-white/50 text-gray-300' : 'hover:bg-purple-900 sm:border sm:border-white/10 sm:bg-primary-black px-2  sm:px-4 py-2 rounded text-gray-300'}>Deposit</button>
-                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("withdraw") }} className={actionPoolState == "withdraw" ? 'hover:bg-purple-900 sm:border sm:border-white/10 sm:bg-purple-900 px-4 py-2 rounded border-b-white/50 text-gray-300' : 'hover:bg-purple-900 sm:border sm:border-white/10 sm:bg-primary-black px-2  sm:px-4 py-2 rounded text-gray-300'}>Withdraw</button>
+                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("claim") }} className={actionPoolState == "claim" ? 'px-4 py-2 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2 sm:px-4 py-2 rounded text-gray-500'}>Claim</button>
+                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("deposit") }} className={actionPoolState == "deposit" ? 'px-4 py-2 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Deposit</button>
+                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("withdraw") }} className={actionPoolState == "withdraw" ? 'px-4 py-2 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Withdraw</button>
 
                       </div>
                       <div className='mt-5 h-[0.5px] w-full bg-white/30'></div>

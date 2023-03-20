@@ -86,11 +86,11 @@ const VaultsRender = ({ setModaleConnectStatus }) => {
         {/* Render Switch Between Vaults */}
         <motion.div variants={textVariant(1.5)} className="flex justify-center pt-4 gap-2 ">
           {poolsButtons.map((item) => (
-            <button onClick={() => setSelectedPool(item.vaultId)} key={item.vaultId} className={selectedPool == item.vaultId ? 'hover:bg-purple-900 border border-white border-opacity-10 bg-purple-900 px-4 py-2 rounded text-gray-300' : 'hover:bg-purple-900 border border-white border-opacity-10 bg-primary-black px-4 py-2 rounded text-gray-300'}>
+            <button onClick={() => setSelectedPool(item.vaultId)} key={item.vaultId} className={selectedPool == item.vaultId ? 'hover:bg-purple-900/50 border border-white border-opacity-10 bg-purple-900/50 px-4 py-2 rounded-lg text-gray-300' : 'hover:bg-purple-900/50 border border-white border-opacity-10 bg-primary-black/10 px-4 py-2 rounded-lg text-gray-300'}>
               {item.vaultButtonName}
             </button>
           ))}
-          <button className={'hover:bg-white hover:bg-opacity-30 border border-white border-opacity-10 bg-primary-black bg-opacity-10 px-4 py-2 rounded text-gray-300'}>
+          <button className={'hover:bg-white hover:bg-opacity-30 border border-white border-opacity-10 bg-primary-black/10 px-4 py-2 rounded-lg text-gray-300'}>
             {soonPool.vaultButtonName}
           </button>
           </motion.div>
