@@ -18,7 +18,7 @@ const VaultsRender = ({ setModaleConnectStatus }) => {
   const [selectedPool, setSelectedPool] = useState(0);
   const [poolsButtons, setPoolsButtons] = useState([{
     vaultId: 0,
-    address: '0xc3fa3096A0853Ab1199eA504ad2C167a0eB92680',
+    address: '0x3b171c40646F68e66F0e01197cE40562A5441c25',
     vaultButtonName: "MLP",
   }]);
   const soonPool = {

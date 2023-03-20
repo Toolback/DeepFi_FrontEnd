@@ -5,7 +5,7 @@ import { getProvider } from "../wallet-connect";
 const IHandler = async (signer? : any) => {
     let provider = signer ? signer : await getProvider()
     let contractInstance = new ethers.Contract(
-        "0x47c03f1a44Ab370994419cA38Ac05E70DEC10578", // liquidity handler fantom testnet
+        "0x0EA5b1d7Df2155255E73683F6dE820B3462E5D71", // liquidity handler fantom testnet
         LiquidityHandler.abi,
         provider
     ); 
