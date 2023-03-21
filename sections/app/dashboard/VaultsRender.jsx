@@ -14,7 +14,6 @@ import VaultCard2 from '@components/app/VaultCard2';
 const VaultsRender = ({ setModaleConnectStatus }) => {
   const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
   const [lockData, setLockData] = useState(false);
-  const [updateData, setUpdateData] = useState(false);
   const [selectedPool, setSelectedPool] = useState(0);
   const [poolsButtons, setPoolsButtons] = useState([{
     vaultId: 0,
@@ -33,16 +32,21 @@ const VaultsRender = ({ setModaleConnectStatus }) => {
       // setLoading(true);
       let i = 0;
       const deployedPools = await getDeployedPools();
+      const names = []
+      for(i = 0; i < deployedPools.length; i++)
+      {
+        let name = await await getVaultName(deployedPools[i]);
+        names.push(name);
+      }
       const buttons = []
       await deployedPools.map(async (i_address, index) => {
         buttons.push(
           {
-            vaultId: i, // index ?
+            vaultId: index, // index ?
             address: i_address,
-            vaultButtonName: "MLP", // for now only one pool define later 
+            vaultButtonName: names[index], // for now only one pool define later 
           }
         )
-        i++;
       })
       setPoolsButtons(buttons)
     }
@@ -54,12 +58,12 @@ const VaultsRender = ({ setModaleConnectStatus }) => {
         renderVaults()
         // setLoading(false);
       }, (raison) => {
-        console.log("ERROR Pools infos fetch", raison)
+        console.log("ERROR => Pools Buttons infos fetch", raison)
         setLockData(false);
         // setLoading(false);
       });
     }
-  }, [stateAppData.userAddress, updateData])
+  }, [stateAppData.userAddress])
 
   const renderVaults = () => {
     return (

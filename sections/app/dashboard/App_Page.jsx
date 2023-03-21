@@ -3,6 +3,7 @@ import VaultsRender from './VaultsRender'
 import VaultMetrics from "./VaultMetrics";
 
 const App_Page = ({ data }) => {
+    
     const userMetrics = [
         { name: 'Total Deposit', stat: 'N/a' },
         { name: 'Total Claimable', stat: 'N/a' },

@@ -12,7 +12,7 @@ import CoinCarousel from './CoinCarousel';
 
 const VaultCard = ({ vault, setModaleConnectStatus }) => {
   const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
-
+  const [dataLoading, setLoading] = useState(false);
   const [lockData, setLockData] = useState(false);
   const [userAmountInput, setUserAmountInput] = useState(0);
   const [updateData, setUpdateData] = useState(false);
@@ -37,21 +37,20 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
     })
 
   const toClaimTemp = [
-    { name: 'Deepfi', balance: 1000, url: 'https://s2.coinmarketcap.com/static/img/coins/64x64/23038.png' },
-    { name: 'FTM', balance: 1000, url: '' },
-    { name: 'FTM', balance: 1000, url: '' },
+    { name: 'Deepfi', balance: 'N/a', url: 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/68.png' },
+    { name: 'FTM', balance: 'N/a', url: 'https://s3.coinmarketcap.com/static/img/portraits/62d51d9af192d82df8ff3a83.png' },
 
   ]
 
   const totalEarnedTemp = [
-    { name: 'Deepfi', balance: 1000, url: 'https://s2.coinmarketcap.com/static/img/coins/64x64/23038.png' },
-    { name: 'FTM', balance: 1000, url: '' },
+    { name: 'Deepfi', balance: 'N/a', url: 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/68.png' },
+    { name: 'FTM', balance: 'N/a', url: 'https://s3.coinmarketcap.com/static/img/portraits/62d51d9af192d82df8ff3a83.png' },
   ]
 
   useEffect(() => {
     const fetchData = async () => {
       setLockData(true);
-      // setLoading(true);
+      setLoading(true);
       let connected = false;
       if (stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve")
         connected = true;
@@ -64,27 +63,25 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
       let rewardTokenName = await getTokenName(rewardToken);
       let res =
       {
-
-
-        vaultAddress: vault.address,
-        adapterId: adapter_id,
+        // vaultAddress: vault.address,
+        // adapterId: adapter_id,
         // adapterAddress: adapter_data.adapterAddress,
-        adapterAddress: "",
+        // adapterAddress: "",
+        // rewardToken: rewardToken.substring(0, 5) + "..." + rewardToken.substring(rewardToken.length - 3),
+        // rewardFinishAt: (await getVaultEndRewardDuration(vault.address)).toString(),
+        // rewardDuration: (await getVaultRewardDuration(vault.address)).toString() + "Days",
+
         tvl: (await getVaultTVL(vault.address)).toString(),
-        rewardToken: rewardToken.substring(0, 5) + "..." + rewardToken.substring(rewardToken.length - 3),
-        rewardFinishAt: (await getVaultEndRewardDuration(vault.address)).toString(),
-        rewardDuration: (await getVaultRewardDuration(vault.address)).toString() + "Days",
-        rewardRate: (await getVaultRewardRate(vault.address)).toString(),
+
+        rewardRate: (Number(ethers.utils.formatUnits(await getVaultRewardRate(vault.address), await getTokenDecimals(stakeToken)))).toFixed(8),
         userDeposit: connected == true ? (ethers.utils.formatUnits(await getVaultUserDeposit(vault.address, stateAppData.userAddress), await getTokenDecimals(stakeToken))) + ' ' + stakeTokenName : "N/a",
         // userClaimable: connected == true ? await getVaultUserClaimable(vault.address, stateAppData.userAddress) : [], // todo Multiple Reward Tokens
         // userTotalEarned: connected == true ? await getVaultTotalUserEarned(vault.address, stateAppData.userAddress) : [ ], // todo Multiple Reward Tokens
         userClaimable: connected == true ? toClaimTemp : toClaimTemp,//[], // todo Multiple Reward Tokens
         userTotalEarned: connected == true ? totalEarnedTemp : totalEarnedTemp, //[], // todo Multiple Reward Tokens
-
         userAvailableStakingBal: connected == true ? (ethers.utils.formatUnits(await getTokenBalanceOf(stakeToken, stateAppData.userAddress), await getTokenDecimals(stakeToken))) + ' ' + stakeTokenName : "N/a",
         adapterContracts: (await getAdapterInfos(adapter_id)).contracts
       }
-
       setStats(res);
       // console.log(" Info push: ", res)
     }
@@ -93,11 +90,11 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
       fetchData().then(() => {
         setLockData(false);
         renderVault()
-        // setLoading(false);
+        setLoading(false);
       }, (raison) => {
         console.log("ERROR Pools infos fetch", raison)
         setLockData(false);
-        // setLoading(false);
+        setLoading(false);
       });
     }
   }, [stateAppData.userAddress, vault, updateData])
@@ -192,10 +189,10 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
       case 'claim':
         return (
           <>
-          <div className='w-[250px] sm:w-[300px]'>
+            <div className='w-[250px] sm:w-[300px]'>
 
-        <CoinCarousel coins={stats.userClaimable} displayNbMobile={2} />
-          </div>
+              <CoinCarousel coins={stats.userClaimable} displayNbMobile={2} />
+            </div>
 
             <div className='flex justify-center gap-2'>
               {stateAppData.userAddress != '' && stateAppData.userAddress != 'connect to retrieve' ?
@@ -238,7 +235,23 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
 
             {/* <div className=" w-full h-[30px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" /> */}
             <div className="sm:flex sm:flex-col">
+              {dataLoading ?
+                <>
+                  <div className=' absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 flex'>
+                    <div
 
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-purple-900/50 focus:border-rose-200 active:bg-rose-200 transition ease-in-out duration-150 cursor-not-allowed"
+                      disabled=""
+                    >
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Loading
+
+                    </div>
+                  </div>
+                </> : <></>}
               {/* pool display */}
               <div className="pt-4 grid sm:grid-cols-2 ">
 
@@ -246,69 +259,75 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
                 <div className='sm:col-span-1'>
 
                   <div className="bg-primary-black/90 sm:min-h-[340px] min-h-[380px] sm:flex sm:justify-center py-10 px-2 rounded-tl-[120px]  border border-white/10 backdrop-blur drop-shadow-lg ">
-                    <div className=''>
+                    {!dataLoading ? <>
+                      <div className=''>
 
 
-                      <div className="flex justify-center ">
-                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("claim") }} className={actionPoolState == "claim" ? 'px-4 py-8 sm:py-4 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2 sm:px-4 py-2 rounded text-gray-500'}>Claim</button>
-                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("deposit") }} className={actionPoolState == "deposit" ? 'px-4 py-8 sm:py-4 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Deposit</button>
-                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("withdraw") }} className={actionPoolState == "withdraw" ? 'px-4 py-8 sm:py-4 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Withdraw</button>
+                        <div className="flex justify-center ">
+                          <button onClick={() => { setUserAmountInput(0); setActionPoolState("claim") }} className={actionPoolState == "claim" ? 'px-4 py-8 sm:py-4 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2 sm:px-4 py-2 rounded text-gray-500'}>Claim</button>
+                          <button onClick={() => { setUserAmountInput(0); setActionPoolState("deposit") }} className={actionPoolState == "deposit" ? 'px-4 py-8 sm:py-4 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Deposit</button>
+                          <button onClick={() => { setUserAmountInput(0); setActionPoolState("withdraw") }} className={actionPoolState == "withdraw" ? 'px-4 py-8 sm:py-4 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Withdraw</button>
 
+                        </div>
+                        <div className=' mb-4 h-[0.5px] w-full bg-white/30'></div>
+                        {renderAction()}
+
+                        {/* conditionnel if connected */}
+
+                        {/* <button>Approve & Deposit</button> */}
                       </div>
-                      <div className=' mb-4 h-[0.5px] w-full bg-white/30'></div>
-                      {renderAction()}
-
-                      {/* conditionnel if connected */}
-
-                      {/* <button>Approve & Deposit</button> */}
-                    </div>
+                    </> : <></>}
                   </div>
                 </div>
 
                 {/* global infos cards */}
                 <div className="bg-secondary-black/5 min-h-[330px] sm:min-h-[100px] flex justify-around items-center border border-white/10 backdrop-blur drop-shadow-lg ">
 
+                  {!dataLoading ? <>
 
-                    <div className='text-center flex flex-col gap-4'>
-                      <h4 className='text-sm text-gray-300'>Total Earned</h4>
+                    <div className='text-center flex flex-col gap-2'>
                       <div className='w-[120px] sm:w-[170px] md:w-[210px]'>
 
-                              <CoinCarousel coins={stats.userTotalEarned} displayNbMobile={1} />
-                              </div>
+                        <CoinCarousel coins={stats.userTotalEarned} displayNbMobile={1} />
+                      </div>
+                      <h4 className='text-md text-gray-300'>Total Earned</h4>
 
                     </div>
 
-                  <div className='w-[1px] h-3/4 bg-white/30'></div>
+                    <div className='w-[1px] h-3/4 bg-white/30'></div>
 
-                  <div className="grid sm:grid-cols-2 gap-2 sm:gap-4 w-1/3 text-center">
-                    <div className="text-center">
-                      <p className='text-lg font-bold tracking-tight text-white'>{stats.tvl}</p>
-                      <h4 className='text-sm text-gray-300'>TVL</h4>
-                    </div>
-                    <div className="text-center">
-                      <p className='text-lg text-center font-bold tracking-tight text-white'>X</p>
-                      <h4 className='text-sm text-gray-300'>APR</h4>
-                    </div>
-                    <div className="text-center">
-                      <p className='text-lg font-bold tracking-tight text-white'>0.1 %</p>
-                      <h4 className='text-sm text-gray-300'>Fees on withdraw</h4>
-                    </div>
-                    <div className="text-center">
-                      <p className='text-lg text-center font-bold tracking-tight text-white'>X</p>
-                      <h4 className='text-sm text-gray-300'>Rewards / second</h4>
-                    </div>
-                    <div className='hidden sm:block sm:col-span-2 h-[1px] w-full bg-white/30'></div>
+                    <div className="grid sm:grid-cols-2 gap-2 sm:gap-4 w-1/3 text-center">
+                      <div className="text-center">
+                        <p className='text-lg font-bold tracking-tight text-white'>{stats.tvl}</p>
+                        <h4 className='text-sm text-gray-300'>TVL</h4>
+                      </div>
+                      <div className="text-center">
+                        <p className='text-lg text-center font-bold tracking-tight text-white'>X</p>
+                        <h4 className='text-sm text-gray-300'>APR</h4>
+                      </div>
+                      <div className="text-center">
+                        <p className='text-lg font-bold tracking-tight text-white'>0.1 %</p>
+                        <h4 className='text-sm text-gray-300'>Fees on withdraw</h4>
+                      </div>
+                      <div className="text-center">
+                        <p className='text-lg text-center font-bold tracking-tight text-white'>{stats.rewardRate > 0 ? stats.rewardRate : 0}</p>
+                        <h4 className='text-sm text-gray-300'>Rewards / second</h4>
+                      </div>
+                      <div className='hidden sm:block sm:col-span-2 sm:h-[1px] w-full bg-white/30'></div>
 
-                    <div className="text-center sm:col-span-2 pt-4 ">
-                      <p className='text-lg font-bold tracking-tight text-white'>{stats.userDeposit}</p>
-                      <h4 className='text-sm text-gray-300'>Your Stake</h4>
-                    </div>
+                      <div className="text-center sm:col-span-2 pt-4 ">
+                        <p className='sm:text-2xl text-lg font-bold tracking-tight text-white'>{stats.userDeposit}</p>
+                        <h4 className='text-sm text-gray-300'>Your Stake</h4>
+                      </div>
 
-                  </div>
+                    </div>
+                  </> : <></>}
+
                 </div>
 
               </div>
 
+              {/* </>} */}
 
 
             </div>
