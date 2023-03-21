@@ -192,16 +192,10 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
       case 'claim':
         return (
           <>
-            {/* <dl className="grid grid-cols-2 gap-2 py-4 px-4">
-              {stats.userClaimable?.map((item, index) => (
-                <div key={index} className="overflow-hidden flex flex-col items-center ">
-                  {item.url ? <img className="z-30 h-[44px]" src={item.url} /> : <div className="h-[44px]"></div>}
-                  <dt className="truncate text-sm font-medium text-gray-300">{item.name}</dt>
-                  <dd className="mt-1 text-xl font-semibold tracking-tight">{item.balance}</dd>
-                </div>
-              ))}
-            </dl> */}
-        <CoinCarousel coins={stats.userClaimable}/>
+          <div className='w-[250px] sm:w-[300px]'>
+
+        <CoinCarousel coins={stats.userClaimable} displayNbMobile={2} />
+          </div>
 
             <div className='flex justify-center gap-2'>
               {stateAppData.userAddress != '' && stateAppData.userAddress != 'connect to retrieve' ?
@@ -239,7 +233,7 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
             className="relative w-full  mt-[30px]"
           >
 
-            <div className="absolute w-full min-h-[710px] sm:min-h-[350px] hero-gradient rounded-tl-[120px] z-[0] -top-[10px]" />
+            <div className="absolute w-full min-h-[730px] sm:min-h-[360px] hero-gradient rounded-tl-[120px] z-[0] -top-[10px]" />
 
 
             {/* <div className=" w-full h-[30px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" /> */}
@@ -251,17 +245,17 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
                 {/* deposit / withdraw */}
                 <div className='sm:col-span-1'>
 
-                  <div className="bg-primary-black/90 sm:min-h-[330px] sm:flex sm:justify-center py-10 px-2 rounded-tl-[120px]  border border-white/10 backdrop-blur drop-shadow-lg ">
+                  <div className="bg-primary-black/90 sm:min-h-[340px] min-h-[380px] sm:flex sm:justify-center py-10 px-2 rounded-tl-[120px]  border border-white/10 backdrop-blur drop-shadow-lg ">
                     <div className=''>
 
 
                       <div className="flex justify-center ">
-                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("claim") }} className={actionPoolState == "claim" ? 'px-4 py-2 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2 sm:px-4 py-2 rounded text-gray-500'}>Claim</button>
-                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("deposit") }} className={actionPoolState == "deposit" ? 'px-4 py-2 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Deposit</button>
-                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("withdraw") }} className={actionPoolState == "withdraw" ? 'px-4 py-2 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Withdraw</button>
+                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("claim") }} className={actionPoolState == "claim" ? 'px-4 py-8 sm:py-4 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2 sm:px-4 py-2 rounded text-gray-500'}>Claim</button>
+                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("deposit") }} className={actionPoolState == "deposit" ? 'px-4 py-8 sm:py-4 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Deposit</button>
+                        <button onClick={() => { setUserAmountInput(0); setActionPoolState("withdraw") }} className={actionPoolState == "withdraw" ? 'px-4 py-8 sm:py-4 rounded-sm  text-gray-200 text-bold' : 'hover:text-gray-300 transition ease transform hover:-translate-y-1 duration-1500 px-2  sm:px-4 py-2 rounded text-gray-500'}>Withdraw</button>
 
                       </div>
-                      <div className='mt-5 h-[0.5px] w-full bg-white/30'></div>
+                      <div className=' mb-4 h-[0.5px] w-full bg-white/30'></div>
                       {renderAction()}
 
                       {/* conditionnel if connected */}
@@ -272,25 +266,17 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
                 </div>
 
                 {/* global infos cards */}
-                <div className="bg-secondary-black/5 min-h-[360px] sm:min-h-[100px] flex justify-around items-center border border-white/10 backdrop-blur drop-shadow-lg ">
+                <div className="bg-secondary-black/5 min-h-[330px] sm:min-h-[100px] flex justify-around items-center border border-white/10 backdrop-blur drop-shadow-lg ">
 
-                  {/* <div className="h-3/4 flex flex-col gap-4 w-2/3"> */}
-
-                    {/* <div className='h-[1px] w-full bg-white'></div> */}
 
                     <div className='text-center flex flex-col gap-4'>
                       <h4 className='text-sm text-gray-300'>Total Earned</h4>
-                      <dl className="grid grid-cols-2 gap-4 px-4">
-                        {stats.userTotalEarned?.map((item, index) => (
-                          <div key={index} className="overflow-hidden flex flex-col items-center ">
-                            {item.url ? <img className="z-30 h-[44px]" src={item.url} /> : <div className="h-[44px]"></div>}
-                            <dt className="truncate text-sm font-medium text-gray-300">{item.name}</dt>
-                            <dd className="mt-1 text-xl font-semibold tracking-tight">{item.balance}</dd>
-                          </div>
-                        ))}
-                      </dl>
+                      <div className='w-[120px] sm:w-[170px] md:w-[210px]'>
+
+                              <CoinCarousel coins={stats.userTotalEarned} displayNbMobile={1} />
+                              </div>
+
                     </div>
-                  {/* </div> */}
 
                   <div className='w-[1px] h-3/4 bg-white/30'></div>
 

@@ -5,28 +5,29 @@ import 'react-multi-carousel/lib/styles.css';
 // import { DisplayedCoins } from '../components';
 // import { getFeaturedPosts } from '../services';
 
-const responsive = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 1024 },
-    items: 2,
-  },
-  desktop: {
-    breakpoint: { max: 1024, min: 768 },
-    items: 2,
-  },
-  tablet: {
-    breakpoint: { max: 768, min: 640 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 640, min: 0 },
-    items: 2,
-  },
-};
 
-const CoinCarousel = ({ coins }) => {
+const CoinCarousel = ({ coins, displayNbMobile }) => {
   const [displayedCoins, setDisplayCoins] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
+  
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 1024 },
+      items: 2,
+    },
+    desktop: {
+      breakpoint: { max: 1024, min: 768 },
+      items: 2,
+    },
+    tablet: {
+      breakpoint: { max: 768, min: 640 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 640, min: 0 },
+      items: displayNbMobile,
+    },
+  };
 
   useEffect(() => {
     setDisplayCoins(coins);
@@ -50,7 +51,7 @@ const CoinCarousel = ({ coins }) => {
   );
 
   return (
-    <div className="py-4 w-[300px]">
+    <div className="py-4">
       <Carousel infinite customLeftArrow={customLeftArrow} customRightArrow={customRightArrow} responsive={responsive} itemClass="px-4">
         {dataLoaded && displayedCoins?.map((coin, index) => (
           
