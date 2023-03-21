@@ -201,7 +201,7 @@ const VaultCard = ({ vault, setModaleConnectStatus }) => {
               {stateAppData.userAddress != '' && stateAppData.userAddress != 'connect to retrieve' ?
                 <button onClick={() => handlePoolClaim()} className='hover:font-bold hover:border-white/60 rounded-xl hover:border font-semibold text-2xl border-b border-white/10 transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Claim Reward</button>
                 :
-                <button onClick={() => setModaleConnectStatus(true)} className='hover:font-bold font-semibold text-2xl transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
+                <button onClick={() => setModaleConnectStatus(true)} className='hover:font-bold hover:border-white/60 rounded-xl hover:border font-semibold text-2xl border-b border-white/10 transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
               }
 
             </div>
