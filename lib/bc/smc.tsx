@@ -15,27 +15,46 @@ import IERC20 from "./interfaces/IERC20";
 
 // -------------------- IERC20 --------------------
 
-export const getTokenName = async (_addr : string) => {
+export const getTokenName = async (_addr : string, provider : any) => {
     try {
-        let req = await (await IERC20(_addr)).name();
+        let req = await (await IERC20(_addr, provider)).name();
         return (req);
     } catch (e) {
         console.error("SM : Error retrieving token name:", e)
     }
 }
 
-export const getTokenBalanceOf = async (_contractAddr : string, _userAddr : string) => {
+export const getTokenAllowance = async (_addr : string, provider : any, owner:string, to:string) => {
     try {
-        let req = await (await IERC20(_contractAddr)).balanceOf(_userAddr);
+        let req = await (await IERC20(_addr, provider)).allowance(owner, to);
+        return (req);
+    } catch (e) {
+        console.error("SM : Error retrieving token allowance:", e)
+    }
+}
+
+export const getTokenBalanceOf = async (_contractAddr : string, _userAddr : string, provider : any) => {
+    try {
+        let req = await (await IERC20(_contractAddr, provider)).balanceOf(_userAddr);
         return (req);
     } catch (e) {
         console.error("SM : Error retrieving token balance:", e)
     }
 }
 
-export const getTokenDecimals = async (_contractAddr : string) => {
+export const getTokenDecimals = async (_contractAddr : string, provider : any) => {
     try {
-        let req = await (await IERC20(_contractAddr)).decimals();
+        let req = await (await IERC20(_contractAddr, provider)).decimals();
+        return (req);
+    } catch (e) {
+        console.error("SM : Error retrieving token decimals:", e)
+    }
+}
+
+
+export const ApproveTokenAmount = async (_token:string, _target : string, _amount : number, _signer : any) => {
+    try {
+        let req = await (await IERC20(_token, _signer)).approve(_target, _amount);
         return (req);
     } catch (e) {
         console.error("SM : Error retrieving token decimals:", e)
@@ -53,9 +72,9 @@ export const mintFakeToken = async (_addr : string, _signer : any) => {
     }
 }
 
-export const balOfFakeToken = async (_addr : string) => {
+export const balOfFakeToken = async (_addr : string, provider : any) => {
     try {
-        let bal = await (await IFakeToken()).balanceOf(_addr);
+        let bal = await (await IFakeToken(provider)).balanceOf(_addr);
         return (bal);
     } catch (e) {
         console.error("SM : Error retrieving fake token balance:", e)
@@ -74,12 +93,12 @@ export const approveTargetFT = async (_target : string, _amount : number, _signe
 
 // -------------------- Deepfi Token -------------------- 
 
-export const balOfDeepfi = async (_addr : string) => {
+export const balOfDeFiToken = async (_addr : string, provider : any) => {
     try {
-        let bal = await (await IDeepfi()).balanceOf(_addr);
+        let bal = Number(ethers.utils.formatUnits(await (await IDeepfi(provider)).balanceOf(_addr), 18));
         return (bal);
     } catch (e) {
-        console.error("SM : Error retrieving Deepfi balance:", e)
+        console.error("SM : Error retrieving DeFi Token balance:", e)
     }
 }
 
@@ -104,37 +123,37 @@ export const transferDeepfi = async (_target : string, _amount : number, _signer
 
 // -------------------- Handler -------------------- 
 
-export const getDeployedPools = async () => {
+export const getDeployedPools = async (provider : any) => {
     try {
-        let res = await (await IHandler()).getListOfPools();
+        let res = await (await IHandler(provider)).getListOfPools();
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving getDeployedPools:", e)
     }
 }
 
-export const getAdapterId = async (poolAddress : string) => {
+export const getAdapterId = async (poolAddress : string, provider : any) => {
     try {
-        let res = await (await IHandler()).getAdapterId(poolAddress);
+        let res = await (await IHandler(provider)).getAdapterId(poolAddress);
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving getAdapterId:", e)
     }
 }
 
-export const getAdapterInfos = async (poolId : number) => {
+export const getAdapterInfos = async (poolId : number, provider : any) => {
     try {
-        let res = await (await IHandler()).getAdapterInfo(poolId);
+        let res = await (await IHandler(provider)).getAdapterInfo(poolId);
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving getAdapterInfos:", e)
     }
 }
 
-export const isHandlerAdmin = async (userAddress : string) => {
+export const isHandlerAdmin = async (userAddress : string, provider : any) => {
     try {
-        const AdminRole = await (await IHandler()).DEFAULT_ADMIN_ROLE();
-        const res = await (await IHandler()).hasRole(AdminRole, userAddress);
+        const AdminRole = await (await IHandler(provider)).DEFAULT_ADMIN_ROLE();
+        const res = await (await IHandler(provider)).hasRole(AdminRole, userAddress);
     return (res);
 } catch (e) {
     console.error("SM : Error retrieving handler admin role:", e)
@@ -301,9 +320,9 @@ export const setPauseVault = async (vault_address : string, flag : number, signe
     }
 }
 
-export const getPausedVaultStatus = async (vault_address : string) => {
+export const getPausedVaultStatus = async (vault_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).paused();
+        let res = await (await IVault(vault_address, provider)).paused();
         return res;
     } catch (e) {
         console.error("SM : Error while removeVaultAdmin:", e)
@@ -311,113 +330,127 @@ export const getPausedVaultStatus = async (vault_address : string) => {
 }
 // View Functions
 
-export const getVaultName = async (vault_address : string) => {
+export const getVaultName = async (vault_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).vaultName();
+        let res = await (await IVault(vault_address, provider)).vaultName();
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving vault name:", e)
     }
 }
 
-export const isVaultAdmin = async (vault_address : string, userAddress : string) => {
+export const isVaultAdmin = async (vault_address : string, userAddress : string, provider : any) => {
     try {
-        const AdminRole = await (await IVault(vault_address)).DEFAULT_ADMIN_ROLE();
-        const res = await (await IVault(vault_address)).hasRole(AdminRole, userAddress);
+        const AdminRole = await (await IVault(vault_address, provider)).DEFAULT_ADMIN_ROLE();
+        const res = await (await IVault(vault_address, provider)).hasRole(AdminRole, userAddress);
     return (res);
 } catch (e) {
     console.error("SM : Error retrieving vault admin role:", e)
 }
 }
-export const getVaultTVL = async (vault_address : string) => {
+export const getVaultTVL = async (vault_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).totalSupply();
+        let res = await (await IVault(vault_address, provider)).totalSupply();
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving vault tvl:", e)
     }
 }
 
-export const getVaultUserDeposit = async (vault_address : string, user_address : string) => {
+export const getVaultUserDeposit = async (vault_address : string, user_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).getStakeBalance(user_address);
+        let res = await (await IVault(vault_address, provider)).getStakeBalance(user_address);
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving user vault balance:", e)
     }
 }
 
-export const getVaultUserClaimable = async (vault_address : string, user_address : string) => {
+export const getVaultUserClaimable = async (vault_address : string, user_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).getUserAllClaimableRewards(user_address);
+        let res = await (await IVault(vault_address, provider)).getUserAllClaimableRewards(user_address);
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving user claimable balance:", e)
     }
 }
 
-export const getVaultTotalUserEarned = async (vault_address : string, user_address : string) => {
+export const getVaultTotalUserEarned = async (vault_address : string, user_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).getTotalUserEarned(user_address);
+        let res = await (await IVault(vault_address, provider)).getUserAllEarnedRewards(user_address);
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving user total earned from vault balance:", e)
     }
 }
 
-export const getVaultEndRewardDuration = async (vault_address : string) => {
+export const getVaultEndRewardDuration = async (vault_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).finishAt();
+        let res = await (await IVault(vault_address, provider)).finishAt();
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving finishat reward vault:", e)
     }
 }
 
-export const getVaultRewardDuration = async (vault_address : string) => {
+export const getVaultRewardDuration = async (vault_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).duration();
+        let res = await (await IVault(vault_address, provider)).duration();
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving finishat reward vault:", e)
     }
 }
 
-export const getVaultRewardRate = async (vault_address : string) => {
+export const getVaultRewardRate = async (vault_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).rewardRate();
+        let res = await (await IVault(vault_address, provider)).rewardRate();
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving finishat reward vault:", e)
     }
 }
 
-export const getVaultStakeToken = async (vault_address : string) => {
+export const getVaultStakeToken = async (vault_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).getStakeToken();
+        let res = await (await IVault(vault_address, provider)).stakingToken();
         return (res);
     } catch (e) {
         console.error("SM : Error retrieving vault staking token :", e)
     }
 }
 
-export const getVaultRewardToken = async (vault_address : string) => {
+// export const getVaultRewardToken = async (vault_address : string, provider : any) => {
+//     try {
+//         let res = await (await IVault(vault_address, provider)).getRewardToken();
+//         return (res);
+//     } catch (e) {
+//         console.error("SM : Error retrieving vault reward token :", e)
+//     }
+// }
+
+export const getVaultRewardToken = async (vault_address : string, provider : any) => {
     try {
-        let res = await (await IVault(vault_address)).getRewardToken();
+        let res = await (await IVault(vault_address, provider)).rewardsToken();
+        if (!Array.isArray(res))
+        {
+            let arr = [1];
+            arr[0] = res;
+            return (arr); 
+        }
         return (res);
     } catch (e) {
-        console.error("SM : Error retrieving vault reward token :", e)
+        console.error("SM : Error getVaultRewardToken:", e)
     }
 }
-
 
 // // -------------------- MLP Adapter --------------------
 
 
-export const isAdapterAdmin = async (userAddress : string) => {
+export const isAdapterAdmin = async (userAddress : string, provider : any) => {
     try {
-        const AdminRole = await (await IMLPAdapter()).DEFAULT_ADMIN_ROLE();
-        const res = await (await IMLPAdapter()).hasRole(AdminRole, userAddress);
+        const AdminRole = await (await IMLPAdapter(provider)).DEFAULT_ADMIN_ROLE();
+        const res = await (await IMLPAdapter(provider)).hasRole(AdminRole, userAddress);
     return (res);
 } catch (e) {
     console.error("SM : Error retrieving Adapter admin role:", e)
@@ -441,5 +474,14 @@ export const removeAdapterAdmin = async (newAdminAddress : string, signer : any)
         return await res.wait();
     } catch (e) {
         console.error("SM : Error while removeAdapterAdmin:", e)
+    }
+}
+
+export const setAdapterCompoundStatus = async (status : boolean, signer : any) => {
+    try {
+        let res = await (await IMLPAdapter(signer)).setCompoundRewardStatus(status);
+        return await res.wait();
+    } catch (e) {
+        console.error("SM : Error while setAdapterCompoundStatus:", e)
     }
 }

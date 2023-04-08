@@ -29,43 +29,47 @@ const Admin_Page = ({ data }) => {
     const [deployedPools, setDeployedPools] = useState([
         {
             vaultId: 0,
-            vaultAddress: '',
-            vaultName: ""
+            address: '',
+            vaultButtonName: ""
         }])
         ;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            let i = 0;
-            const deployedPools = await getDeployedPools();
-            const buttons = []
-            await deployedPools.forEach(async (i_address) => {
-                // const res = await getVaultName(i_address);
-                // console.log("Vault Name : ", vaultName);
-                buttons.push({
-                        vaultId: i,
-                        vaultAddress: i_address,
-                        vaultName: "MLP", // for now only one pool define later
-                        // vaultName :  res,
-                    })
-                renderDeployedVaults()
-                // console.log(" Info push: ", pool)
-                i++;
-            })
-            setDeployedPools(buttons)
-            // return (poolsInfos)
-        }
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         let i = 0;
+    //         const deployedPools = await getDeployedPools();
+    //         const buttons = []
+    //         await deployedPools.forEach(async (i_address) => {
+    //             // const res = await getVaultName(i_address);
+    //             // console.log("Vault Name : ", vaultButtonName);
+    //             buttons.push({
+    //                     vaultId: i,
+    //                     address: i_address,
+    //                     vaultButtonName: "MLP", // for now only one pool define later
+    //                     // vaultButtonName :  res,
+    //                 })
+    //             renderDeployedVaults()
+    //             // console.log(" Info push: ", pool)
+    //             i++;
+    //         })
+    //         setDeployedPools(buttons)
+    //         // return (poolsInfos)
+    //     }
 
-        fetchData().then((valeur) => {
-            // console.log("All Pools Infos", valeur)
-            // Promesse tenue
-            renderDeployedVaults()
-            // setLoading(false);
-        }, (raison) => {
-            // Rejet de la promesse
-            console.log("ERROR Pools infos fetch", raison)
-            // setLoading(false);
-        });
+    //     fetchData().then((valeur) => {
+    //         // console.log("All Pools Infos", valeur)
+    //         // Promesse tenue
+    //         renderDeployedVaults()
+    //         // setLoading(false);
+    //     }, (raison) => {
+    //         // Rejet de la promesse
+    //         console.log("ERROR Pools infos fetch", raison)
+    //         // setLoading(false);
+    //     });
+    // }, [])
+
+    useEffect(()=>{
+        setDeployedPools(stateAppData.vaults);
     }, [])
 
     const handleSubmitVaultReward = async () => {
@@ -168,10 +172,10 @@ const Admin_Page = ({ data }) => {
                 {deployedPools.map(item => {
                     return (
                         <div key={item.vaultId} className="bg-primary-black p-5 rounded flex flex-col gap-2 items-center">
-                            <h4>{item.vaultName}</h4>
+                            <h4>{item.vaultButtonName}</h4>
                             <div>
                                 <p>Vault Address :</p>
-                                <p>{item.vaultAddress}</p>
+                                <p>{item.address}</p>
                             </div>
                         </div>
                     )

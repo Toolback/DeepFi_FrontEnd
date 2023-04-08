@@ -34,7 +34,7 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
 
                     <div>
 
-                        {stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve" ?
+                        {stateAppData.connected === true ?
                             <p>{(stateAppData.userAddress).substring(0, 5)}...{(stateAppData.userAddress).substring(stateAppData.userAddress.length - 3)}</p>
                             :
                             <button className='hover:font-extrabold text-white' onClick={() => setModaleConnectStatus(!modaleConnectStatus)}>
@@ -86,7 +86,7 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                         }
                                                 </> : <></>}
 
-                        {stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve" ?
+                        {stateAppData.connected === true ?
                             <p>{(stateAppData.userAddress).substring(0, 5)}...{(stateAppData.userAddress).substring(stateAppData.userAddress.length - 3)}</p>
                             :
                             <button className='hover:font-extrabold  text-[20px]' onClick={() => setModaleConnectStatus(!modaleConnectStatus)}>

@@ -1,9 +1,7 @@
 import D_Pool_SingleReward from "../ABI/D_Vault_SingleReward.json";
-import {ethers, getDefaultProvider} from "ethers"
-import { getProvider } from "../wallet-connect";
+import {ethers} from "ethers"
 
-const IVault = async (vault_address : string, signer? : any) => {
-    let provider = signer ? signer : await getProvider()
+const IVault = async (vault_address : string, provider : any) => {
     let contractInstance = new ethers.Contract(
         vault_address, // Vault fantom 
         D_Pool_SingleReward.abi, 

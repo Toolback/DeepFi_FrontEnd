@@ -7,12 +7,12 @@ import { useContext } from 'react';
 import { isHandlerAdmin } from 'lib/bc/smc';
 
 const ModaleConnect = ({ setModaleConnectStatus }) => {
-  const {dispatchAppData} = useContext(AppDataStoreContext);
+  const {stateAppData, dispatchAppData} = useContext(AppDataStoreContext);
 
   const handleConnectClick = async () => {
     const res = await connectWallet();
-    let userStatus = await isHandlerAdmin(res.userAddress) ? "admin" : "member";
-    await dispatchAppData({ type: 'setAppData', accounts : res.accounts, userStatus, userAddress : res.userAddress, signer : res.signer})
+    let userStatus = await isHandlerAdmin(res.userAddress, res.signer) ? "admin" : "member";
+    await dispatchAppData({...stateAppData, type: 'setAppData', accounts : res.accounts, connected: true, userStatus, userAddress : res.userAddress, provider : res.signer})
 
     setModaleConnectStatus(false);
   }

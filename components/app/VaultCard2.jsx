@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { slideIn } from 'utils/motion';
 import { getProvider } from 'lib/bc/wallet-connect';
-import { approveTargetFT, balOfDeepfi, balOfFakeToken, getAdapterId, getAdapterInfos, getDeployedPools, getVaultEndRewardDuration, getVaultName, getVaultRewardDuration, getVaultRewardRate, getVaultRewardToken, getVaultTotalUserEarned, getVaultTVL, getVaultUserClaimable, getVaultUserDeposit, mintFakeToken, vaultClaim, vaultDeposit, vaultWithdraw } from 'lib/bc/smc'
+import { approveTargetFT, balOfFakeToken, getAdapterId, getAdapterInfos, getDeployedPools, getVaultEndRewardDuration, getVaultName, getVaultRewardDuration, getVaultRewardRate, getVaultRewardToken, getVaultTotalUserEarned, getVaultTVL, getVaultUserClaimable, getVaultUserDeposit, mintFakeToken, vaultClaim, vaultDeposit, vaultWithdraw } from 'lib/bc/smc'
 import { BigNumber } from "ethers";
 import ContractCard from './ContractInfoRenderer';
 
@@ -50,7 +50,7 @@ const VaultCard2 = ({ vault, setModaleConnectStatus }) => {
 
       // setLoading(true);
       let connected = false;
-      if (stateAppData.userAddress != "" && stateAppData.userAddress != "connect to retrieve")
+      if (stateAppData.connected === true)
         connected = true;
       // console.log("Connected Status", connected)
       let adapter_id = await getAdapterId(vault.address);
@@ -150,7 +150,7 @@ const VaultCard2 = ({ vault, setModaleConnectStatus }) => {
             <div className='py-4'>
             </div>
             <div className='flex justify-center gap-2'>
-              {stateAppData.userAddress != '' && stateAppData.userAddress != 'connect to retrieve' ?
+              {stateAppData.connected === true ?
                 <button onClick={() => handlePoolDeposit()} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Deposit</button>
                 :
                 <button onClick={() => setModaleConnectStatus(true)} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
@@ -173,7 +173,7 @@ const VaultCard2 = ({ vault, setModaleConnectStatus }) => {
             <div className='py-4'>
             </div>
             <div className='flex justify-center gap-2'>
-              {stateAppData.userAddress != '' && stateAppData.userAddress != 'connect to retrieve' ?
+              {stateAppData.connected === true ?
                 <button onClick={() => handlePoolWithdraw()} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Withdraw</button>
                 :
                 <button onClick={() => setModaleConnectStatus(true)} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
@@ -196,7 +196,7 @@ const VaultCard2 = ({ vault, setModaleConnectStatus }) => {
             <div className='py-4'>
             </div>
             <div className='flex justify-center gap-2'>
-              {stateAppData.userAddress != '' && stateAppData.userAddress != 'connect to retrieve' ?
+              {stateAppData.connected === true ?
                 <button onClick={() => handlePoolClaim()} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Claim</button>
                 :
                 <button onClick={() => setModaleConnectStatus(true)} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>

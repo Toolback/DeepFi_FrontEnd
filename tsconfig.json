@@ -17,6 +17,7 @@
 		"paths": {
 			"@components/*": ["components/*"],
 			"@lib/*": ["lib/*"],
+			"@data/*": ["data/*"],
 			"@utils/*": ["utils/*"],
 			"@theme/*": ["theme/*"],
 			"@hooks/*": ["hooks/*"],
@@ -26,6 +27,6 @@
 		},
 		"moduleResolution": "node"
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.js", "data/StoreAppData.js", "lib/bc/wallet-connect.js", "components/app/ModaleConnect.js", "sections/app/dashboard/VaultsRender.jsx", "components/app/VaultCard.jsx", "components/app/UserMetricsRenderer.jsx", "sections/app/dashboard/VaultHero.jsx"],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.js", "data/StoreAppData.js", "lib/bc/wallet-connect.js", "components/app/ModaleConnect.js", "sections/app/dashboard/VaultsRender.jsx", "components/app/VaultCard.jsx", "sections/app/dashboard/VaultHero.jsx", "lib/fetch/userAllVaultsMetrics.jsx"],
 	"exclude": ["node_modules"]
 }
