@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion';
 
 import styles from '../../styles';
-import { newFeatures } from '../../constants';
 import { NewFeatures, TitleText, TypingText } from '../../components/home';
 import { planetVariants, staggerContainer, fadeIn } from '../../utils/motion';
+import { card1SubTitle, card1Title, card1News, card1AnimatedImage } from '../../constants/HomePage_Texts';
 
 const WhatsNew = () => (
   <section className={`${styles.paddings} relative z-10`}>
@@ -20,10 +20,10 @@ const WhatsNew = () => (
         variants={fadeIn('right', 'tween', 0.2, 1)}
         className="flex-[0.95] flex justify-center flex-col"
       >
-        <TypingText title="| Whats new?" />
-        <TitleText title={<>Launch of our Governance Token</>} />
+        <TypingText title={card1SubTitle} />
+        <TitleText title={card1Title} />
         <div className="mt-[48px] flex flex-wrap justify-between gap-[24px]">
-          {newFeatures.map((feature) => (
+          {card1News.map((feature) => (
             <NewFeatures key={feature.title} {...feature} />
           ))}
         </div>
@@ -34,7 +34,7 @@ const WhatsNew = () => (
         className={`flex-1 ${styles.flexCenter}`}
       >
         <img
-          src="/whats-new.png"
+          src={card1AnimatedImage}
           alt="get-started"
           className="w-[90%] h-[90%] object-contain"
         />

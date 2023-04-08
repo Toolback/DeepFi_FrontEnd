@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { AppDataStoreContext } from 'data/StoreAppData';
 import { useContext } from 'react';
 import { AppRouteStoreContext } from 'data/StoreAppRouter';
+import { AppTitle } from '../../../constants/AppPage_Text';
 
 const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, modaleMenuStatus, setModaleMenuStatus }) => {
     const { stateAppData } = useContext(AppDataStoreContext);
@@ -27,7 +28,7 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                     <button type="button">
                         <Link href="/">
                             <h2 className=" font-extrabold text-[24px] leading-[30.24px] ">
-                                Deposit.Finance
+                                {AppTitle}
                             </h2>
                         </Link>
                     </button>
@@ -68,7 +69,7 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                     <button type="button">
                         <Link href="/">
                             <h2 className=" font-extrabold text-[24px] leading-[30.24px] ">
-                                Deposit.Finance
+                                {AppTitle}
                             </h2>
                         </Link>
                     </button>

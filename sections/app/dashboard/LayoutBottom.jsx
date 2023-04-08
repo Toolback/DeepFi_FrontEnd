@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { socials } from '../../../constants';
 
 import { footerVariants } from 'utils/motion';
+import { footerSocials } from '../../../constants/HomePage_Texts';
 const LayoutBottom = ({ destination}) => {
     
     return (
@@ -34,7 +35,7 @@ const LayoutBottom = ({ destination}) => {
               </p>
     
               <div className="flex gap-4">
-                {socials.map((social) => (
+                {footerSocials.map((social) => (
                   <img
                     key={social.name}
                     src={social.url}

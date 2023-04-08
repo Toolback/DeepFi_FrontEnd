@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 import styles from '../../styles';
 import { slideIn, staggerContainer, textVariant } from '../../utils/motion';
-
+import { headingP1, headingP2 } from '../../constants/HomePage_Texts';
 const Hero = () => (
   <section className={`${styles.yPaddings} sm:pl-16 pl-6`}>
     <motion.div
@@ -16,14 +16,14 @@ const Hero = () => (
     >
       <div className="flex justify-center items-center flex-col relative z-10">
         <motion.h1 variants={textVariant(1.1)} className={styles.heroHeading}>
-          Enjoy real
+          {headingP1}
         </motion.h1>
         <motion.div
           variants={textVariant(1.2)}
           className="flex flex-row justify-center items-center"
         >
-          <div className={styles.heroDText} />
-          <h1 className={styles.heroHeading}>Efi</h1>
+          {/* <div className={styles.heroDText} /> */}
+          <h1 className={styles.heroHeading}>{headingP2}</h1>
         </motion.div>
       </div>
 

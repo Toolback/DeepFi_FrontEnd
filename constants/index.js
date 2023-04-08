@@ -1,4 +1,6 @@
 import {
+  NavBarLeftTitle,
+  
   startingFeatures,
   newFeatures,
   insights,

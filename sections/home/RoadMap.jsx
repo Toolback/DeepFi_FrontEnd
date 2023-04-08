@@ -4,8 +4,9 @@ import { motion } from 'framer-motion';
 
 import styles from '../../styles';
 import { fadeIn, staggerContainer, zoomIn } from '../../utils/motion';
+import { roadMapSubTitle, roadMapTexte, roadMapTitle } from '../../constants/HomePage_Texts';
 
-const Feedback = () => (
+const RoadMap = () => (
   <section className={`${styles.paddings}`}>
     <motion.div
       variants={staggerContainer}
@@ -32,16 +33,16 @@ const Feedback = () => (
         <div className="feedback-gradient" />
         <div>
           <h4 className="font-bold text-center sm:text-[32px] text-[26px] sm:leading-[40.32px] leading-[36.32px] text-white">
-            What's Next ?
+           {roadMapTitle}
           </h4>
           <p className="mt-[8px] font-normal text-center sm:text-[18px] text-[12px] sm:leading-[22.68px] leading-[16.68px] text-white">
-            Road Map
+            {roadMapSubTitle}
 
           </p>
         </div>
 
         <p className="mt-[24px] font-normal sm:text-[24px] text-[18px] sm:leading-[45.6px] leading-[39.6px] text-white">
-          [WIP]
+          {roadMapTexte}
         </p>
       </motion.div>
 
@@ -60,4 +61,4 @@ const Feedback = () => (
   </section>
 );
 
-export default Feedback;
+export default RoadMap;

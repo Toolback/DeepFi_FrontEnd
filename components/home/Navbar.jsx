@@ -6,8 +6,8 @@ import styles from '../../styles';
 import { navVariants } from '../../utils/motion';
 
 import Link from 'next/link';
-
-
+import { NavBarLeftTitle } from '../../constants/HomePage_Texts';
+import { NavBarButtonLeft } from '../../constants/HomePage_Texts';
 const Navbar = () => {
 
 return (
@@ -23,14 +23,14 @@ return (
     >
 
       <h2 className="font-extrabold text-[24px] leading-[30.24px] text-white">
-        Deposit.Finance
+        {NavBarLeftTitle}
       </h2>
 
       {/* <ConnectButton /> */}
       <Link href="/App">
       <button type="button" className="flex items-center h-fit py-4 px-4 bg-[#25618B] bg-opacity-20 rounded-[32px] gap-[12px]">
           <span className="font-normal text-[16px] text-white">
-            App
+            {NavBarButtonLeft}
           </span>
         </button>
         </Link>

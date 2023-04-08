@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion';
 
 import styles from '../../styles';
-import { startingFeatures } from '../../constants';
 import { StartSteps, TitleText, TypingText } from '../../components/home';
 import { staggerContainer, fadeIn, planetVariants } from '../../utils/motion';
+import { card2AnimatedImage, card2StartingFeatures, card2SubTitle, card2SubTitle2, card2Title } from '../../constants/HomePage_Texts';
 
 const GetStarted = () => (
   <section className={`${styles.paddings} relative z-10`}>
@@ -21,7 +21,7 @@ const GetStarted = () => (
         className={`flex-1 ${styles.flexCenter}`}
       >
         <img
-          src="/get-started.png"
+          src={card2AnimatedImage}
           alt="get-started"
           className="w-[90%] h-[90%] object-contain"
         />
@@ -30,11 +30,11 @@ const GetStarted = () => (
         variants={fadeIn('left', 'tween', 0.2, 1)}
         className="flex-[0.75] flex justify-center flex-col"
       >
-        <TypingText title="| How it Works" />
-        <TitleText title={<>Three Ways To Get An Hand On It</>} />
-        <span className="font-extrabold text-white">Any remaining DEEFI will be airdroped to holders</span>
+        <TypingText title={card2SubTitle}/>
+        <TitleText title={card2Title} />
+        <span className="font-extrabold text-white">{card2SubTitle2}</span>
         <div className="mt-[31px] flex flex-col max-w-[370px] gap-[24px]">
-          {startingFeatures.map((feature, index) => (
+          {card2StartingFeatures.map((feature, index) => (
             <StartSteps
               key={feature}
               number={`${index < 10 ? '0' : ''} ${index + 1}`}
