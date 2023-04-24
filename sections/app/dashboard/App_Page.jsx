@@ -31,7 +31,7 @@ const App_Page = () => {
       {dataLoaded  ?
       <>
         <VaultsRender vaultInfo={poolsButtons} />
-        <VaultMetrics  /> 
+        {/* <VaultMetrics  />  */}
       </> : <>
       <div className='text-center pb-4'>Loading Recent Data ...</div>
       <Loader/>

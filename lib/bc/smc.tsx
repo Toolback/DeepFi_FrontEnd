@@ -123,6 +123,15 @@ export const transferDeepfi = async (_target : string, _amount : number, _signer
 
 // -------------------- Handler -------------------- 
 
+export const getDeployedPoolsAndAdapters = async (provider : any) => {
+    try {
+        let res = await (await IHandler(provider)).getActiveAdapters();
+        return (res);
+    } catch (e) {
+        console.error("SM : Error retrieving getDeployedPoolsAndAdapters:", e)
+    }
+}
+
 export const getDeployedPools = async (provider : any) => {
     try {
         let res = await (await IHandler(provider)).getListOfPools();
@@ -236,6 +245,8 @@ export const deleteAdapterContractInfo = async (adapterId : number, contractInde
 
 // // -------------------- Vaults -------------------- 
 
+
+
 export const vaultDeposit = async (vault_address : string, amount : number, signer : any) => {
     try {
         let res = await (await IVault(vault_address, signer)).deposit(amount);
@@ -329,6 +340,24 @@ export const getPausedVaultStatus = async (vault_address : string, provider : an
     }
 }
 // View Functions
+
+export const getVaultUserBals = async (vault_address : string, user : string,  provider : any) => {
+    try {
+        let res = await (await IVault(vault_address, provider)).getUserBals(user);
+        return (res);
+    } catch (e) {
+        console.error("SM : Error while getVaultGlobalData:", e)
+    }
+}
+
+export const getVaultGlobalData = async (vault_address : string, provider : any) => {
+    try {
+        let res = await (await IVault(vault_address, provider)).getVaultInfos();
+        return (res);
+    } catch (e) {
+        console.error("SM : Error while getVaultGlobalData:", e)
+    }
+}
 
 export const getVaultName = async (vault_address : string, provider : any) => {
     try {

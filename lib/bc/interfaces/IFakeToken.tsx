@@ -4,7 +4,7 @@ import {ethers} from "ethers"
 // Free Test Token
 const IFakeToken = async (provider : any) => {
     let contractInstance = new ethers.Contract(
-        "0xa6ccE76B22Cf07e28fF7c92B465cb038ab14808B", // fake token contract address Fantom Testnet
+        "0x18188A8d50cC6f44a4eCB9D112E2F98d47d9491c", // fake token contract address Fantom Testnet
         FakeToken.abi, 
         provider
     ); 

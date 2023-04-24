@@ -15,7 +15,8 @@ import {
   mintFakeToken,
   vaultClaim,
   vaultDeposit,
-  vaultWithdraw
+  vaultWithdraw,
+  approveTargetFT
 } from 'lib/bc/smc'
 import { useAccount } from 'wagmi';
 import { getProvider } from '@wagmi/core'
@@ -64,13 +65,13 @@ const VaultCard = ({ vaultInfo }) => {
       }
     }
     
-    if (lockData === false) {
+    // if (lockData === false) {
       fetchData().then(()=>{
         setLockData(false);
         setDataLoaded(true);
         // console.log("3a - VaultCard Update -ENDED")
       })
-    }
+    // }
   }, [isConnected, vaultInfo, updateData])
 
   
@@ -79,9 +80,11 @@ const VaultCard = ({ vaultInfo }) => {
     let allowance = await getTokenAllowance(vault.stakeToken.address, stateAppData.provider, stateAppData.userAddress, vault.address);
     if (allowance < userAmountInput) {
       let adjustedAmount = userAmountInput - allowance;
-      await ApproveTokenAmount(vault.stakeToken.address, vault.address, adjustedAmount, stateAppData.provider);
+      console.log("TEEEST ?", adjustedAmount, vault.stakeToken.address, allowance)
+      // await ApproveTokenAmount(vault.stakeToken.address, vault.address, adjustedAmount, stateAppData.provider);
+      await approveTargetFT(vault.address, adjustedAmount, stateAppData.provider);
     }
-    await vaultDeposit(vault.address, userAmountInput, stateAppData.provider)
+    // await vaultDeposit(vault.address, userAmountInput, stateAppData.provider)
     setUpdateData(!updateData);
   }
 
@@ -103,7 +106,7 @@ const VaultCard = ({ vaultInfo }) => {
   }
 
   const setMaxDepositInput = async () => {
-    const maxBal = await balOfFakeToken(stateAppData.userAddress);
+    const maxBal = await balOfFakeToken(stateAppData.userAddress, getProvider());
     setUserAmountInput(maxBal);
   }
 

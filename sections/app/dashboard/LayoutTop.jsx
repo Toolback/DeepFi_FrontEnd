@@ -29,7 +29,6 @@ const LayoutTop = ({ destination }) => {
     useEffect(() => {
         const RetrieveUserInfos = async () => {
             let signer = await fetchSigner();
-            console.log("SIGNER RETRIEVED =", signer, address);
             let prov = getProvider();
             let userStatus = await isHandlerAdmin(address, prov) ? "admin" : "member";
             await dispatchAppData({ ...stateAppData, type: 'setAppData', connected: true, userStatus, userAddress: address, provider: signer })
@@ -37,7 +36,7 @@ const LayoutTop = ({ destination }) => {
         }
         if (isConnected) {
             RetrieveUserInfos().then((e) => {
-                console.log("Successfully Connected ! <3", e);
+                console.log("Successfully Connected ! <3");
             })
 
         }
