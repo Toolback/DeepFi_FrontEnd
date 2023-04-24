@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { navVariants } from 'utils/motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from 'styles';
 import Link from 'next/link';
@@ -9,21 +9,50 @@ import { useContext } from 'react';
 import { AppRouteStoreContext } from 'data/StoreAppRouter';
 import { AppTitle } from '../../../constants/AppPage_Text';
 
-const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, modaleMenuStatus, setModaleMenuStatus }) => {
-    const { stateAppData } = useContext(AppDataStoreContext);
+import { Web3Button } from '@web3modal/react'
+import { useAccount, useContract, useSigner } from 'wagmi'
+
+import { fetchSigner } from '@wagmi/core'
+import { getProvider } from '@wagmi/core'
+
+import { isHandlerAdmin } from 'lib/bc/smc';
+
+
+
+
+const LayoutTop = ({ destination }) => {
+    const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
     const { dispatchAppRoute } = useContext(AppRouteStoreContext);
+    const { address, isConnected } = useAccount()
+
+
+    useEffect(() => {
+        const RetrieveUserInfos = async () => {
+            let signer = await fetchSigner();
+            console.log("SIGNER RETRIEVED =", signer, address);
+            let prov = getProvider();
+            let userStatus = await isHandlerAdmin(address, prov) ? "admin" : "member";
+            await dispatchAppData({ ...stateAppData, type: 'setAppData', connected: true, userStatus, userAddress: address, provider: signer })
+            return signer
+        }
+        if (isConnected) {
+            RetrieveUserInfos().then((e) => {
+                console.log("Successfully Connected ! <3", e);
+            })
+
+        }
+
+    }, [address])
     return (
         <>
             <div className="absolute w-[35%] h-[60%]  gradient-01" />
-
             <motion.nav
                 variants={navVariants}
                 initial="hidden"
                 whileInView="show"
                 className={`py-8 relative`}
             >
-                    {/* <div className="absolute w-[50%] inset-0 gradient-01" /> */}
-
+                {/* <div className="absolute w-[50%] inset-0 gradient-01" /> */}
                 <div className='flex pb-8 text-white md:hidden justify-between items-center'>
                     <button type="button">
                         <Link href="/">
@@ -34,38 +63,23 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                     </button>
 
                     <div>
-
-                        {stateAppData.connected === true ?
-                            <p>{(stateAppData.userAddress).substring(0, 5)}...{(stateAppData.userAddress).substring(stateAppData.userAddress.length - 3)}</p>
-                            :
-                            <button className='hover:font-extrabold text-white' onClick={() => setModaleConnectStatus(!modaleConnectStatus)}>
-                                Connect
-                            </button>
-                        }
+                        <Web3Button />
                         {stateAppData.userStatus === "admin" ?
-                        <>
-                        {destination === "appPage" ?
-                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'adminPage' })}>
-                                Admin Panel
-                            </button>
-                            :
-                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'appPage' })}>
-                                User Panel
-                            </button>
-                        }
-                        </> : <></>}
+                            <>
+                                {destination === "appPage" ?
+                                    <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'adminPage' })}>
+                                        Admin Panel
+                                    </button>
+                                    :
+                                    <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'appPage' })}>
+                                        User Panel
+                                    </button>
+                                }
+                            </> : <></>}
                     </div>
-                    {/* <button onClick={() => setModaleMenuStatus(!modaleMenuStatus)}>
-                    <img src="/menu.svg" alt="menu" className="w-[24px] h-[24px] object-contain" />
-                    
-                </button> */}
                 </div>
 
-                {/* <div
-                // className={`${styles.innerWidth} mx-auto flex justify-between gap-8`}
-            className='mx-auto flex justify-between items-center gap-8'> */}
                 <div className='hidden md:flex px-2 z-50 justify-between items-center text-white text-bold '>
-                    {/* <ConnectButton /> */}
                     <button type="button">
                         <Link href="/">
                             <h2 className=" font-extrabold text-[24px] leading-[30.24px] ">
@@ -74,33 +88,21 @@ const LayoutTop = ({ destination, modaleConnectStatus, setModaleConnectStatus, m
                         </Link>
                     </button>
                     <div className='flex gap-5'>
-                    {stateAppData.userStatus === "admin" ?
-                        <>
-                        {destination == 'appPage' ?
-                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'adminPage' })}>
-                                Admin Panel
-                            </button>
-                            :
-                            <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'appPage' })}>
-                                User Panel
-                            </button>
-                        }
-                                                </> : <></>}
-
-                        {stateAppData.connected === true ?
-                            <p>{(stateAppData.userAddress).substring(0, 5)}...{(stateAppData.userAddress).substring(stateAppData.userAddress.length - 3)}</p>
-                            :
-                            <button className='hover:font-extrabold  text-[20px]' onClick={() => setModaleConnectStatus(!modaleConnectStatus)}>
-                                Connect
-                            </button>
-                        }
-                        
+                        {stateAppData.userStatus === "admin" ?
+                            <>
+                                {destination == 'appPage' ?
+                                    <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'adminPage' })}>
+                                        Admin Panel
+                                    </button>
+                                    :
+                                    <button className='hover:font-extrabold  text-[20px]' onClick={() => dispatchAppRoute({ type: 'setAppRoute', dDataAppRoute: 'appPage' })}>
+                                        User Panel
+                                    </button>
+                                }
+                            </> : <></>}
+                        <Web3Button />
                     </div>
-
-
-
                 </div>
-                {/* </div> */}
             </motion.nav>
         </>
     )

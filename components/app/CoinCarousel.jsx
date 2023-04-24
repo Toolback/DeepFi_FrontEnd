@@ -30,7 +30,7 @@ const CoinCarousel = ({ coins, displayNbMobile, displayNbDesktop, mode }) => {
   let num;
 
   useEffect(() => {
-    console.log("COIN RECEIVED : ", coins, 'IN MODE => ', mode)
+    // console.log("COIN RECEIVED : ", coins, 'IN MODE => ', mode)
     setDataLoaded(false);
     setDisplayCoins(coins);
     setDataLoaded(true);

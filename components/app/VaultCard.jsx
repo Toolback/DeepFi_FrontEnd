@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppDataStoreContext } from 'data/StoreAppData';
 import { motion } from 'framer-motion';
-import { slideIn, staggerContainer, textVariant } from 'utils/motion';
+import { slideIn } from 'utils/motion';
 import Link from 'next/link';
 import styles from 'styles';
 import Loader from "components/app/Loader";
@@ -17,14 +17,19 @@ import {
   vaultDeposit,
   vaultWithdraw
 } from 'lib/bc/smc'
+import { useAccount } from 'wagmi';
+import { getProvider } from '@wagmi/core'
+import { Web3Button } from '@web3modal/react'
 
-const VaultCard = ({ vaultInfo, setModaleConnectStatus }) => {
+const VaultCard = ({ vaultInfo }) => {
   const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [lockData, setLockData] = useState(false);
   const [userAmountInput, setUserAmountInput] = useState(0);
   const [updateData, setUpdateData] = useState(false);
   const [actionPoolState, setActionPoolState] = useState("claim");
+  const { address, isConnected } = useAccount();
+  
   const [vault, setVault] = useState(
     {
       address: 'N/a',
@@ -45,11 +50,12 @@ const VaultCard = ({ vaultInfo, setModaleConnectStatus }) => {
     const fetchData = async () => {
       setLockData(true);
       setDataLoaded(false);
-      console.log("3 - VaultCard - Selected Vault Initial Infos retrived => ", vaultInfo)
+      // console.log("3 - VaultCard - Selected Vault Initial Infos retrived => ", vaultInfo)
       setDataLoaded(false);
-      if (stateAppData.connected === true) {
-        let res = await getUserVaultData(vaultInfo, stateAppData.userAddress, stateAppData.provider)
-        console.log("3a - VaultCard Update - Selected Vault Infos Updated UseEffect", res)
+      if (isConnected === true) {
+        let provider = getProvider();
+        let res = await getUserVaultData(vaultInfo, address, provider)
+        // console.log("3a - VaultCard Update - Selected Vault Infos Updated UseEffect", res)
         setVault(res);
       }
       else // user is not connected => display initial data (empty balance)
@@ -59,14 +65,13 @@ const VaultCard = ({ vaultInfo, setModaleConnectStatus }) => {
     }
     
     if (lockData === false) {
-
       fetchData().then(()=>{
         setLockData(false);
         setDataLoaded(true);
-        console.log("3a - VaultCard Update -ENDED")
+        // console.log("3a - VaultCard Update -ENDED")
       })
     }
-  }, [stateAppData.userAddress, vaultInfo, updateData])
+  }, [isConnected, vaultInfo, updateData])
 
   
   const handlePoolDeposit = async () => {
@@ -117,11 +122,13 @@ const VaultCard = ({ vaultInfo, setModaleConnectStatus }) => {
           <div className='py-4'>
           </div>
           <div className='flex justify-center gap-2'>
-            {stateAppData.connected === true ?
+            {isConnected === true ?
               <button onClick={() => handlePoolDeposit()} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Deposit</button>
               :
-              <button onClick={() => { setModaleConnectStatus(true); setUpdateData(!updateData) }} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
-            }
+              // <button onClick={() => { setModaleConnectStatus(true); setUpdateData(!updateData) }} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
+              <Web3Button />
+
+}
           </div>
         </>
       case 'withdraw':
@@ -137,10 +144,11 @@ const VaultCard = ({ vaultInfo, setModaleConnectStatus }) => {
           <div className='py-4'>
           </div>
           <div className='flex justify-center gap-2'>
-            {stateAppData.connected === true ?
+            {isConnected === true ?
               <button onClick={() => handlePoolWithdraw()} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Withdraw</button>
               :
-              <button onClick={() => { setModaleConnectStatus(true); setUpdateData(!updateData) }} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
+              // <button onClick={() => { setModaleConnectStatus(true); setUpdateData(!updateData) }} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
+              <Web3Button />
             }
           </div>
         </>
@@ -150,10 +158,11 @@ const VaultCard = ({ vaultInfo, setModaleConnectStatus }) => {
             <CoinCarousel coins={vault?.rewardsToken} displayNbMobile={1} displayNbDesktop={1} mode={1} />
           </div>
           <div className='flex justify-center gap-2'>
-            {stateAppData.connected === true ?
+            {isConnected === true ?
               <button onClick={() => handlePoolClaim()} className='hover:font-bold hover:border-white/60 rounded-xl hover:border font-semibold text-2xl border-b border-white/10 transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Claim Reward</button>
               :
-              <button onClick={() => { setModaleConnectStatus(true); setUpdateData(!updateData) }} className='hover:font-bold hover:border-white/60 rounded-xl hover:border font-semibold text-2xl border-b border-white/10 transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
+              // <button onClick={() => { setModaleConnectStatus(true); setUpdateData(!updateData) }} className='hover:font-bold hover:border-white/60 rounded-xl hover:border font-semibold text-2xl border-b border-white/10 transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
+              <Web3Button />
             }
           </div>
         </>

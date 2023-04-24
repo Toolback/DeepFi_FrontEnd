@@ -12,7 +12,8 @@ export const getUserVaultData = async (vaults, userAddress, provider) => {
         console.log("GetUserVaultData -ERROR /!/ Received Vault Undefined")
         return
     }
-    if (Array.isArray(vaults)) // vaults is an array of all vaults 
+
+    if (Array.isArray(vaults))
     {
         for (let vault of vaults) {
             vault.stakeToken.bal = await getVaultUserDeposit(vault.address, userAddress, provider)
@@ -24,7 +25,7 @@ export const getUserVaultData = async (vaults, userAddress, provider) => {
             }
         }
     }
-    else if (typeof vaults === 'object')// vault is an object (single vault)
+    else if (typeof vaults === 'object')
     {
         vaults.stakeToken.bal = ethers.utils.formatUnits(await getVaultUserDeposit(vaults.address, userAddress, provider), vaults.stakeToken.dec)
         vaults.stakeToken.balToStake = ethers.utils.formatUnits(await getTokenBalanceOf(vaults.stakeToken.address, userAddress, provider), vaults.stakeToken.dec)

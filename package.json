@@ -1,5 +1,5 @@
 {
-  "name": "create-nextjs-dapp-base",
+  "name": "deposit_finance",
   "version": "1.0.2",
   "private": true,
   "scripts": {
@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@web3modal/ethereum": "^2.3.6",
+    "@web3modal/react": "^2.3.6",
     "classnames": "^2.3.2",
-    "ethers": "5.7.2",
+    "dotenv": "^16.0.3",
+    "ethers": "^5",
     "framer-motion": "^7.6.12",
     "next": "12.3.1",
     "react": "18.2.0",
@@ -21,7 +24,8 @@
     "react-use": "^17.4.0",
     "sass": "^1.55.0",
     "sharp": "^0.31.2",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "wagmi": "^0.12.12"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
@@ -35,6 +39,6 @@
     "postcss": "^8.4.19",
     "prettier": "2.7.1",
     "tailwindcss": "^3.2.4",
-    "typescript": "4.9.3"
+    "typescript": "4.9.4"
   }
 }

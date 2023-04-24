@@ -27,6 +27,8 @@
 		},
 		"moduleResolution": "node"
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.js", "data/StoreAppData.js", "lib/bc/wallet-connect.js", "components/app/ModaleConnect.js", "sections/app/dashboard/VaultsRender.jsx", "components/app/VaultCard.jsx", "sections/app/dashboard/VaultHero.jsx", "lib/fetch/userAllVaultsMetrics.jsx"],
+	// "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.js", "data/StoreAppData.js", "lib/bc/wallet-connect.js", "components/app/ModaleConnect.js", "sections/app/dashboard/VaultsRender.jsx", "components/app/VaultCard.jsx", "sections/app/dashboard/VaultHero.jsx", "lib/fetch/userAllVaultsMetrics.jsx"],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
 	"exclude": ["node_modules"]
+
 }

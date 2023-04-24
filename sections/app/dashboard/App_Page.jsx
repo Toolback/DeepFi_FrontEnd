@@ -6,23 +6,19 @@ import VaultsRender from './VaultsRender'
 import VaultMetrics from "./VaultMetrics";
 import Loader from "components/app/Loader";
 
-const App_Page = ({ data }) => {
+const App_Page = () => {
   const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [poolsButtons, setPoolsButtons] = useState([]);
 
   useEffect(() => {
-    if(!dataLoaded)
-    {
       getVaultsData(stateAppData.provider)
       .then((vaults) => {
         // console.log("1 - App_Data - Initial All Vaults Data => ", vaults)
         dispatchAppData({ ...stateAppData, type: 'setAppData', vaults })
         setPoolsButtons(vaults)
         setDataLoaded(true)
-        // })
       })
-    }
       //catch for error / setTimeOut 
   }, [])
 
@@ -34,8 +30,8 @@ const App_Page = ({ data }) => {
       <div className=" hidden sm:flex gradient-07 " />
       {dataLoaded  ?
       <>
-        <VaultsRender setModaleConnectStatus={data} vaultInfo={poolsButtons} />
-        <VaultMetrics  /> 
+        <VaultsRender vaultInfo={poolsButtons} />
+        {/* <VaultMetrics  />  */}
       </> : <>
       <div className='text-center pb-4'>Loading Recent Data ...</div>
       <Loader/>

@@ -9,11 +9,15 @@ import Loader from "components/app/Loader";
 import { userAllVaultsMetrics } from 'lib/fetch/userAllVaultsMetrics';
 import { getUserVaultData } from '../../../lib/fetch/getUserVaultData';
 import { protocolTokens } from 'constants';
+import { useAccount } from 'wagmi';
+import { fetchSigner } from '@wagmi/core'
+import { getProvider } from '@wagmi/core'
 
 const VaultMetrics = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [connected, setConnected] = useState(false);
   const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
+  const { address, isConnected } = useAccount();
   const [userState, setUserStats] = useState({
     totalDeposit: [],
     totalClaimable: [],
@@ -24,11 +28,13 @@ const VaultMetrics = () => {
   useEffect(() => {
     setDataLoaded(false);
     const fetchData = async () => {
+      let signer = await fetchSigner()
+      let provider = getProvider();
 
-      let update = await getUserVaultData(stateAppData.vaults, stateAppData.userAddress, stateAppData.provider)
+      let update = await getUserVaultData(stateAppData.vaults, address, provider)
       // await dispatchAppData({ ...stateAppData, type: 'setAppData', vaults: update })
 
-      let metrics = await userAllVaultsMetrics(update, stateAppData.userAddress, stateAppData.provider)
+      let metrics = await userAllVaultsMetrics(update, address, provider)
       if (metrics === undefined) {
         console.log("VaultMetrics - Error Metrics Undefined")
         return
@@ -36,15 +42,15 @@ const VaultMetrics = () => {
       setUserStats(metrics.resUserMetrics);
     }
 
-    if (stateAppData.connected === true) {
+    if (isConnected === true) {
       setConnected(true);
       setDataLoaded(false)
       fetchData().then(() => {
-        // console.log("ended <3", connected, stateAppData.connected)
+        // console.log("ended <3", connected, isConnected)
         setDataLoaded(true)
       })
     }
-  }, [stateAppData.userAddress, stateAppData.vaults])
+  }, [address, stateAppData.vaults])
 
   return (
     <>
@@ -76,7 +82,7 @@ const VaultMetrics = () => {
                   </div>
                   <div className="mb-8">
 
-                    {stateAppData.connected &&
+                    {isConnected &&
                       <> {dataLoaded ?
 
                         <div className="flex justify-center items-center pt-8 text-md">
@@ -89,7 +95,7 @@ const VaultMetrics = () => {
                                 <span className="block">My Summary</span>
                               </h2>
                               <p className="mt-4 text-lg text-right leading-6 text-indigo-200">
-                                personal metric of all combined vaults
+                                personnal metric of all combined vaults
                               </p>
                             </div>
                             <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2">
