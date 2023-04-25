@@ -10,20 +10,18 @@ import CoinCarousel from './CoinCarousel';
 import { getUserVaultData } from 'lib/fetch/getUserVaultData';
 import {
   ApproveTokenAmount,
-  balOfFakeToken,
   getTokenAllowance,
   mintFakeToken,
   vaultClaim,
   vaultDeposit,
   vaultWithdraw,
-  approveTargetFT
 } from 'lib/bc/smc'
 import { useAccount } from 'wagmi';
 import { getProvider } from '@wagmi/core'
 import { Web3Button } from '@web3modal/react'
 
 import { ethers } from 'ethers'
-import { getVaultUserDeposit } from '../../lib/bc/smc';
+import { getTokenBalanceOf, getVaultUserDeposit } from '../../lib/bc/smc';
 
 const VaultCard = ({ vaultInfo }) => {
   const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
@@ -81,22 +79,26 @@ const VaultCard = ({ vaultInfo }) => {
 
   const handlePoolDeposit = async () => {
     setDataLoaded(false);
-    let userAmountInGwei = ethers.utils.parseUnits(userAmountInput.toString(), 18);
-    let allowance = await getTokenAllowance(vault.stakeToken.address, stateAppData.provider, stateAppData.userAddress, vault.address);
-    console.log("Test 1  = ", Number(allowance), Number(userAmountInGwei))
-    if (allowance < userAmountInGwei) {
-      let adjustedAmount = userAmountInGwei - allowance;
-      await ApproveTokenAmount(vault.stakeToken.address, vault.address, adjustedAmount, stateAppData.provider);
-    }
-    console.log("Test 2  = ", ethers.utils.parseUnits(userAmountInput.toString(), 18))
-    console.log("Test 3  = ", vault.address, stateAppData.provider)
-    await vaultDeposit(vault.address, userAmountInGwei, stateAppData.provider)
+    let userAmountInGwei = ethers.utils.parseUnits(userAmountInput, vault.stakeToken.dec);
+    // let allowance = await getTokenAllowance(vault.stakeToken.address, stateAppData.provider, stateAppData.userAddress, vault.address);
+    // console.log("Test 1 base  = ", allowance, userAmountInGwei)
+    // console.log("Test 1b Number  = ", Number(allowance), Number(userAmountInGwei))
+    // if (userAmountInGwei.gt(allowance)) {
+    //   let adjustedAmount = userAmountInGwei.sub(allowance);
+    //   console.log("Test 2  = ", adjustedAmount, Number(adjustedAmount))
+    // await ApproveTokenAmount(vault.stakeToken.address, vault.address, adjustedAmount, stateAppData.provider);
+    // }
+    await ApproveTokenAmount(vault.stakeToken.address, vault.address, userAmountInGwei, stateAppData.provider);
+    await vaultDeposit(vault.address, userAmountInGwei, stateAppData.provider);
+    setUserAmountInput(0);
     setUpdateData(!updateData);
   }
 
   const handlePoolWithdraw = async () => {
     setDataLoaded(false);
-    await vaultWithdraw(vault.address, userAmountInput, stateAppData.provider)
+    let userAmountInGwei = ethers.utils.parseUnits(userAmountInput, vault.stakeToken.dec);
+    await vaultWithdraw(vault.address, userAmountInGwei, stateAppData.provider)
+    setUserAmountInput(0);
     setUpdateData(!updateData);
   }
 
@@ -107,25 +109,43 @@ const VaultCard = ({ vaultInfo }) => {
   }
 
   const mintTestToken = async () => {
-    await mintFakeToken(stateAppData.userAddress, stateAppData.provider);
+    await mintFakeToken(vault.stakeToken.address, vault.stakeToken.dec, stateAppData.userAddress, stateAppData.provider);
     setUpdateData(!updateData);
   }
 
   const setMaxDepositInput = async () => {
-    const maxBal = await balOfFakeToken(stateAppData.userAddress, stateAppData.provider);
-    setUserAmountInput(maxBal);
+    const maxBal = await getTokenBalanceOf(vault.stakeToken.address, stateAppData.userAddress, stateAppData.provider);
+    setUserAmountInput(ethers.utils.formatUnits(maxBal, vault.stakeToken.dec));
   }
 
   const setMaxWithdrawInput = async () => {
     const maxBal = await getVaultUserDeposit(vault.address, stateAppData.userAddress, stateAppData.provider);
-    setUserAmountInput(maxBal);
+    setUserAmountInput(ethers.utils.formatUnits(maxBal, vault.stakeToken.dec));
   }
   function renderAction() {
     switch (actionPoolState) {
       case 'deposit':
         return <>
           <div className='pt-4 pb-2 '>
-            <Link className="text-start" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
+            {/* <Link className="text-start" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link> */}
+            <Link 
+              className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'
+              href="https://faucet.fantom.network/"
+            >
+              <button
+                className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'
+              >
+              Mint Test FTM
+            </button>
+            </Link>
+            <button 
+              onClick={() => mintTestToken()} 
+              className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'
+            >
+              Mint Test {vault.stakeToken.name}
+            </button>
+
+
           </div>
           <div className="">Available: {(vault.stakeToken.balToStake).toString()}</div>
           <div className=" bg-primary-black/70 rounded p-2 flex justify-between">
@@ -147,7 +167,12 @@ const VaultCard = ({ vaultInfo }) => {
       case 'withdraw':
         return <>
           <div className='pt-4 pb-2 '>
-            <Link className="text-start" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link>
+            {/* <Link className="text-start" href="https://app.mummy.finance/#/buy_mlp">Buy MLP</Link> */}
+            <button
+                className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'
+              >
+              Mint Test FTM
+            </button>
           </div>
           <div className="">Total Staked: {(vault.stakeToken.bal).toString()}</div>
           <div className=" bg-primary-black/70 rounded p-2 flex justify-between">
@@ -268,7 +293,7 @@ className={`${styles.innerWidth} mx-auto flex flex-col`}
                       <h4 className='text-sm text-gray-300'>APR</h4>
                     </div>
                     <div className="text-center">
-                      <p className='text-lg font-bold tracking-tight text-white'>{vault.tvl}</p>
+                      <p className='text-lg font-bold tracking-tight text-white'>{ethers.utils.formatUnits(vault.tvl, vault.stakeToken.dec)}</p>
                       <h4 className='text-sm text-gray-300'>TVL</h4>
                     </div>
                     <div className="text-center">

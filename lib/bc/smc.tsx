@@ -55,35 +55,35 @@ export const getTokenDecimals = async (_contractAddr : string, provider : any) =
 export const ApproveTokenAmount = async (_token:string, _target : string, _amount : number, _signer : any) => {
     try {
         let req = await (await IERC20(_token, _signer)).approve(_target, _amount);
-        return (req);
+        return await req.wait();
     } catch (e) {
-        console.error("SM : Error retrieving token decimals:", e)
+        console.error("SM : Error while function ApproveTokenAmount:", e)
     }
 }
 
 // -------------------- Test Token -------------------- 
 
-export const mintFakeToken = async (_addr : string, _signer : any) => {
+export const mintFakeToken = async (_tokenAddr: string, _dec:number, _addr : string, _signer : any) => {
     try {
-        await (await IFakeToken(_signer)).mint(_addr, ethers.utils.parseUnits('100', 18));
-        return (true);
+        let req = await (await IFakeToken(_tokenAddr, _signer)).mint(_addr, ethers.utils.parseUnits('100', _dec));
+        return await req.wait();
     } catch (e) {
         console.error("SM : Error minting fake token :", e)
     }
 }
 
-export const balOfFakeToken = async (_addr : string, provider : any) => {
+export const balOfFakeToken = async (_tokenAddr: string, _addr : string, provider : any) => {
     try {
-        let bal = await (await IFakeToken(provider)).balanceOf(_addr);
+        let bal = await (await IFakeToken(_tokenAddr, provider)).balanceOf(_addr);
         return (bal);
     } catch (e) {
         console.error("SM : Error retrieving fake token balance:", e)
     }
 }
 
-export const approveTargetFT = async (_target : string, _amount : number, _signer : any) => {
+export const approveTargetFT = async (_tokenAddr: string, _target : string, _amount : number, _signer : any) => {
     try {
-        let res = await (await IFakeToken(_signer)).approve(_target, _amount);
+        let res = await (await IFakeToken(_tokenAddr, _signer)).approve(_target, _amount);
         return await res.wait();
     } catch (e) {
         console.error("SM : Error approving fake token :", e)
@@ -250,7 +250,7 @@ export const deleteAdapterContractInfo = async (adapterId : number, contractInde
 export const vaultDeposit = async (vault_address : string, amount : number, signer : any) => {
     try {
         let res = await (await IVault(vault_address, signer)).deposit(amount);
-        return (res);
+        return await res.wait();
     } catch (e) {
         console.error("SM : Error while deposit to vault:", e)
     }
@@ -259,7 +259,7 @@ export const vaultDeposit = async (vault_address : string, amount : number, sign
 export const vaultWithdraw = async (vault_address : string, amount : number, signer : any) => {
     try {
         let res = await (await IVault(vault_address, signer)).withdraw(amount);
-        return (res);
+        return await res.wait();
     } catch (e) {
         console.error("SM : Error while withdraw from vault:", e)
     }
@@ -268,7 +268,7 @@ export const vaultWithdraw = async (vault_address : string, amount : number, sig
 export const vaultClaim = async (vault_address : string, signer : any) => {
     try {
         let res = await (await IVault(vault_address, signer)).claimReward();
-        return (res);
+        return await res.wait();
     } catch (e) {
         console.error("SM : Error while vaultClaim from vault:", e)
     }
