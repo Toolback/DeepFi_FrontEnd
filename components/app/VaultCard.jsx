@@ -22,15 +22,18 @@ import { useAccount } from 'wagmi';
 import { getProvider } from '@wagmi/core'
 import { Web3Button } from '@web3modal/react'
 
+import { ethers } from 'ethers'
+import { getVaultUserDeposit } from '../../lib/bc/smc';
+
 const VaultCard = ({ vaultInfo }) => {
   const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [lockData, setLockData] = useState(false);
-  const [userAmountInput, setUserAmountInput] = useState(0);
+  const [userAmountInput, setUserAmountInput] = useState();
   const [updateData, setUpdateData] = useState(false);
   const [actionPoolState, setActionPoolState] = useState("claim");
   const { address, isConnected } = useAccount();
-  
+
   const [vault, setVault] = useState(
     {
       address: 'N/a',
@@ -64,27 +67,30 @@ const VaultCard = ({ vaultInfo }) => {
         setVault(vaultInfo);
       }
     }
-    
+
     // if (lockData === false) {
-      fetchData().then(()=>{
-        setLockData(false);
-        setDataLoaded(true);
-        // console.log("3a - VaultCard Update -ENDED")
-      })
+    fetchData().then(() => {
+      setLockData(false);
+      setDataLoaded(true);
+      console.log(vault)
+      // console.log("3a - VaultCard Update -ENDED")
+    })
     // }
   }, [isConnected, vaultInfo, updateData])
 
-  
+
   const handlePoolDeposit = async () => {
     setDataLoaded(false);
+    let userAmountInGwei = ethers.utils.parseUnits(userAmountInput.toString(), 18);
     let allowance = await getTokenAllowance(vault.stakeToken.address, stateAppData.provider, stateAppData.userAddress, vault.address);
-    if (allowance < userAmountInput) {
-      let adjustedAmount = userAmountInput - allowance;
-      console.log("TEEEST ?", adjustedAmount, vault.stakeToken.address, allowance)
-      // await ApproveTokenAmount(vault.stakeToken.address, vault.address, adjustedAmount, stateAppData.provider);
-      await approveTargetFT(vault.address, adjustedAmount, stateAppData.provider);
+    console.log("Test 1  = ", Number(allowance), Number(userAmountInGwei))
+    if (allowance < userAmountInGwei) {
+      let adjustedAmount = userAmountInGwei - allowance;
+      await ApproveTokenAmount(vault.stakeToken.address, vault.address, adjustedAmount, stateAppData.provider);
     }
-    // await vaultDeposit(vault.address, userAmountInput, stateAppData.provider)
+    console.log("Test 2  = ", ethers.utils.parseUnits(userAmountInput.toString(), 18))
+    console.log("Test 3  = ", vault.address, stateAppData.provider)
+    await vaultDeposit(vault.address, userAmountInGwei, stateAppData.provider)
     setUpdateData(!updateData);
   }
 
@@ -106,11 +112,15 @@ const VaultCard = ({ vaultInfo }) => {
   }
 
   const setMaxDepositInput = async () => {
-    const maxBal = await balOfFakeToken(stateAppData.userAddress, getProvider());
+    const maxBal = await balOfFakeToken(stateAppData.userAddress, stateAppData.provider);
     setUserAmountInput(maxBal);
   }
 
-  function renderAction () {
+  const setMaxWithdrawInput = async () => {
+    const maxBal = await getVaultUserDeposit(vault.address, stateAppData.userAddress, stateAppData.provider);
+    setUserAmountInput(maxBal);
+  }
+  function renderAction() {
     switch (actionPoolState) {
       case 'deposit':
         return <>
@@ -131,7 +141,7 @@ const VaultCard = ({ vaultInfo }) => {
               // <button onClick={() => { setModaleConnectStatus(true); setUpdateData(!updateData) }} className='hover:font-semibold transition duration-500 ease transform hover:-translate-y-1 px-4 py-2'>Connect Wallet</button>
               <Web3Button />
 
-}
+            }
           </div>
         </>
       case 'withdraw':
@@ -142,7 +152,7 @@ const VaultCard = ({ vaultInfo }) => {
           <div className="">Total Staked: {(vault.stakeToken.bal).toString()}</div>
           <div className=" bg-primary-black/70 rounded p-2 flex justify-between">
             <input className="placeholder-white w-3/4  bg-white/0	" placeholder="Enter Amount" onChange={e => setUserAmountInput(e.target.value)} value={userAmountInput} />
-            <button className="hover:text-white text-gray-200" onClick={() => setMaxDepositInput()}>MAX</button>
+            <button className="hover:text-white text-gray-200" onClick={() => setMaxWithdrawInput()}>MAX</button>
           </div>
           <div className='py-4'>
           </div>
@@ -189,9 +199,10 @@ className={`${styles.innerWidth} mx-auto flex flex-col`}
       <div className={`${styles.innerWidth} mx-auto flex flex-col`}>
         <motion.div
           variants={slideIn('right', 'tween', 0.2, 1)}
-          className="relative w-full  mt-[30px]"
+          className="relative w-full  mb-[60px]"
         >
-          <div className="absolute w-full min-h-[730px] sm:min-h-[360px] hero-gradient rounded-tl-[120px] z-[0] -top-[10px]" />
+          {/* <div className="absolute w-full min-h-[730px] sm:min-h-[360px] hero-gradient rounded-tl-[120px] z-[0] -top-[10px]" /> */}
+          {/* <div className="absolute w-full h-[350px] hero-gradient rounded-3xl z-[0] mt-3 " /> */}
 
           {/* <div className=" w-full h-[30px] hero-gradient rounded-tl-[140px] z-[0] -top-[30px]" /> */}
           <div className="sm:flex sm:flex-col">
@@ -201,7 +212,7 @@ className={`${styles.innerWidth} mx-auto flex flex-col`}
                   <div
                     className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-purple-900/50 focus:border-rose-200 active:bg-rose-200 transition ease-in-out duration-150 cursor-not-allowed"
                     disabled=""
-                    >
+                  >
                     <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
@@ -211,13 +222,13 @@ className={`${styles.innerWidth} mx-auto flex flex-col`}
                 </div>
               </>
               : <></>}
-              {/* // <Loader/> : <></>}  */}
+            {/* // <Loader/> : <></>}  */}
             {/* pool display */}
             <div className="pt-4 grid sm:grid-cols-2 ">
 
               {/* deposit / withdraw */}
               <div className='sm:col-span-1'>
-                <div className="bg-primary-black/90 sm:min-h-[340px] min-h-[380px] sm:flex sm:justify-center py-10 px-2 rounded-tl-[120px]  border border-white/10 backdrop-blur drop-shadow-lg ">
+                <div className="bg-primary-black/90 sm:min-h-[340px] min-h-[380px] sm:flex sm:justify-center py-10 px-2 rounded-l-3xl  border border-white/10 backdrop-blur drop-shadow-lg ">
                   {dataLoaded && <>
                     <div className=''>
                       <div className="flex justify-center ">
@@ -233,16 +244,20 @@ className={`${styles.innerWidth} mx-auto flex flex-col`}
               </div>
 
               {/* global infos cards */}
-              <div className="bg-secondary-black/5 min-h-[330px] sm:min-h-[100px] flex justify-around items-center border border-white/10 backdrop-blur drop-shadow-lg ">
+              <div className="bg-purple-500/10 shadow-xl min-h-[330px] sm:min-h-[100px] flex justify-around items-center rounded-r-3xl border border-white/10 backdrop-blur drop-shadow-lg ">
 
                 {dataLoaded ? <>
 
-                  <div className='text-center flex flex-col gap-2'>
+                  <div className='text-center flex flex-col'>
                     <div className='w-[120px] sm:w-[170px] md:w-[210px]'>
+                      <h4 className='text-md text-gray-300'>Actual Deposit</h4>
+                      <CoinCarousel coins={[vault.stakeToken]} displayNbMobile={1} displayNbDesktop={1} mode={3} />
+                    </div>
+
+                    <div className='w-[120px] sm:w-[170px] md:w-[210px]'>
+                      <h4 className='text-md text-gray-300'>Total Earned</h4>
                       <CoinCarousel coins={vault.rewardsToken} displayNbMobile={1} displayNbDesktop={1} mode={2} />
                     </div>
-                    <h4 className='text-md text-gray-300'>Total Earned</h4>
-
                   </div>
 
                   <div className='w-[1px] h-3/4 bg-white/30'></div>
@@ -264,16 +279,16 @@ className={`${styles.innerWidth} mx-auto flex flex-col`}
                       <p className='text-lg text-center font-bold tracking-tight text-white'>{vault.rewardRate > 0 ? vault.rewardRate : 0}</p>
                       <h4 className='text-sm text-gray-300'>Rewards / second</h4>
                     </div>
-                    <div className='hidden sm:block sm:col-span-2 sm:h-[1px] w-full bg-white/30'></div>
+                    <div className='hidden sm:block sm:col-span-2 sm:h-[1px] mt-8 w-full bg-white/30'></div>
 
-                    <div className="text-center sm:col-span-2 pt-4 ">
+                    <div className="text-center sm:col-span-2  ">
                       <p className='sm:text-2xl text-lg font-bold tracking-tight text-white'>{Number(vault.stakeToken.bal)}</p>
                       <h4 className='text-sm text-gray-300'>Your Stake</h4>
                     </div>
 
                   </div>
-                </> 
-                : <></>}
+                </>
+                  : <></>}
               </div>
             </div>
             {/* </>} */}

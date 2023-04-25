@@ -15,7 +15,7 @@ export default function VaultHero() {
     viewport={{ once: false, amount: 0.60 }}
     className={`${styles.innerWidth} mx-auto flex flex-col`}
   >
-    <div className="relative z-10 pb-4 sm:py-8">
+    <div className="relative z-10 pb-4 sm:pt-8">
       <div className="absolute inset-x-0 top-0 hidden h-1/2 lg:block" aria-hidden="true" />
       <div className="mx-auto max-w-7xl bg-transparent lg:px-8">
         <div className="lg:grid lg:grid-cols-12">

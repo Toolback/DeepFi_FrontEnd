@@ -4,7 +4,7 @@ import { approveTargetDeepfi, transferDeepfi, setRewardsDuration, notifyRewardAm
 import { AppDataStoreContext } from 'data/StoreAppData';
 import { useContext } from 'react';
 import { ethers } from 'ethers'
-import { addAdapterContractInfo, deleteAdapterContractInfo, getPausedVaultStatus, getVaultName, isAdapterAdmin, isHandlerAdmin, isVaultAdmin, removeAdapterAdmin, removeHandlerAdmin, removeVaultAdmin, setNewAdapterAdmin, setNewHandlerAdmin, setNewVaultAdmin, setPauseVault } from "../../lib/bc/smc";
+import { addAdapterContractInfo, deleteAdapterContractInfo, getPausedVaultStatus, getVaultName, isAdapterAdmin, isHandlerAdmin, isVaultAdmin, removeAdapterAdmin, removeHandlerAdmin, removeVaultAdmin, setAdapterCompoundStatus, setNewAdapterAdmin, setNewHandlerAdmin, setNewVaultAdmin, setPauseVault } from "../../lib/bc/smc";
 const Admin_Page = ({ data }) => {
     const { stateAppData, dispatchAppData } = useContext(AppDataStoreContext);
 
@@ -73,8 +73,8 @@ const Admin_Page = ({ data }) => {
     }, [])
 
     const handleSubmitVaultReward = async () => {
-        const provider = await getProvider()
-        const signer = provider.getSigner(stateAppData.userAddress);
+        // const provider = await getProvider()
+        const signer = stateAppData.provider;
 
         // approve staking token transfer to vault 
         await approveTargetDeepfi(vaultAddress, ethers.utils.parseUnits(newRewardAmount, 18), signer);
@@ -163,6 +163,10 @@ const Admin_Page = ({ data }) => {
         const provider = await getProvider()
         const signer = provider.getSigner(stateAppData.userAddress);
         await deleteAdapterContractInfo(adapterId, adapterContractIndex, signer);
+    }
+
+    const handleSetMLPCompound = async () => {
+        await setAdapterCompoundStatus(false, stateAppData.provider);
     }
 
     const renderDeployedVaults = () => {
@@ -414,6 +418,25 @@ const Admin_Page = ({ data }) => {
                         <button onClick={() => handleSetAdmin(2, 1)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Set Admin</button>
                         <button onClick={() => handleSetAdmin(2, 0)} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Remove Admin</button>
 
+                    </div>
+
+
+                    <div className="bg-primary-black p-5 rounded flex flex-col gap-2 items-center">
+                        <h4>Compound MLP</h4>
+
+                        <div className="flex flex-col gap-2 justify-end">
+                            <div>
+                                <p>Adapter Id :</p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter ID (MLP = 1)" onChange={e => setAdapterId(e.target.value)} value={adapterId} />
+
+                            </div>
+                            <div>
+                                <p>User Address :</p>
+                                <input className="placeholder-white w-3/4 placeholder-opacity-75  bg-purple-500/10 back rounded	" placeholder="Enter Address" onChange={e => setUserAdminAddress(e.target.value)} value={userAdminAddress} />
+                            </div>
+                        </div>
+
+                        <button onClick={() => handleSetMLPCompound()} className='hover:bg-purple-900 bg-purple-500/10 back rounded px-4 py-2'>Change Status</button>
                     </div>
 
 

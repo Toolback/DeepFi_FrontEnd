@@ -514,3 +514,12 @@ export const setAdapterCompoundStatus = async (status : boolean, signer : any) =
         console.error("SM : Error while setAdapterCompoundStatus:", e)
     }
 }
+
+export const getAdapterCompoundStatus = async (provider : any) => {
+    try {
+        let res = await (await IMLPAdapter(provider)).setCompoundRewardStatus(status);
+        return await res.wait();
+    } catch (e) {
+        console.error("SM : Error while setAdapterCompoundStatus:", e)
+    }
+}

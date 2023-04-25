@@ -36,7 +36,7 @@ const VaultsRender = ({vaultInfo}) => {
             <h2 className="text-3xl text-center font-bold tracking-tight text-white">
               <span className="block">Earning</span>
             </h2>
-            <p className="mt-4 text-lg text-center leading-6 text-indigo-200">
+            <p className="mt-2 text-lg text-center leading-6 text-indigo-200">
               All Available Vaults
             </p>
           </motion.div>
