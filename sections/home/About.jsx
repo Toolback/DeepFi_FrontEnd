@@ -8,7 +8,7 @@ import { fadeIn, staggerContainer } from '../../utils/motion';
 import { intro, introTitle } from '../../constants/HomePage_Texts';
 
 const About = () => (
-  <section className={`${styles.paddings} relative z-10`}>
+  <section className={`${styles.paddings} relative z-10 sm:-mt-10`}>
     <div className="gradient-02 z-0" />
     <motion.div
       variants={staggerContainer}
