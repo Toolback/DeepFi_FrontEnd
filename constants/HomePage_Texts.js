@@ -60,19 +60,23 @@ export const footerCopyrights = 'Copyright © 2021 - 2023 Deposit.Finance. All r
 export const footerSocials = [
   {
     name: 'twitter',
-    url: '/twitter.svg',
+    url:'/',
+    imageUrl: '/twitter.svg',
   },
   {
     name: 'linkedin',
-    url: '/linkedin.svg',
+    url:'/',
+    imageUrl: '/linkedin.svg',
   },
   {
     name: 'instagram',
-    url: '/instagram.svg',
+    url:'/',
+    imageUrl: '/instagram.svg',
   },
   {
     name: 'facebook',
-    url: '/facebook.svg',
+    url:'/',
+    imageUrl: '/facebook.svg',
   },
 ];
 
