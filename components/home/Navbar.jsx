@@ -30,7 +30,7 @@ return (
 
       {/* <ConnectButton /> */}
       <Link href="/App">
-      <button type="button" className="flex items-center h-fit py-4 px-4 bg-[#25618B] bg-opacity-20 rounded-[32px] gap-[12px]">
+      <button type="button" className="flex items-center h-fit py-3 px-4 border  border-[#25618B] hover:border-[#90afc5] rounded-[32px] gap-[12px]">
           <span className="font-normal text-[16px] text-white">
             {NavBarButtonLeft}
           </span>

@@ -1,5 +1,5 @@
 export const NavBarLeftTitle = `Deposit.Finance`;
-export const NavBarButtonLeft = `App`;
+export const NavBarButtonLeft = `Launch App`;
 
 export const headingP1 = `Enjoy Defi`;
 export const headingP2 = `With Ease`;
