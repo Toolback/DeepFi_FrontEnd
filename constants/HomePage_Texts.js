@@ -3,6 +3,10 @@ export const NavBarButtonLeft = `Launch App`;
 
 export const headingP1 = `Enjoy Defi`;
 export const headingP2 = `With Ease`;
+export const subheading01 = (<p>
+  Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. 
+<br/>Cras aliquet purus dui laoreet diam sed lacus, fames.
+<br/>Cras aliquet purus dui </p>);
 
 export const introTitle = `| About Deposit.Finance`;
 export const intro = (

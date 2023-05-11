@@ -7,7 +7,7 @@ const Home = () => (
   {/* // <div className="bg-cover bg-center" style={{backgroundImage: `url(/HomeDeposit.png)`}}> */}
 
   <img
-      src="/HomeDeposit.png"
+      src="/HomeDeposit_BG.png"
       alt="hero_cover"
       // className="w-full sm:h-[500px] h-[350px] object-cover rounded-tl-[140px] z-10 relative"
       className="absolute object-cover h-full w-full opacity-50"

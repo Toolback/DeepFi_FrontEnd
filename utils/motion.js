@@ -19,6 +19,17 @@ export const navVariants = {
   },
 };
 
+export const floatingAnimation = {
+  show: {
+  y: [-10, 10, -10],
+  transition: {
+    duration: 3.5,
+    repeat: Infinity,
+    ease: 'easeOut',
+  },
+}
+};
+
 export const slideIn = (direction, type, delay, duration) => ({
   hidden: {
     x: direction === 'left' ? '-150%' : direction === 'right' ? '150%' : 0,
