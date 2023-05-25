@@ -3,7 +3,7 @@ import {ethers} from "ethers"
 
 const IEQZAdapter = async (provider : any) => {
     let contractInstance = new ethers.Contract(
-        "0xAE5257B5dd895027bE7C9263e810F5f9380AF7D7", // eqz strategy fantom testnet
+        "0x0a40DCA2F0Ee6baB5abfe92Db3a41016E0Ce691E", // eqz strategy fantom testnet
         EQZAdapterABI.abi, 
         provider
     );

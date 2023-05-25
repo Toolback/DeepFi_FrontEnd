@@ -3,7 +3,7 @@ import {ethers} from "ethers"
 
 const IMLPAdapter = async (provider : any) => {
     let contractInstance = new ethers.Contract(
-        "0x991e0100f0d6d308D139B72F8407749e0A34254D", // mlp strategy fantom testnet
+        "0x3454B91f94b50ED277F57cBec4E8354F00A97970", // mlp strategy fantom testnet
         MLPAdapterABI.abi, 
         provider
     );

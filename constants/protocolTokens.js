@@ -1,6 +1,6 @@
 export const protocolTokens = [
     { //testnet address replace later
-      address:'0xb483aE4D4dE9F0E341d13Ff0A9B3530E84265352', 
+      address:'0x6Aaee6aCa4555a715F70fA4Ed102b18851c6c71c', 
       name: 'Defi',
       url: 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/68.png',
       decimals: 18,
@@ -37,14 +37,14 @@ export const protocolTokens = [
     },
 
     { // Free Test Token deployed on FTM Testnet for the protocol
-        address:"0x18188A8d50cC6f44a4eCB9D112E2F98d47d9491c",
+        address:"0x5B5Ca8B9DBe49d38CD0d5f804069cc8e9233AC8E",
         name: 'TToken18',
         url: 'https://s3.coinmarketcap.com/static/img/portraits/62d51d9af192d82df8ff3a83.png',
         decimals: 18,
       },
 
       { // Free Test Token deployed on FTM Testnet for the protocol
-        address:"0xEE4AFC7Bb01672De0c2a568B8CfB47DC41516903",
+        address:"0x044802bF03fe52CA222Fc5cA032bCEaf4CAB7821",
         name: 'TToken6',
         url: 'https://s3.coinmarketcap.com/static/img/portraits/62d51d9af192d82df8ff3a83.png',
         decimals: 6,
